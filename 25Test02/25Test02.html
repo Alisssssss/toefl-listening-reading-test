@@ -1,0 +1,737 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive TOEFL Practice Test</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .question-option {
+            transition: background-color 0.2s ease-in-out;
+        }
+        .question-option:hover {
+            background-color: #eef2ff; /* indigo-50 */
+        }
+        .question-option input:checked + label {
+            background-color: #c7d2fe; /* indigo-200 */
+            border-color: #6366f1; /* indigo-500 */
+        }
+        .insert-square {
+            cursor: pointer;
+            color: #6366f1;
+            font-weight: bold;
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            text-align: center;
+            line-height: 20px;
+            border: 1px solid transparent;
+        }
+        .insert-square.selected {
+            background-color: #6366f1;
+            color: white;
+            border-color: #4338ca;
+        }
+        .paragraph-highlight {
+            background-color: #eef2ff; /* indigo-50 */
+            border-left: 3px solid #6366f1; /* indigo-500 */
+            padding-left: 1em;
+            margin-left: -1em;
+            transition: all 0.3s ease-in-out;
+        }
+        .highlighted-sentence {
+            background-color: #fef9c3; /* yellow-100 */
+            padding: 2px 0;
+        }
+        .replay-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 0 8px;
+            display: inline-flex;
+            align-items: center;
+            vertical-align: middle;
+        }
+        .replay-btn:disabled svg {
+            fill: #9ca3af; /* gray-400 */
+        }
+    </style>
+</head>
+<body class="bg-gray-100 text-gray-800">
+
+    <div id="app-container" class="container mx-auto max-w-7xl p-4 md:p-8 my-8 bg-white rounded-2xl shadow-lg">
+        
+        <!-- Header -->
+        <header class="flex justify-between items-center pb-4 border-b mb-6">
+            <h1 class="text-2xl md:text-3xl font-bold text-gray-700">TOEFL Practice Test</h1>
+            <div id="timer" class="text-xl font-semibold text-indigo-600"></div>
+        </header>
+
+        <!-- Listening Section -->
+        <div id="listening-section">
+            <h2 class="text-xl font-semibold mb-4 text-indigo-700 border-l-4 border-indigo-500 pl-3">Section 1: Listening</h2>
+            
+            <!-- Conversation 1 Container -->
+            <div id="c1-container">
+                <div id="c1-audio-view" class="mb-8 p-6 bg-gray-50 rounded-lg text-center">
+                    <h3 class="font-bold text-xl mb-4">Conversation 1 (25Z02-C1)</h3>
+                    <p class="text-gray-600 mb-6">Click the button to play the audio. You can only play it once.</p>
+                    <button id="play-c1-btn" class="bg-indigo-600 text-white font-bold py-3 px-6 rounded-lg shadow-md hover:bg-indigo-700 disabled:bg-gray-400 disabled:cursor-not-allowed transition">Play Audio</button>
+                    <audio id="audio-c1" src="2025 Test 02/25Z02-C1.mp3" preload="auto"></audio>
+                    <div class="mt-6">
+                        <button id="start-c1-questions-btn" class="bg-green-600 text-white font-bold py-2 px-6 rounded-lg shadow-md hover:bg-green-700 disabled:opacity-50 disabled:cursor-not-allowed transition hidden">Start Questions</button>
+                    </div>
+                </div>
+                <div id="c1-questions-view" class="hidden mb-8 p-6 bg-gray-50 rounded-lg">
+                    <div class="listening-question c1-question">
+                        <p class="mb-2 font-medium">1. What problem is the woman having?</p>
+                        <div class="space-y-2"><div class="question-option"><input type="radio" id="c1-q1-a" name="c1-q1" value="A" class="hidden"><label for="c1-q1-a" class="block w-full p-3 border rounded-lg cursor-pointer">She needs to drop one of the courses she is taking.</label></div><div class="question-option"><input type="radio" id="c1-q1-b" name="c1-q1" value="B" class="hidden"><label for="c1-q1-b" class="block w-full p-3 border rounded-lg cursor-pointer">She wants to take a course that her university will not be offering.</label></div><div class="question-option"><input type="radio" id="c1-q1-c" name="c1-q1" value="C" class="hidden"><label for="c1-q1-c" class="block w-full p-3 border rounded-lg cursor-pointer">She does not understand how to register online for her courses.</label></div><div class="question-option"><input type="radio" id="c1-q1-d" name="c1-q1" value="D" class="hidden"><label for="c1-q1-d" class="block w-full p-3 border rounded-lg cursor-pointer">She is having trouble figuring out which courses she needs to take.</label></div></div>
+                    </div>
+                    <div class="listening-question c1-question hidden">
+                        <p class="mb-2 font-medium">2. What does the woman imply when she mentions her political science course?</p>
+                        <div class="space-y-2"><div class="question-option"><input type="radio" id="c1-q2-a" name="c1-q2" value="A" class="hidden"><label for="c1-q2-a" class="block w-full p-3 border rounded-lg cursor-pointer">She finds the course more difficult than she had thought it would be.</label></div><div class="question-option"><input type="radio" id="c1-q2-b" name="c1-q2" value="B" class="hidden"><label for="c1-q2-b" class="block w-full p-3 border rounded-lg cursor-pointer">She does not consider the course to be relevant to her major field of study.</label></div><div class="question-option"><input type="radio" id="c1-q2-c" name="c1-q2" value="C" class="hidden"><label for="c1-q2-c" class="block w-full p-3 border rounded-lg cursor-pointer">She is likely to take another political science course next semester.</label></div><div class="question-option"><input type="radio" id="c1-q2-d" name="c1-q2" value="D" class="hidden"><label for="c1-q2-d" class="block w-full p-3 border rounded-lg cursor-pointer">She had originally planned to major in political science.</label></div></div>
+                    </div>
+                    <div class="listening-question c1-question hidden">
+                        <p class="mb-2 font-medium">3. What can be inferred about the course catalog at the woman's university?</p>
+                        <div class="space-y-2"><div class="question-option"><input type="radio" id="c1-q3-a" name="c1-q3" value="A" class="hidden"><label for="c1-q3-a" class="block w-full p-3 border rounded-lg cursor-pointer">It explains why cross registration is no longer an option for students.</label></div><div class="question-option"><input type="radio" id="c1-q3-b" name="c1-q3" value="B" class="hidden"><label for="c1-q3-b" class="block w-full p-3 border rounded-lg cursor-pointer">It gives information about courses but does not list professors.</label></div><div class="question-option"><input type="radio" id="c1-q3-c" name="c1-q3" value="C" class="hidden"><label for="c1-q3-c" class="block w-full p-3 border rounded-lg cursor-pointer">Some of the information it contains is not up-to-date.</label></div><div class="question-option"><input type="radio" id="c1-q3-d" name="c1-q3" value="D" class="hidden"><label for="c1-q3-d" class="block w-full p-3 border rounded-lg cursor-pointer">This year is the first year that it has been online.</label></div></div>
+                    </div>
+                    <div class="listening-question c1-question hidden">
+                        <p class="mb-2 font-medium">4. Why does the woman mention her brother?</p>
+                        <div class="space-y-2"><div class="question-option"><input type="radio" id="c1-q4-a" name="c1-q4" value="A" class="hidden"><label for="c1-q4-a" class="block w-full p-3 border rounded-lg cursor-pointer">To explain why she is surprised that she would be allowed to take a class at Barton</label></div><div class="question-option"><input type="radio" id="c1-q4-b" name="c1-q4" value="B" class="hidden"><label for="c1-q4-b" class="block w-full p-3 border rounded-lg cursor-pointer">To explain why she did not enroll at Barton</label></div><div class="question-option"><input type="radio" id="c1-q4-c" name="c1-q4" value="C" class="hidden"><label for="c1-q4-c" class="block w-full p-3 border rounded-lg cursor-pointer">To indicate why she would be excited to take a class at Barton</label></div><div class="question-option"><input type="radio" id="c1-q4-d" name="c1-q4" value="D" class="hidden"><label for="c1-q4-d" class="block w-full p-3 border rounded-lg cursor-pointer">To indicate a concern she has about taking a class at Barton</label></div></div>
+                    </div>
+                    <div class="listening-question c1-question hidden">
+                        <p class="mb-2 font-medium">5. What does the man imply when he says this?</p>
+                        <div class="space-y-2"><div class="question-option"><input type="radio" id="c1-q5-a" name="c1-q5" value="A" class="hidden"><label for="c1-q5-a" class="block w-full p-3 border rounded-lg cursor-pointer">The woman will be able to take Latin at her own university in the future.</label></div><div class="question-option"><input type="radio" id="c1-q5-b" name="c1-q5" value="B" class="hidden"><label for="c1-q5-b" class="block w-full p-3 border rounded-lg cursor-pointer">The woman will probably not enjoy taking Latin as much as she thinks she will.</label></div><div class="question-option"><input type="radio" id="c1-q5-c" name="c1-q5" value="C" class="hidden"><label for="c1-q5-c" class="block w-full p-3 border rounded-lg cursor-pointer">The woman should register now for next year's Latin class.</label></div><div class="question-option"><input type="radio" id="c1-q5-d" name="c1-q5" value="D" class="hidden"><label for="c1-q5-d" class="block w-full p-3 border rounded-lg cursor-pointer">The woman should wait until next year to take a Latin class.</label></div></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Lecture 1 Container -->
+            <div id="l1-container" class="hidden">
+                 <div id="l1-audio-view" class="mb-8 p-6 bg-gray-50 rounded-lg text-center">
+                    <h3 class="font-bold text-xl mb-4">Lecture 1 (25Z02-L1)</h3>
+                    <p class="text-gray-600 mb-6">Click the button to play the audio. You can only play it once.</p>
+                    <button id="play-l1-btn" class="bg-indigo-600 text-white font-bold py-3 px-6 rounded-lg shadow-md hover:bg-indigo-700 disabled:bg-gray-400 disabled:cursor-not-allowed transition">Play Audio</button>
+                    <audio id="audio-l1" src="2025 Test 02/25Z02-L1.mp3" preload="auto"></audio>
+                    <div class="mt-6">
+                        <button id="start-l1-questions-btn" class="bg-green-600 text-white font-bold py-2 px-6 rounded-lg shadow-md hover:bg-green-700 disabled:opacity-50 disabled:cursor-not-allowed transition hidden">Start Questions</button>
+                    </div>
+                </div>
+                <div id="l1-questions-view" class="hidden mb-8 p-6 bg-gray-50 rounded-lg">
+                    <div class="listening-question l1-question">
+                        <p class="mb-2 font-medium">1. What is the lecture mainly about?</p>
+                        <div class="space-y-2"><div class="question-option"><input type="radio" id="l1-q1-a" name="l1-q1" value="A" class="hidden"><label for="l1-q1-a" class="block w-full p-3 border rounded-lg cursor-pointer">The role of immigrants in sports and entertainment in the United States in the early 1900s</label></div><div class="question-option"><input type="radio" id="l1-q1-b" name="l1-q1" value="B" class="hidden"><label for="l1-q1-b" class="block w-full p-3 border rounded-lg cursor-pointer">How participation in a leisure activity reflected broader changes in the United States in the 1900s</label></div><div class="question-option"><input type="radio" id="l1-q1-c" name="l1-q1" value="C" class="hidden"><label for="l1-q1-c" class="block w-full p-3 border rounded-lg cursor-pointer">Differences between vaudeville and nickelodeon movies</label></div><div class="question-option"><input type="radio" id="l1-q1-d" name="l1-q1" value="D" class="hidden"><label for="l1-q1-d" class="block w-full p-3 border rounded-lg cursor-pointer">The depiction of people from different social backgrounds in movies in the early 1900s</label></div></div>
+                    </div>
+                    <div class="listening-question l1-question hidden">
+                        <p class="mb-2 font-medium">2. What does the professor say about recreation in the United States in the late 1800s?</p>
+                        <div class="space-y-2"><div class="question-option"><input type="radio" id="l1-q2-a" name="l1-q2" value="A" class="hidden"><label for="l1-q2-a" class="block w-full p-3 border rounded-lg cursor-pointer">Recreational activities often reflected divisions among social groups.</label></div><div class="question-option"><input type="radio" id="l1-q2-b" name="l1-q2" value="B" class="hidden"><label for="l1-q2-b" class="block w-full p-3 border rounded-lg cursor-pointer">People who lived in cities had little time for recreational activities.</label></div><div class="question-option"><input type="radio" id="l1-q2-c" name="l1-q2" value="C" class="hidden"><label for="l1-q2-c" class="block w-full p-3 border rounded-lg cursor-pointer">Immigrants brought their own types of recreation with them.</label></div><div class="question-option"><input type="radio" id="l1-q2-d" name="l1-q2" value="D" class="hidden"><label for="l1-q2-d" class="block w-full p-3 border rounded-lg cursor-pointer">The first large national sports leagues were created.</label></div></div>
+                    </div>
+                     <div class="listening-question l1-question hidden">
+                        <p class="mb-2 font-medium">3. Why does the professor mention department stores?</p>
+                        <div class="space-y-2"><div class="question-option"><input type="radio" id="l1-q3-a" name="l1-q3" value="A" class="hidden"><label for="l1-q3-a" class="block w-full p-3 border rounded-lg cursor-pointer">To contrast people's shopping habits of the late 1800s with those of the early 1900s</label></div><div class="question-option"><input type="radio" id="l1-q3-b" name="l1-q3" value="B" class="hidden"><label for="l1-q3-b" class="block w-full p-3 border rounded-lg cursor-pointer">To suggest that vaudeville theaters caused an increase in the number of customers at nearby businesses</label></div><div class="question-option"><input type="radio" id="l1-q3-c" name="l1-q3" value="C" class="hidden"><label for="l1-q3-c" class="block w-full p-3 border rounded-lg cursor-pointer">To suggest that early movies had an important effect on clothing fashion</label></div><div class="question-option"><input type="radio" id="l1-q3-d" name="l1-q3" value="D" class="hidden"><label for="l1-q3-d" class="block w-full p-3 border rounded-lg cursor-pointer">To give an example of a source of employment in cities</label></div></div>
+                    </div>
+                    <div class="listening-question l1-question hidden">
+                        <p class="mb-2 font-medium">4. What does the professor imply about vaudeville theaters in the United States?</p>
+                        <div class="space-y-2"><div class="question-option"><input type="radio" id="l1-q4-a" name="l1-q4" value="A" class="hidden"><label for="l1-q4-a" class="block w-full p-3 border rounded-lg cursor-pointer">They introduced long, multi-reel movies to the public.</label></div><div class="question-option"><input type="radio" id="l1-q4-b" name="l1-q4" value="B" class="hidden"><label for="l1-q4-b" class="block w-full p-3 border rounded-lg cursor-pointer">They were among the few public places where people could socialize after work.</label></div><div class="question-option"><input type="radio" id="l1-q4-c" name="l1-q4" value="C" class="hidden"><label for="l1-q4-c" class="block w-full p-3 border rounded-lg cursor-pointer">They were small and uncomfortable.</label></div><div class="question-option"><input type="radio" id="l1-q4-d" name="l1-q4" value="D" class="hidden"><label for="l1-q4-d" class="block w-full p-3 border rounded-lg cursor-pointer">They mostly featured live performances.</label></div></div>
+                    </div>
+                    <div class="listening-question l1-question hidden">
+                        <p class="mb-2 font-medium">5. What does the professor say about the absence of sound in nickelodeon movies? <span class="font-normal text-gray-500">(Click on 2 answers)</span></p>
+                        <div class="space-y-2"><div class="question-option"><input type="checkbox" id="l1-q5-a" name="l1-q5" value="A" class="hidden"><label for="l1-q5-a" class="block w-full p-3 border rounded-lg cursor-pointer">It allowed movies to be made inexpensively.</label></div><div class="question-option"><input type="checkbox" id="l1-q5-b" name="l1-q5" value="B" class="hidden"><label for="l1-q5-b" class="block w-full p-3 border rounded-lg cursor-pointer">It limited the popularity of early movies.</label></div><div class="question-option"><input type="checkbox" id="l1-q5-c" name="l1-q5" value="C" class="hidden"><label for="l1-q5-c" class="block w-full p-3 border rounded-lg cursor-pointer">It allowed entire families to attend movies.</label></div><div class="question-option"><input type="checkbox" id="l1-q5-d" name="l1-q5" value="D" class="hidden"><label for="l1-q5-d" class="block w-full p-3 border rounded-lg cursor-pointer">It made movies accessible to new immigrants.</label></div></div>
+                    </div>
+                    <div class="listening-question l1-question hidden">
+                        <p class="mb-2 font-medium">6. What is the professor's opinion about changes in the way movies were made and shown in the 1920s?</p>
+                        <div class="space-y-2"><div class="question-option"><input type="radio" id="l1-q6-a" name="l1-q6" value="A" class="hidden"><label for="l1-q6-a" class="block w-full p-3 border rounded-lg cursor-pointer">The changes encouraged immigrants to learn English.</label></div><div class="question-option"><input type="radio" id="l1-q6-b" name="l1-q6" value="B" class="hidden"><label for="l1-q6-b" class="block w-full p-3 border rounded-lg cursor-pointer">The changes had the unfortunate side effect of reintroducing social barriers.</label></div><div class="question-option"><input type="radio" id="l1-q6-c" name="l1-q6" value="C" class="hidden"><label for="l1-q6-c" class="block w-full p-3 border rounded-lg cursor-pointer">The changes made movies more entertaining but less artistic.</label></div><div class="question-option"><input type="radio" id="l1-q6-d" name="l1-q6" value="D" class="hidden"><label for="l1-q6-d" class="block w-full p-3 border rounded-lg cursor-pointer">The changes were an inevitable response to changes in public tastes.</label></div></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Conversation 2 Container -->
+            <div id="c2-container" class="hidden">
+                <div id="c2-audio-view" class="mb-8 p-6 bg-gray-50 rounded-lg text-center">
+                    <h3 class="font-bold text-xl mb-4">Conversation 2 (25Z02-C2)</h3>
+                    <p class="text-gray-600 mb-6">Click the button to play the audio. You can only play it once.</p>
+                    <button id="play-c2-btn" class="bg-indigo-600 text-white font-bold py-3 px-6 rounded-lg shadow-md hover:bg-indigo-700 disabled:bg-gray-400 disabled:cursor-not-allowed transition">Play Audio</button>
+                    <audio id="audio-c2" src="2025 Test 02/25Z02-C2.mp3" preload="auto"></audio>
+                    <div class="mt-6">
+                        <button id="start-c2-questions-btn" class="bg-green-600 text-white font-bold py-2 px-6 rounded-lg shadow-md hover:bg-green-700 disabled:opacity-50 disabled:cursor-not-allowed transition hidden">Start Questions</button>
+                    </div>
+                </div>
+                <div id="c2-questions-view" class="hidden mb-8 p-6 bg-gray-50 rounded-lg">
+                    <div class="listening-question c2-question">
+                        <p class="mb-2 font-medium">1. Why does the student go to see the woman? <span class="font-normal text-gray-500">(Click on 2 answers)</span></p>
+                        <div class="space-y-2"><div class="question-option"><input type="checkbox" id="c2-q1-a" name="c2-q1" value="A" class="hidden"><label for="c2-q1-a" class="block w-full p-3 border rounded-lg cursor-pointer">To ask if he can cancel his meal plan contract</label></div><div class="question-option"><input type="checkbox" id="c2-q1-b" name="c2-q1" value="B" class="hidden"><label for="c2-q1-b" class="block w-full p-3 border rounded-lg cursor-pointer">To ask if his meal plan covers food for guests</label></div><div class="question-option"><input type="checkbox" id="c2-q1-c" name="c2-q1" value="C" class="hidden"><label for="c2-q1-c" class="block w-full p-3 border rounded-lg cursor-pointer">To ask which meal plans are available to him the following year</label></div><div class="question-option"><input type="checkbox" id="c2-q1-d" name="c2-q1" value="D" class="hidden"><label for="c2-q1-d" class="block w-full p-3 border rounded-lg cursor-pointer">To ask about a refund for the unused meals in his current meal plan</label></div></div>
+                    </div>
+                    <div class="listening-question c2-question hidden">
+                        <p class="mb-2 font-medium">2. What does the woman imply about the parents of first-year students?</p>
+                        <div class="space-y-2"><div class="question-option"><input type="radio" id="c2-q2-a" name="c2-q2" value="A" class="hidden"><label for="c2-q2-a" class="block w-full p-3 border rounded-lg cursor-pointer">They would prefer that their children have too many meals rather than too few.</label></div><div class="question-option"><input type="radio" id="c2-q2-b" name="c2-q2" value="B" class="hidden"><label for="c2-q2-b" class="block w-full p-3 border rounded-lg cursor-pointer">They do not always understand how the university's meal plans work.</label></div><div class="question-option"><input type="radio" id="c2-q2-c" name="c2-q2" value="C" class="hidden"><label for="c2-q2-c" class="block w-full p-3 border rounded-lg cursor-pointer">They often complain about the high cost of their children's meal plans.</label></div><div class="question-option"><input type="radio" id="c2-q2-d" name="c2-q2" value="D" class="hidden"><label for="c2-q2-d" class="block w-full p-3 border rounded-lg cursor-pointer">They would prefer that their children make their own meal arrangements.</label></div></div>
+                    </div>
+                    <div class="listening-question c2-question hidden">
+                        <p class="mb-2 font-medium">3. According to the woman, what is the policy regarding meal plans for third- and fourth-year students? <span class="font-normal text-gray-500">(Click on 2 answers)</span></p>
+                        <div class="space-y-2"><div class="question-option"><input type="checkbox" id="c2-q3-a" name="c2-q3" value="A" class="hidden"><label for="c2-q3-a" class="block w-full p-3 border rounded-lg cursor-pointer">They are not required to buy a meal plan.</label></div><div class="question-option"><input type="checkbox" id="c2-q3-b" name="c2-q3" value="B" class="hidden"><label for="c2-q3-b" class="block w-full p-3 border rounded-lg cursor-pointer">They may invite more than ten guests to eat on their meal plan.</label></div><div class="question-option"><input type="checkbox" id="c2-q3-c" name="c2-q3" value="C" class="hidden"><label for="c2-q3-c" class="block w-full p-3 border rounded-lg cursor-pointer">They may buy any meal plan that the university offers.</label></div><div class="question-option"><input type="checkbox" id="c2-q3-d" name="c2-q3" value="D" class="hidden"><label for="c2-q3-d" class="block w-full p-3 border rounded-lg cursor-pointer">They are not allowed to buy a meal plan if they belong to a club that offers meals.</label></div></div>
+                    </div>
+                    <div class="listening-question c2-question hidden">
+                        <p class="mb-2 font-medium">4. Why does the woman mention the student's friends?</p>
+                        <div class="space-y-2"><div class="question-option"><input type="radio" id="c2-q4-a" name="c2-q4" value="A" class="hidden"><label for="c2-q4-a" class="block w-full p-3 border rounded-lg cursor-pointer">To find out if they are having a similar problem</label></div><div class="question-option"><input type="radio" id="c2-q4-b" name="c2-q4" value="B" class="hidden"><label for="c2-q4-b" class="block w-full p-3 border rounded-lg cursor-pointer">To suggest a way for the student to use his extra meals</label></div><div class="question-option"><input type="radio" id="c2-q4-c" name="c2-q4" value="C" class="hidden"><label for="c2-q4-c" class="block w-full p-3 border rounded-lg cursor-pointer">To point out that most students are satisfied with their meal plan</label></div><div class="question-option"><input type="radio" id="c2-q4-d" name="c2-q4" value="D" class="hidden"><label for="c2-q4-d" class="block w-full p-3 border rounded-lg cursor-pointer">To suggest that the student join a campus organization</label></div></div>
+                    </div>
+                    <div class="listening-question c2-question hidden">
+                        <p class="mb-2 font-medium">5. How does the student feel about seeing the dean?
+                            <button id="play-c2-q5-replay-btn" class="replay-btn" title="Play audio clip">
+                                <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24" class="fill-indigo-600"><path d="M320-200v-560l440 280-440 280Zm80-280Zm0 134 210-134-210-134v268Z"/></svg>
+                            </button>
+                            <audio id="audio-c2-q5-replay" src="2025 Test 02/25Z02-C1重听.mp3" preload="auto"></audio>
+                        </p>
+                        <div class="space-y-2"><div class="question-option"><input type="radio" id="c2-q5-a" name="c2-q5" value="A" class="hidden"><label for="c2-q5-a" class="block w-full p-3 border rounded-lg cursor-pointer">He is determined to see the dean immediately about a refund.</label></div><div class="question-option"><input type="radio" id="c2-q5-b" name="c2-q5" value="B" class="hidden"><label for="c2-q5-b" class="block w-full p-3 border rounded-lg cursor-pointer">He is too shy to talk to such an important person.</label></div><div class="question-option"><input type="radio" id="c2-q5-c" name="c2-q5" value="C" class="hidden"><label for="c2-q5-c" class="block w-full p-3 border rounded-lg cursor-pointer">He is reluctant to spend time to go see the dean now.</label></div><div class="question-option"><input type="radio" id="c2-q5-d" name="c2-q5" value="D" class="hidden"><label for="c2-q5-d" class="block w-full p-3 border rounded-lg cursor-pointer">He is concerned that the dean will be too busy at this time of year.</label></div></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Lecture 2 Container -->
+            <div id="l2-container" class="hidden">
+                <div id="l2-audio-view" class="mb-8 p-6 bg-gray-50 rounded-lg text-center">
+                    <h3 class="font-bold text-xl mb-4">Lecture 2 (25Z02-L2)</h3>
+                    <p class="text-gray-600 mb-6">Click the button to play the audio. You can only play it once.</p>
+                    <button id="play-l2-btn" class="bg-indigo-600 text-white font-bold py-3 px-6 rounded-lg shadow-md hover:bg-indigo-700 disabled:bg-gray-400 disabled:cursor-not-allowed transition">Play Audio</button>
+                    <audio id="audio-l2" src="2025 Test 02/25Z02-L2.mp3" preload="auto"></audio>
+                    <div class="mt-6">
+                        <button id="start-l2-questions-btn" class="bg-green-600 text-white font-bold py-2 px-6 rounded-lg shadow-md hover:bg-green-700 disabled:opacity-50 disabled:cursor-not-allowed transition hidden">Start Questions</button>
+                    </div>
+                </div>
+                <div id="l2-questions-view" class="hidden mb-8 p-6 bg-gray-50 rounded-lg">
+                    <div class="listening-question l2-question">
+                        <p class="mb-2 font-medium">1. What is the lecture mainly about?</p>
+                        <div class="space-y-2"><div class="question-option"><input type="radio" id="l2-q1-a" name="l2-q1" value="A" class="hidden"><label for="l2-q1-a" class="block w-full p-3 border rounded-lg cursor-pointer">The spread of variety theater from Europe to the United States</label></div><div class="question-option"><input type="radio" id="l2-q1-b" name="l2-q1" value="B" class="hidden"><label for="l2-q1-b" class="block w-full p-3 border rounded-lg cursor-pointer">Similarities between live entertainment and film</label></div><div class="question-option"><input type="radio" id="l2-q1-c" name="l2-q1" value="C" class="hidden"><label for="l2-q1-c" class="block w-full p-3 border rounded-lg cursor-pointer">A debate about the cultural impact of the Bijou theater</label></div><div class="question-option"><input type="radio" id="l2-q1-d" name="l2-q1" value="D" class="hidden"><label for="l2-q1-d" class="block w-full p-3 border rounded-lg cursor-pointer">The emergence and decline of a form of entertainment</label></div></div>
+                    </div>
+                    <div class="listening-question l2-question hidden">
+                        <p class="mb-2 font-medium">2. According to the professor, in what important way did vaudeville shows differ from earlier variety shows?</p>
+                        <div class="space-y-2"><div class="question-option"><input type="radio" id="l2-q2-a" name="l2-q2" value="A" class="hidden"><label for="l2-q2-a" class="block w-full p-3 border rounded-lg cursor-pointer">Vaudeville shows did not move from place to place.</label></div><div class="question-option"><input type="radio" id="l2-q2-b" name="l2-q2" value="B" class="hidden"><label for="l2-q2-b" class="block w-full p-3 border rounded-lg cursor-pointer">Vaudeville shows included many different types of acts.</label></div><div class="question-option"><input type="radio" id="l2-q2-c" name="l2-q2" value="C" class="hidden"><label for="l2-q2-c" class="block w-full p-3 border rounded-lg cursor-pointer">Earlier variety shows featured more entertainers.</label></div><div class="question-option"><input type="radio" id="l2-q2-d" name="l2-q2" value="D" class="hidden"><label for="l2-q2-d" class="block w-full p-3 border rounded-lg cursor-pointer">Earlier variety shows were not rehearsed.</label></div></div>
+                    </div>
+                    <div class="listening-question l2-question hidden">
+                        <p class="mb-2 font-medium">3. What is the professor's attitude when he discusses the word "vaudeville"?</p>
+                        <div class="space-y-2"><div class="question-option"><input type="radio" id="l2-q3-a" name="l2-q3" value="A" class="hidden"><label for="l2-q3-a" class="block w-full p-3 border rounded-lg cursor-pointer">Pleased that a student recognized the word's French origin</label></div><div class="question-option"><input type="radio" id="l2-q3-b" name="l2-q3" value="B" class="hidden"><label for="l2-q3-b" class="block w-full p-3 border rounded-lg cursor-pointer">Impressed that a U.S. theater owner introduced a French word into the English language</label></div><div class="question-option"><input type="radio" id="l2-q3-c" name="l2-q3" value="C" class="hidden"><label for="l2-q3-c" class="block w-full p-3 border rounded-lg cursor-pointer">Dismissive of the idea that the word's meaning in English relates to its meaning in French</label></div><div class="question-option"><input type="radio" id="l2-q3-d" name="l2-q3" value="D" class="hidden"><label for="l2-q3-d" class="block w-full p-3 border rounded-lg cursor-pointer">Puzzled, because few nineteenth-century immigrants to the United States came from France</label></div></div>
+                    </div>
+                    <div class="listening-question l2-question hidden">
+                        <p class="mb-2 font-medium">4. What factors does the professor associate with the success of Benjamin Franklin Keith's theaters? <span class="font-normal text-gray-500">(Click on 3 answers)</span></p>
+                        <div class="space-y-2"><div class="question-option"><input type="checkbox" id="l2-q4-a" name="l2-q4" value="A" class="hidden"><label for="l2-q4-a" class="block w-full p-3 border rounded-lg cursor-pointer">The talent of the performers</label></div><div class="question-option"><input type="checkbox" id="l2-q4-b" name="l2-q4" value="B" class="hidden"><label for="l2-q4-b" class="block w-full p-3 border rounded-lg cursor-pointer">The length of the shows</label></div><div class="question-option"><input type="checkbox" id="l2-q4-c" name="l2-q4" value="C" class="hidden"><label for="l2-q4-c" class="block w-full p-3 border rounded-lg cursor-pointer">The price of admission</label></div><div class="question-option"><input type="checkbox" id="l2-q4-d" name="l2-q4" value="D" class="hidden"><label for="l2-q4-d" class="block w-full p-3 border rounded-lg cursor-pointer">The focus on family entertainment</label></div><div class="question-option"><input type="checkbox" id="l2-q4-e" name="l2-q4" value="E" class="hidden"><label for="l2-q4-e" class="block w-full p-3 border rounded-lg cursor-pointer">The beauty of the theaters</label></div></div>
+                    </div>
+                    <div class="listening-question l2-question hidden">
+                        <p class="mb-2 font-medium">5. In what way did vaudeville influence U.S. society?</p>
+                        <div class="space-y-2"><div class="question-option"><input type="radio" id="l2-q5-a" name="l2-q5" value="A" class="hidden"><label for="l2-q5-a" class="block w-full p-3 border rounded-lg cursor-pointer">Vaudeville introduced a form of entertainment intended mainly for children.</label></div><div class="question-option"><input type="radio" id="l2-q5-b" name="l2-q5" value="B" class="hidden"><label for="l2-q5-b" class="block w-full p-3 border rounded-lg cursor-pointer">Vaudeville helped to create a sense of national unity.</label></div><div class="question-option"><input type="radio" id="l2-q5-c" name="l2-q5" value="C" class="hidden"><label for="l2-q5-c" class="block w-full p-3 border rounded-lg cursor-pointer">Vaudeville encouraged people to schedule their leisure activities.</label></div><div class="question-option"><input type="radio" id="l2-q5-d" name="l2-q5" value="D" class="hidden"><label for="l2-q5-d" class="block w-full p-3 border rounded-lg cursor-pointer">Vaudeville led to the popularity of neighborhood theaters.</label></div></div>
+                    </div>
+                    <div class="listening-question l2-question hidden">
+                        <p class="mb-2 font-medium">6. What does the professor imply about the early film industry?</p>
+                        <div class="space-y-2"><div class="question-option"><input type="radio" id="l2-q6-a" name="l2-q6" value="A" class="hidden"><label for="l2-q6-a" class="block w-full p-3 border rounded-lg cursor-pointer">It played both a positive and a negative role in vaudeville's history.</label></div><div class="question-option"><input type="radio" id="l2-q6-b" name="l2-q6" value="B" class="hidden"><label for="l2-q6-b" class="block w-full p-3 border rounded-lg cursor-pointer">It offered entertainment at lower prices than vaudeville could.</label></div><div class="question-option"><input type="radio" id="l2-q6-c" name="l2-q6" value="C" class="hidden"><label for="l2-q6-c" class="block w-full p-3 border rounded-lg cursor-pointer">It struggled to attract audiences away from live theater.</label></div><div class="question-option"><input type="radio" id="l2-q6-d" name="l2-q6" value="D" class="hidden"><label for="l2-q6-d" class="block w-full p-3 border rounded-lg cursor-pointer">It was financially supported by the Bijou Theater.</label></div></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Lecture 3 Container -->
+            <div id="l3-container" class="hidden">
+                <div id="l3-audio-view" class="mb-8 p-6 bg-gray-50 rounded-lg text-center">
+                    <h3 class="font-bold text-xl mb-4">Lecture 3 (25Z02-L3)</h3>
+                    <p class="text-gray-600 mb-6">Click the button to play the audio. You can only play it once.</p>
+                    <button id="play-l3-btn" class="bg-indigo-600 text-white font-bold py-3 px-6 rounded-lg shadow-md hover:bg-indigo-700 disabled:bg-gray-400 disabled:cursor-not-allowed transition">Play Audio</button>
+                    <audio id="audio-l3" src="2025 Test 02/25Z02-L3.mp3" preload="auto"></audio>
+                    <div class="mt-6">
+                        <button id="start-l3-questions-btn" class="bg-green-600 text-white font-bold py-2 px-6 rounded-lg shadow-md hover:bg-green-700 disabled:opacity-50 disabled:cursor-not-allowed transition hidden">Start Questions</button>
+                    </div>
+                </div>
+                <div id="l3-questions-view" class="hidden mb-8 p-6 bg-gray-50 rounded-lg">
+                    <div class="listening-question l3-question">
+                        <p class="mb-2 font-medium">1. What is the lecture mainly about?</p>
+                        <div class="space-y-2"><div class="question-option"><input type="radio" id="l3-q1-a" name="l3-q1" value="A" class="hidden"><label for="l3-q1-a" class="block w-full p-3 border rounded-lg cursor-pointer">The discovery of potential flaws in Wegener's theory</label></div><div class="question-option"><input type="radio" id="l3-q1-b" name="l3-q1" value="B" class="hidden"><label for="l3-q1-b" class="block w-full p-3 border rounded-lg cursor-pointer">An idea that challenged the theory of continental drift</label></div><div class="question-option"><input type="radio" id="l3-q1-c" name="l3-q1" value="C" class="hidden"><label for="l3-q1-c" class="block w-full p-3 border rounded-lg cursor-pointer">A new technology that caused an old theory to be reconsidered</label></div><div class="question-option"><input type="radio" id="l3-q1-d" name="l3-q1" value="D" class="hidden"><label for="l3-q1-d" class="block w-full p-3 border rounded-lg cursor-pointer">A theory that was at first dismissed by the scientific community</label></div></div>
+                    </div>
+                    <div class="listening-question l3-question hidden">
+                        <p class="mb-2 font-medium">2. Why does the professor mention a jigsaw puzzle?</p>
+                        <div class="space-y-2"><div class="question-option"><input type="radio" id="l3-q2-a" name="l3-q2" value="A" class="hidden"><label for="l3-q2-a" class="block w-full p-3 border rounded-lg cursor-pointer">To explain a technique used by mapmakers in the 1600s</label></div><div class="question-option"><input type="radio" id="l3-q2-b" name="l3-q2" value="B" class="hidden"><label for="l3-q2-b" class="block w-full p-3 border rounded-lg cursor-pointer">To help explain the origin of Wegeners theory</label></div><div class="question-option"><input type="radio" id="l3-q2-c" name="l3-q2" value="C" class="hidden"><label for="l3-q2-c" class="block w-full p-3 border rounded-lg cursor-pointer">To suggest that Wegener's theory was complicated</label></div><div class="question-option"><input type="radio" id="l3-q2-d" name="l3-q2" value="D" class="hidden"><label for="l3-q2-d" class="block w-full p-3 border rounded-lg cursor-pointer">To emphasize the originality of Wegener's theory</label></div></div>
+                    </div>
+                    <div class="listening-question l3-question hidden">
+                        <p class="mb-2 font-medium">3. What question about plant and animal fossils did Wegener's theory attempt to answer?</p>
+                        <div class="space-y-2"><div class="question-option"><input type="radio" id="l3-q3-a" name="l3-q3" value="A" class="hidden"><label for="l3-q3-a" class="block w-full p-3 border rounded-lg cursor-pointer">why there are large numbers of fossils at the tip of South America</label></div><div class="question-option"><input type="radio" id="l3-q3-b" name="l3-q3" value="B" class="hidden"><label for="l3-q3-b" class="block w-full p-3 border rounded-lg cursor-pointer">Why fossils are difficult to find in some regions of Earth's crust</label></div><div class="question-option"><input type="radio" id="l3-q3-c" name="l3-q3" value="C" class="hidden"><label for="l3-q3-c" class="block w-full p-3 border rounded-lg cursor-pointer">Why similar fossils can be found in different parts of the world</label></div><div class="question-option"><input type="radio" id="l3-q3-d" name="l3-q3" value="D" class="hidden"><label for="l3-q3-d" class="block w-full p-3 border rounded-lg cursor-pointer">Why the fossil record is incomplete in both South Africa and South America</label></div></div>
+                    </div>
+                    <div class="listening-question l3-question hidden">
+                        <p class="mb-2 font-medium">4. What does the professor imply about contraction theory?</p>
+                        <div class="space-y-2"><div class="question-option"><input type="radio" id="l3-q4-a" name="l3-q4" value="A" class="hidden"><label for="l3-q4-a" class="block w-full p-3 border rounded-lg cursor-pointer">It was disproved by new scientific discoveries.</label></div><div class="question-option"><input type="radio" id="l3-q4-b" name="l3-q4" value="B" class="hidden"><label for="l3-q4-b" class="block w-full p-3 border rounded-lg cursor-pointer">It helped explain why continental drift occurs.</label></div><div class="question-option"><input type="radio" id="l3-q4-c" name="l3-q4" value="C" class="hidden"><label for="l3-q4-c" class="block w-full p-3 border rounded-lg cursor-pointer">It was supported by evidence from different scientific fields.</label></div><div class="question-option"><input type="radio" id="l3-q4-d" name="l3-q4" value="D" class="hidden"><label for="l3-q4-d" class="block w-full p-3 border rounded-lg cursor-pointer">It was not accepted until late in the twentieth century.</label></div></div>
+                    </div>
+                    <div class="listening-question l3-question hidden">
+                        <p class="mb-2 font-medium">5. What did Wegener's theory and contraction theory both try to explain?</p>
+                        <div class="space-y-2"><div class="question-option"><input type="radio" id="l3-q5-a" name="l3-q5" value="A" class="hidden"><label for="l3-q5-a" class="block w-full p-3 border rounded-lg cursor-pointer">Why Earth's molten body cooled so quickly</label></div><div class="question-option"><input type="radio" id="l3-q5-b" name="l3-q5" value="B" class="hidden"><label for="l3-q5-b" class="block w-full p-3 border rounded-lg cursor-pointer">How Earth's mountain ranges formed</label></div><div class="question-option"><input type="radio" id="l3-q5-c" name="l3-q5" value="C" class="hidden"><label for="l3-q5-c" class="block w-full p-3 border rounded-lg cursor-pointer">Why Earth's surface no longer continues to shrink</label></div><div class="question-option"><input type="radio" id="l3-q5-d" name="l3-q5" value="D" class="hidden"><label for="l3-q5-d" class="block w-full p-3 border rounded-lg cursor-pointer">Why depressions in Earth's surface are not as deep as mountains are high</label></div></div>
+                    </div>
+                    <div class="listening-question l3-question hidden">
+                        <p class="mb-2 font-medium">6. What does the professor say are the reasons that other scientists did not accept Wegener's theory? <span class="font-normal text-gray-500">(Click on 3 answers)</span></p>
+                        <div class="space-y-2"><div class="question-option"><input type="checkbox" id="l3-q6-a" name="l3-q6" value="A" class="hidden"><label for="l3-q6-a" class="block w-full p-3 border rounded-lg cursor-pointer">It was based on evidence originally gathered in the 1600s.</label></div><div class="question-option"><input type="checkbox" id="l3-q6-b" name="l3-q6" value="B" class="hidden"><label for="l3-q6-b" class="block w-full p-3 border rounded-lg cursor-pointer">It did not meet the standards of scientific study favored at that time</label></div><div class="question-option"><input type="checkbox" id="l3-q6-c" name="l3-q6" value="C" class="hidden"><label for="l3-q6-c" class="block w-full p-3 border rounded-lg cursor-pointer">It relied too much on experiments conducted in the laboratory.</label></div><div class="question-option"><input type="checkbox" id="l3-q6-d" name="l3-q6" value="D" class="hidden"><label for="l3-q6-d" class="block w-full p-3 border rounded-lg cursor-pointer">It involved fields of study outside of Wegener's area of expertise</label></div><div class="question-option"><input type="checkbox" id="l3-q6-e" name="l3-q6" value="E" class="hidden"><label for="l3-q6-e" class="block w-full p-3 border rounded-lg cursor-pointer">It did not provide an explanation for why the continents moved.</label></div></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Listening Navigation -->
+            <div id="listening-nav" class="hidden flex justify-end mt-8 pt-6 border-t">
+                 <button id="next-listening-q-btn" class="bg-indigo-600 text-white font-bold py-2 px-6 rounded-lg shadow-md hover:bg-indigo-700">Next &rarr;</button>
+            </div>
+
+        </div>
+
+        <!-- Reading Section -->
+        <div id="reading-section" class="hidden">
+            <h2 class="text-xl font-semibold mb-4 text-indigo-700 border-l-4 border-indigo-500 pl-3">Section 2: Reading</h2>
+
+            <div id="reading-intro-1">
+                <div class="p-6 bg-gray-50 rounded-lg">
+                    <h3 class="font-bold text-lg mb-4">Reading Passage 1: Pollination</h3>
+                    <div class="prose max-w-none text-gray-700 leading-relaxed space-y-4">
+                        <p><b>P1</b> Tree reproduction exploits wind, water, or animals as intermediaries to get pollen from one tree to another. A large animal-pollinated tree, however, faces distinct problems. It needs to produce enough edible reward—nectar and pollen—in its flowers to attract the pollinators to visit but runs the risk of producing so much within one canopy (the upper portion of the tree) that the pollinators linger rather than move to the next tree. Moreover, if all other individuals of a species are in flower (which is needed for cross-pollination—the transfer of pollen from the flower of one plant to a genetically different plant) there may not be enough pollinators for the huge number of flowers produced.</p>
+                        <p><b>P2</b> One solution to these problems is to be in flower when other species are not, so that you have the pollinators to yourself. <span class="highlighted-sentence">In temperate regions this is constrained by having to work around winter; nevertheless, flowering of insect-pollinated trees is indeed spread over a large part of the summer, but this still does not solve the problem of encouraging pollinators to leave the abundant food of one tree to go to another.</span> Some large tropical trees get around this by having some parts of the tree in flower others in bud and others in fruit, giving pollinators the impression of a series of small trees. A more extreme answer, used by other tropical trees, is to produce just a few flowers at a time over a long period, possibly all year. Hawkmoths, hummingbirds, bats, bees, and other pollinators exploit these extended-blooming trees by the equivalent of "trap-lining," where they fly over complex feeding routes, repeatedly visiting widely spread flowers, just like a trapper in the Arctic visiting his spread-out line of traps. Bees can travel more than 20 kilometers during these daily excursions.</p>
+                        <p><b>P3</b> At the other extreme, however, are mass-blooming trees producing huge numbers of flowers. This is especially seen in the aseasonal (no regular dry period) tropical evergreen forests of Borneo and Malaysia where the tallest canopy trees, mostly species of dipterocarp, may all flower and fruit simultaneously at intervals of two to ten years. Over a period lasting a few weeks to a few months, nearly all dipterocarps and up to 88 percent of all canopy species flower after years of little or no reproductive activity. The region over which such a mass-flowering event occurs can be as small as a single river valley or as large as northeastern Borneo or peninsular Malaysia. With individual dipterocarp trees presenting up to four million flowers, this mass flowering seems to ignore the above problems. But as is often the case, the solutions are subtle and not immediately obvious. Firstly, within the concentrated period during which all dipterocarp species flower, individual species flower sequentially, in the same order of species each time, thereby reducing competition for pollinators. Secondly, although an individual tree can flower over two to three weeks, individual flowers may last only a day. The main pollinators are small thrips, an insect attracted by the overpowering scent of the opening flower to spend the night moving around inside a flower eating it and the pollen. In the morning the flower falls, complete with its happy thrips, leaving the ovary on the tree to develop into a fruit. As the next wave of flowers opens the following evening the thrips fly up for their next feed, blown by even light winds to, hopefully, land in the flower of a different tree from the night before. Once there they deliver their load of pollen as they wander around feeding. This works only because, unlike most tropical trees, the dipterocarps tend to grow clumped together (the heavy winged seeds of dipterocarps spin like "helicopters" but do not go far). The thrips persist at low levels between mass flowerings and explode in numbers as the trees come into flower.</p>
+                        <p><b>P4</b> In general, mass-blooming trees use relatively unspecialized pollinators(pollinators that do not restrict themselves to certain tree types), and this gives them a greater number of pollinators to go around. Their strong visual image, created by mass flowering, can attract pollinators in large numbers from great distances. High rivalry among insects can benefit the tree if in the battle for flowers, some insects end up being ejected and going to the next tree.</p>
+                    </div>
+                </div>
+                <div class="text-center mt-6">
+                    <button id="start-reading-1-btn" class="bg-indigo-600 text-white font-bold py-3 px-8 rounded-lg shadow-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-transform transform hover:scale-105">Start Questions for Passage 1</button>
+                </div>
+            </div>
+
+            <div id="reading-intro-2" class="hidden">
+                 <div class="p-6 bg-gray-50 rounded-lg mt-8">
+                    <h3 class="font-bold text-lg mb-4">Reading Passage 2: Dutch Art and the Middle Class</h3>
+                    <div class="prose max-w-none text-gray-700 leading-relaxed space-y-4">
+                        <p><b>P1</b> Throughout history, the wealthy have been the most avid art collectors. Indeed, the money necessary to commission leading artists to create major artworks can be considerable. During the seventeenth century in the Dutch Republic, however, the prosperity that a large proportion of the population enjoyed significantly expanded the group of art patrons, people whose wealth allowed them to support artists by purchasing art. As a result, one distinguishing feature of Dutch art production during this period was how it catered to the tastes of a middle-class audience, broadly defined. An aristocracy and an upper class of ship owners, rich businesspeople, high-ranking officers, and directors of large companies still existed, and these groups continued to be major patrons of the arts. But as the Dutch economy expanded, new patrons-traders, craftspeople, bureaucrats, and soldiers-also commissioned and collected art.</p>
+                        <p><b>P2</b> Although the financial success that the middle class increasingly enjoyed resulted in sharply higher investment in home furnishings and art, <span class="highlighted-sentence">religious beliefs that disdained ostentation led these new Dutch collectors to favor small, low-key works—portraits of ordinary men and women, still lifes and scenes of everyday life, and landscapes.</span> This focus contrasted with the seventeenth-century Italian Baroque fondness for gigantic ceiling frescoes and oil paintings with religious subjects. Stylistically, the art of northern Europe of this period, although also called "Baroque" by art historians, differs markedly from Italian Baroque art.</p>
+                        <p><b>P3</b> It is risky to generalize about the spending and collecting habits of the Dutch middle class, but some interesting facts are revealed by records of wills and estates, contracts, and archived inventories. These records suggest that an individual earning between 1,500 and 3,000 guilders a year could live quite comfortably. A house could be purchased for 1,000 guilders. Another 1,000 guilders could buy all the necessary furnishings for a middle-class home, including a significant amount of art, particularly paintings. Although there was, of course, considerable variation in prices, many artworks were very affordable. Prints, for example, were extremely cheap because of the high number of copies artists produced of each picture. Paintings of interior and everyday scenes were relatively inexpensive in the seventeenth-century Dutch Republic, perhaps costing one or two guilders each. Small landscapes could be purchased for between three and four guilders. Commissioned portraits were the most costly. The size of the work and quality of the frame, as well as the reputation of the artist, were other factors in determining the price of a painting, regardless of the subject.</p>
+                        <p><b>P4</b> With the exception of portraits, Dutch artists produced most of their paintings for an anonymous market, hoping to appeal to a wide audience. To ensure success, artists in the Dutch Republic adapted to the changed conditions of art production and sales. They marketed their paintings in many ways, selling their works directly to buyers who visited their studios. They also sold their works through art dealers, exhibitions, fairs, auctions, and even lotteries. Because of the uncertainty of these sales mechanisms (as opposed to the certainty of a binding contract for a commission from a church, king, or duke), artists became more responsive to market demands. Specialization became common among Dutch artists. For example, painters might limit their practice to portraits, still lifes, or landscapes—the most popular genres (types of art) among middle—class patrons.</p>
+                        <p><b>P5</b> Artists did not always sell their paintings. Frequently, they used their work to pay off loans or debts. Debts incurred in taverns (places where alcoholic drinks and food were served and rooms were rented to travelers), in particular, could be settled with paintings, which may explain why many art dealers, including Jan Vermeer (who himself became an acclaimed painter) and his father before him, were also innkeepers. This connection between art dealing and other businesses eventually solidified, and innkeepers, for example, often would have art exhibitions in their taverns hoping to make a sale. The institutions of today's open art market—dealers, galleries, auctions, and estate sales—owe their establishment to the emergence in the seventeenth century of a prosperous middle class in the Dutch Republic.</p>
+                    </div>
+                </div>
+                <div class="text-center mt-6">
+                    <button id="start-reading-2-btn" class="bg-indigo-600 text-white font-bold py-3 px-8 rounded-lg shadow-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-transform transform hover:scale-105">Start Questions for Passage 2</button>
+                </div>
+            </div>
+            
+            <div id="reading-passage-1-view" class="hidden">
+                 <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div id="passage-container-1" class="bg-gray-50 p-4 rounded-lg overflow-y-auto max-h-[85vh]">
+                         <div id="passage-content-1" class="prose max-w-none text-gray-700 leading-relaxed space-y-4">
+                            <p id="p1"><b>P1</b> Tree reproduction exploits wind, water, or animals as intermediaries to get pollen from one tree to another. A large animal-pollinated tree, however, faces distinct problems. <span class="insert-square" data-passage="1" data-location="1">▇</span> It needs to produce enough edible reward—nectar and pollen—in its flowers to attract the pollinators to visit but runs the risk of producing so much within one canopy (the upper portion of the tree) that the pollinators linger rather than move to the next tree. <span class="insert-square" data-passage="1" data-location="2">▇</span> Moreover, if all other individuals of a species are in flower (which is needed for cross-pollination—the transfer of pollen from the flower of one plant to a genetically different plant) there may not be enough pollinators for the huge number of flowers produced. <span class="insert-square" data-passage="1" data-location="3">▇</span></p>
+                            <p id="p2"><b>P2</b> One solution to these problems is to be in flower when other species are not, so that you have the pollinators to yourself. <span class="highlighted-sentence">In temperate regions this is constrained by having to work around winter; nevertheless, flowering of insect-pollinated trees is indeed spread over a large part of the summer, but this still does not solve the problem of encouraging pollinators to leave the abundant food of one tree to go to another.</span> <span class="insert-square" data-passage="1" data-location="4">▇</span> Some large tropical trees get around this by having some parts of the tree in flower others in bud and others in fruit, giving pollinators the impression of a series of small trees. A more extreme answer, used by other tropical trees, is to produce just a few flowers at a time over a long period, possibly all year. Hawkmoths, hummingbirds, bats, bees, and other pollinators exploit these extended-blooming trees by the equivalent of "trap-lining," where they fly over complex feeding routes, repeatedly visiting widely spread flowers, just like a trapper in the Arctic visiting his spread-out line of traps. Bees can travel more than 20 kilometers during these daily excursions.</p>
+                            <p id="p3"><b>P3</b> At the other extreme, however, are mass-blooming trees producing huge numbers of flowers. This is especially seen in the aseasonal (no regular dry period) tropical evergreen forests of Borneo and Malaysia where the tallest canopy trees, mostly species of dipterocarp, may all flower and fruit simultaneously at intervals of two to ten years. Over a period lasting a few weeks to a few months, nearly all dipterocarps and up to 88 percent of all canopy species flower after years of little or no reproductive activity. The region over which such a mass-flowering event occurs can be as small as a single river valley or as large as northeastern Borneo or peninsular Malaysia. With individual dipterocarp trees presenting up to four million flowers, this mass flowering seems to ignore the above problems. But as is often the case, the solutions are subtle and not immediately obvious. Firstly, within the concentrated period during which all dipterocarp species flower, individual species flower sequentially, in the same order of species each time, thereby reducing competition for pollinators. Secondly, although an individual tree can flower over two to three weeks, individual flowers may last only a day. The main pollinators are small thrips, an insect attracted by the overpowering scent of the opening flower to spend the night moving around inside a flower eating it and the pollen. In the morning the flower falls, complete with its happy thrips, leaving the ovary on the tree to develop into a fruit. As the next wave of flowers opens the following evening the thrips fly up for their next feed, blown by even light winds to, hopefully, land in the flower of a different tree from the night before. Once there they deliver their load of pollen as they wander around feeding. This works only because, unlike most tropical trees, the dipterocarps tend to grow clumped together (the heavy winged seeds of dipterocarps spin like "helicopters" but do not go far). The thrips persist at low levels between mass flowerings and explode in numbers as the trees come into flower.</p>
+                            <p id="p4"><b>P4</b> In general, mass-blooming trees use relatively unspecialized pollinators(pollinators that do not restrict themselves to certain tree types), and this gives them a greater number of pollinators to go around. Their strong visual image, created by mass flowering, can attract pollinators in large numbers from great distances. High rivalry among insects can benefit the tree if in the battle for flowers, some insects end up being ejected and going to the next tree.</p>
+                        </div>
+                    </div>
+                    <div id="questions-container-1">
+                        <div class="reading-q reading-q-rp1" data-paragraph-id="p2">
+                            <p class="mb-2 font-medium">1. Which of the sentences below best expresses the essential information in the highlighted sentence in the passage? Incorrect choices change the meaning in important ways or leave out essential information.</p>
+                            <div class="space-y-2"><div class="question-option"><input type="radio" id="r-q1-a" name="r-q1" value="A" class="hidden"><label for="r-q1-a" class="block w-full p-3 border rounded-lg cursor-pointer">In temperate regions, trees may spread out their flowering over the summer, but this does not solve the problem of pollinators that fail to move on to other trees.</label></div><div class="question-option"><input type="radio" id="r-q1-b" name="r-q1" value="B" class="hidden"><label for="r-q1-b" class="block w-full p-3 border rounded-lg cursor-pointer">Although pollination poses a problem in the winter in temperate regions, species have solved the problem by remaining in trees with abundant food sources.</label></div><div class="question-option"><input type="radio" id="r-q1-c" name="r-q1" value="C" class="hidden"><label for="r-q1-c" class="block w-full p-3 border rounded-lg cursor-pointer">Encouraging pollinators to move on from one tree to another is a common solution for trees in temperate regions where pollination is nevertheless constrained by winter.</label></div><div class="question-option"><input type="radio" id="r-q1-d" name="r-q1" value="D" class="hidden"><label for="r-q1-d" class="block w-full p-3 border rounded-lg cursor-pointer">Pollinators in temperate regions need to leave abundant food sources in one tree to go to another, but if trees flower over a large part of the summer, this solves their problem.</label></div></div>
+                        </div>
+                        <div class="reading-q reading-q-rp1" data-paragraph-id="p2">
+                            <p class="mb-2 font-medium">2. The word "exploit" in paragraph 2 is closest in meaning to</p>
+                            <div class="space-y-2"><div class="question-option"><input type="radio" id="r-q2-a" name="r-q2" value="A" class="hidden"><label for="r-q2-a" class="block w-full p-3 border rounded-lg cursor-pointer">respond to</label></div><div class="question-option"><input type="radio" id="r-q2-b" name="r-q2" value="B" class="hidden"><label for="r-q2-b" class="block w-full p-3 border rounded-lg cursor-pointer">are affected by</label></div><div class="question-option"><input type="radio" id="r-q2-c" name="r-q2" value="C" class="hidden"><label for="r-q2-c" class="block w-full p-3 border rounded-lg cursor-pointer">take advantage of</label></div><div class="question-option"><input type="radio" id="r-q2-d" name="r-q2" value="D" class="hidden"><label for="r-q2-d" class="block w-full p-3 border rounded-lg cursor-pointer">return to</label></div></div>
+                        </div>
+                        <div class="reading-q reading-q-rp1" data-paragraph-id="p2">
+                            <p class="mb-2 font-medium">3. According to paragraph 2, why might large trees benefit from spreading out their flowering over a period of time rather than having all species in flower at the same time?</p>
+                            <div class="space-y-2"><div class="question-option"><input type="radio" id="r-q3-a" name="r-q3" value="A" class="hidden"><label for="r-q3-a" class="block w-full p-3 border rounded-lg cursor-pointer">It allows time for all species in temperate regions to complete their flowering before winter.</label></div><div class="question-option"><input type="radio" id="r-q3-b" name="r-q3" value="B" class="hidden"><label for="r-q3-b" class="block w-full p-3 border rounded-lg cursor-pointer">It encourages pollinators to remain only a short time in the flowers of any one tree species.</label></div><div class="question-option"><input type="radio" id="r-q3-c" name="r-q3" value="C" class="hidden"><label for="r-q3-c" class="block w-full p-3 border rounded-lg cursor-pointer">It makes it more likely that there will be enough pollinators to meet the needs of tree species that are currently in flower.</label></div><div class="question-option"><input type="radio" id="r-q3-d" name="r-q3" value="D" class="hidden"><label for="r-q3-d" class="block w-full p-3 border rounded-lg cursor-pointer">It makes trees appear healthier for a longer period of time and therefore more attractive to pollinators.</label></div></div>
+                        </div>
+                        <div class="reading-q reading-q-rp1" data-paragraph-id="p3">
+                            <p class="mb-2 font-medium">4. Why does the author provide the information that "although an individual tree can flower over two to three weeks, individual flowers may last only a day"?</p>
+                            <div class="space-y-2"><div class="question-option"><input type="radio" id="r-q4-a" name="r-q4" value="A" class="hidden"><label for="r-q4-a" class="block w-full p-3 border rounded-lg cursor-pointer">To introduce an additional strategy that mass-blooming trees use to maximize their chances of pollination</label></div><div class="question-option"><input type="radio" id="r-q4-b" name="r-q4" value="B" class="hidden"><label for="r-q4-b" class="block w-full p-3 border rounded-lg cursor-pointer">To help explain why thrips are the main pollinators of mass-blooming trees</label></div><div class="question-option"><input type="radio" id="r-q4-c" name="r-q4" value="C" class="hidden"><label for="r-q4-c" class="block w-full p-3 border rounded-lg cursor-pointer">To provide a second reason why "mass-blooming" may not be the appropriate term for describing dipterocarp trees</label></div><div class="question-option"><input type="radio" id="r-q4-d" name="r-q4" value="D" class="hidden"><label for="r-q4-d" class="block w-full p-3 border rounded-lg cursor-pointer">To identify one of the major challenges faced by mass-blooming trees that produce huge numbers of flowers</label></div></div>
+                        </div>
+                        <div class="reading-q reading-q-rp1" data-paragraph-id="p3">
+                            <p class="mb-2 font-medium">5. According to paragraph 3, all of the following statements are true of dipterocarps EXCEPT</p>
+                            <div class="space-y-2"><div class="question-option"><input type="radio" id="r-q5-a" name="r-q5" value="A" class="hidden"><label for="r-q5-a" class="block w-full p-3 border rounded-lg cursor-pointer">They are tall, tropical evergreen trees.</label></div><div class="question-option"><input type="radio" id="r-q5-b" name="r-q5" value="B" class="hidden"><label for="r-q5-b" class="block w-full p-3 border rounded-lg cursor-pointer">They make up 88 percent of all canopy species in the forests of Borneo and Malaysia.</label></div><div class="question-option"><input type="radio" id="r-q5-c" name="r-q5" value="C" class="hidden"><label for="r-q5-c" class="block w-full p-3 border rounded-lg cursor-pointer">Some species can go for up to ten years without any significant flowering.</label></div><div class="question-option"><input type="radio" id="r-q5-d" name="r-q5" value="D" class="hidden"><label for="r-q5-d" class="block w-full p-3 border rounded-lg cursor-pointer">Individual trees can produce up to four million flowers during a single period of reproductive activity.</label></div></div>
+                        </div>
+                        <div class="reading-q reading-q-rp1" data-paragraph-id="p3">
+                            <p class="mb-2 font-medium">6. According to paragraph 3, one way in which mass-flowering trees reduce competition for pollinators is by</p>
+                            <div class="space-y-2"><div class="question-option"><input type="radio" id="r-q6-a" name="r-q6" value="A" class="hidden"><label for="r-q6-a" class="block w-full p-3 border rounded-lg cursor-pointer">limiting the mass-lowering event to a relatively small area, such as a single river valley</label></div><div class="question-option"><input type="radio" id="r-q6-b" name="r-q6" value="B" class="hidden"><label for="r-q6-b" class="block w-full p-3 border rounded-lg cursor-pointer">limiting the period during which the mass-flowering takes place to a few weeks</label></div><div class="question-option"><input type="radio" id="r-q6-c" name="r-q6" value="C" class="hidden"><label for="r-q6-c" class="block w-full p-3 border rounded-lg cursor-pointer">having individual species flower one after the other within the period in which the mass-flowering occurs</label></div><div class="question-option"><input type="radio" id="r-q6-d" name="r-q6" value="D" class="hidden"><label for="r-q6-d" class="block w-full p-3 border rounded-lg cursor-pointer">allowing some flowers to fall to the ground, where other noncompeting pollinators are present</label></div></div>
+                        </div>
+                        <div class="reading-q reading-q-rp1" data-paragraph-id="p4">
+                            <p class="mb-2 font-medium">7. The word "ejected" in paragraph 4 is closest in meaning to</p>
+                            <div class="space-y-2"><div class="question-option"><input type="radio" id="r-q7-a" name="r-q7" value="A" class="hidden"><label for="r-q7-a" class="block w-full p-3 border rounded-lg cursor-pointer">too late</label></div><div class="question-option"><input type="radio" id="r-q7-b" name="r-q7" value="B" class="hidden"><label for="r-q7-b" class="block w-full p-3 border rounded-lg cursor-pointer">too slow</label></div><div class="question-option"><input type="radio" id="r-q7-c" name="r-q7" value="C" class="hidden"><label for="r-q7-c" class="block w-full p-3 border rounded-lg cursor-pointer">pushed out</label></div><div class="question-option"><input type="radio" id="r-q7-d" name="r-q7" value="D" class="hidden"><label for="r-q7-d" class="block w-full p-3 border rounded-lg cursor-pointer">kept away</label></div></div>
+                        </div>
+                        <div class="reading-q reading-q-rp1" data-paragraph-id="p4">
+                            <p class="mb-2 font-medium">8. Paragraph 4 suggests which of the following ideas about mass-blooming trees?</p>
+                            <div class="space-y-2"><div class="question-option"><input type="radio" id="r-q8-a" name="r-q8" value="A" class="hidden"><label for="r-q8-a" class="block w-full p-3 border rounded-lg cursor-pointer">They depend on a special type of pollinator that can quickly go around to many trees.</label></div><div class="question-option"><input type="radio" id="r-q8-b" name="r-q8" value="B" class="hidden"><label for="r-q8-b" class="block w-full p-3 border rounded-lg cursor-pointer">Their flowers have very little scent because they attract pollinators through visual signals.</label></div><div class="question-option"><input type="radio" id="r-q8-c" name="r-q8" value="C" class="hidden"><label for="r-q8-c" class="block w-full p-3 border rounded-lg cursor-pointer">Their survival depends on their growing next to one another.</label></div><div class="question-option"><input type="radio" id="r-q8-d" name="r-q8" value="D" class="hidden"><label for="r-q8-d" class="block w-full p-3 border rounded-lg cursor-pointer">Their chance of pollination increases when there is competition for flowers among pollinators.</label></div></div>
+                        </div>
+                        <div class="reading-q reading-q-rp1" data-paragraph-id="p1,p2">
+                            <p class="mb-2 font-medium">9. Look at the squares 【▇】 that indicate where the following sentence can be added to the passage. Where would the sentence best fit?</p>
+                            <p class="mb-2 p-3 bg-blue-100 border-l-4 border-blue-400 rounded-md">"Large animal-pollinated trees must overcome these challenges to reproduce successfully."</p>
+                            <p class="text-gray-600">Click a square in the passage on the left. Your selected position will be highlighted.</p>
+                        </div>
+                        <div class="reading-q reading-q-rp1" data-paragraph-id="all-rp1">
+                            <p class="mb-2 font-medium">10. Directions: An introductory sentence for a brief summary of the passage is provided below. Complete the summary by selecting the THREE answer choices that express the most important ideas in the passage. This question is worth 2 points.</p>
+                            <p class="mb-2 p-3 bg-gray-200 rounded-md">"For trees to reproduce, pollen from flowers of one individual of a species must be transferred to the flowers of another."</p>
+                            <div class="space-y-2"><div class="question-option"><input type="checkbox" id="r-q10-a" name="r-q10" value="A" class="hidden"><label for="r-q10-a" class="block w-full p-3 border rounded-lg cursor-pointer">A. Small tree species are able to get pollen from one individual to another using wind or water, but most large species must also depend on animal pollinators, typically insects.</label></div><div class="question-option"><input type="checkbox" id="r-q10-b" name="r-q10" value="B" class="hidden"><label for="r-q10-b" class="block w-full p-3 border rounded-lg cursor-pointer">B. Temperate and tropical trees differ in the strategies they use to ensure adequate pollination: temperate trees produce only a few flowers in a year, while tropical trees rely on mass blooming.</label></div><div class="question-option"><input type="checkbox" id="r-q10-c" name="r-q10" value="C" class="hidden"><label for="r-q10-c" class="block w-full p-3 border rounded-lg cursor-pointer">C. If many trees flower at once, there may not be enough local pollinators, so mass-blooming trees may flower in sequence or attract pollinators from great distances with their strong visual image.</label></div><div class="question-option"><input type="checkbox" id="r-q10-d" name="r-q10" value="D" class="hidden"><label for="r-q10-d" class="block w-full p-3 border rounded-lg cursor-pointer">D. Large animal-pollinated trees must produce enough pollen and nectar in their flowers to attract pollinators but not so much that pollinators have no reason to move on to flowers of other trees.</label></div><div class="question-option"><input type="checkbox" id="r-q10-e" name="r-q10" value="E" class="hidden"><label for="r-q10-e" class="block w-full p-3 border rounded-lg cursor-pointer">E. Dipterocarps do not seem to face the same problems as other trees because their primary pollinators are thrips that are easily blown from tree to tree by strong tropical winds.</label></div><div class="question-option"><input type="checkbox" id="r-q10-f" name="r-q10" value="F" class="hidden"><label for="r-q10-f" class="block w-full p-3 border rounded-lg cursor-pointer">F. Strategies to encourage pollinators to move to other trees include producing just a few flowers over extended periods, dropping opened flowers quickly, and having only parts of the tree flower at once.</label></div></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="reading-passage-2-view" class="hidden">
+                 <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div id="passage-container-2" class="bg-gray-50 p-4 rounded-lg overflow-y-auto max-h-[85vh]">
+                        <div id="passage-content-2" class="prose max-w-none text-gray-700 leading-relaxed space-y-4">
+                             <p id="rp2-p1"><b>P1</b> Throughout history, the wealthy have been the most avid art collectors. Indeed, the money necessary to commission leading artists to create major artworks can be considerable. During the seventeenth century in the Dutch Republic, however, the prosperity that a large proportion of the population enjoyed significantly expanded the group of art patrons, people whose wealth allowed them to support artists by purchasing art. As a result, one distinguishing feature of Dutch art production during this period was how it catered to the tastes of a middle-class audience, broadly defined. An aristocracy and an upper class of ship owners, rich businesspeople, high-ranking officers, and directors of large companies still existed, and these groups continued to be major patrons of the arts. But as the Dutch economy expanded, new patrons-traders, craftspeople, bureaucrats, and soldiers-also commissioned and collected art.</p>
+                            <p id="rp2-p2"><b>P2</b> Although the financial success that the middle class increasingly enjoyed resulted in sharply higher investment in home furnishings and art, <span class="highlighted-sentence">religious beliefs that disdained ostentation led these new Dutch collectors to favor small, low-key works—portraits of ordinary men and women, still lifes and scenes of everyday life, and landscapes.</span> This focus contrasted with the seventeenth-century Italian Baroque fondness for gigantic ceiling frescoes and oil paintings with religious subjects. Stylistically, the art of northern Europe of this period, although also called "Baroque" by art historians, differs markedly from Italian Baroque art.</p>
+                            <p id="rp2-p3"><b>P3</b> It is risky to generalize about the spending and collecting habits of the Dutch middle class, but some interesting facts are revealed by records of wills and estates, contracts, and archived inventories. <span class="insert-square" data-passage="2" data-location="1">▇</span> These records suggest that an individual earning between 1,500 and 3,000 guilders a year could live quite comfortably. <span class="insert-square" data-passage="2" data-location="2">▇</span> A house could be purchased for 1,000 guilders. <span class="insert-square" data-passage="2" data-location="3">▇</span> Another 1,000 guilders could buy all the necessary furnishings for a middle-class home, including a significant amount of art, particularly paintings. <span class="insert-square" data-passage="2" data-location="4">▇</span> Although there was, of course, considerable variation in prices, many artworks were very affordable. Prints, for example, were extremely cheap because of the high number of copies artists produced of each picture. Paintings of interior and everyday scenes were relatively inexpensive in the seventeenth-century Dutch Republic, perhaps costing one or two guilders each. Small landscapes could be purchased for between three and four guilders. Commissioned portraits were the most costly. The size of the work and quality of the frame, as well as the reputation of the artist, were other factors in determining the price of a painting, regardless of the subject.</p>
+                            <p id="rp2-p4"><b>P4</b> With the exception of portraits, Dutch artists produced most of their paintings for an anonymous market, hoping to appeal to a wide audience. To ensure success, artists in the Dutch Republic adapted to the changed conditions of art production and sales. They marketed their paintings in many ways, selling their works directly to buyers who visited their studios. They also sold their works through art dealers, exhibitions, fairs, auctions, and even lotteries. Because of the uncertainty of these sales mechanisms (as opposed to the certainty of a binding contract for a commission from a church, king, or duke), artists became more responsive to market demands. Specialization became common among Dutch artists. For example, painters might limit their practice to portraits, still lifes, or landscapes—the most popular genres (types of art) among middle—class patrons.</p>
+                            <p id="rp2-p5"><b>P5</b> Artists did not always sell their paintings. Frequently, they used their work to pay off loans or debts. Debts incurred in taverns (places where alcoholic drinks and food were served and rooms were rented to travelers), in particular, could be settled with paintings, which may explain why many art dealers, including Jan Vermeer (who himself became an acclaimed painter) and his father before him, were also innkeepers. This connection between art dealing and other businesses eventually solidified, and innkeepers, for example, often would have art exhibitions in their taverns hoping to make a sale. The institutions of today's open art market—dealers, galleries, auctions, and estate sales—owe their establishment to the emergence in the seventeenth century of a prosperous middle class in the Dutch Republic.</p>
+                        </div>
+                    </div>
+                    <div id="questions-container-2">
+                        <!-- Reading Passage 2 Questions -->
+                        <div class="reading-q reading-q-rp2" data-paragraph-id="rp2-p1">
+                            <p class="mb-2 font-medium">1. The word "avid" in paragraph 1 is closest in meaning to</p>
+                            <div class="space-y-2"><div class="question-option"><input type="radio" id="r2-q1-a" name="r2-q1" value="A" class="hidden"><label for="r2-q1-a" class="block w-full p-3 border rounded-lg cursor-pointer">enthusiastic</label></div><div class="question-option"><input type="radio" id="r2-q1-b" name="r2-q1" value="B" class="hidden"><label for="r2-q1-b" class="block w-full p-3 border rounded-lg cursor-pointer">influential</label></div><div class="question-option"><input type="radio" id="r2-q1-c" name="r2-q1" value="C" class="hidden"><label for="r2-q1-c" class="block w-full p-3 border rounded-lg cursor-pointer">successful</label></div><div class="question-option"><input type="radio" id="r2-q1-d" name="r2-q1" value="D" class="hidden"><label for="r2-q1-d" class="block w-full p-3 border rounded-lg cursor-pointer">typical</label></div></div>
+                        </div>
+                        <div class="reading-q reading-q-rp2" data-paragraph-id="rp2-p1">
+                            <p class="mb-2 font-medium">2. It can be inferred from paragraph 1 that increased middle-class prosperity in the seventeenth-century Dutch Republic resulted in</p>
+                            <div class="space-y-2"><div class="question-option"><input type="radio" id="r2-q2-a" name="r2-q2" value="A" class="hidden"><label for="r2-q2-a" class="block w-full p-3 border rounded-lg cursor-pointer">the aristocracy and upper class losing interest in supporting artists</label></div><div class="question-option"><input type="radio" id="r2-q2-b" name="r2-q2" value="B" class="hidden"><label for="r2-q2-b" class="block w-full p-3 border rounded-lg cursor-pointer">middle-class people becoming art patrons</label></div><div class="question-option"><input type="radio" id="r2-q2-c" name="r2-q2" value="C" class="hidden"><label for="r2-q2-c" class="block w-full p-3 border rounded-lg cursor-pointer">a larger proportion of the population having time to produce art</label></div><div class="question-option"><input type="radio" id="r2-q2-d" name="r2-q2" value="D" class="hidden"><label for="r2-q2-d" class="block w-full p-3 border rounded-lg cursor-pointer">the cost and quality of artwork increasing with increased demand</label></div></div>
+                        </div>
+                        <div class="reading-q reading-q-rp2" data-paragraph-id="rp2-p2">
+                            <p class="mb-2 font-medium">3. Which of the sentences below best expresses the essential information in the highlighted sentence in the passage? Incorrect choices change the meaning in important ways or leave out essential information.</p>
+                            <div class="space-y-2"><div class="question-option"><input type="radio" id="r2-q3-a" name="r2-q3" value="A" class="hidden"><label for="r2-q3-a" class="block w-full p-3 border rounded-lg cursor-pointer">The financial success of the middle class increasingly allowed the Dutch to enjoy their investments in home furnishings and art.</label></div><div class="question-option"><input type="radio" id="r2-q3-b" name="r2-q3" value="B" class="hidden"><label for="r2-q3-b" class="block w-full p-3 border rounded-lg cursor-pointer">Excessive ostentation led to higher investments in home furnishings and art in the form of portraits,still life and scenes of everyday life,and landscapes.</label></div><div class="question-option"><input type="radio" id="r2-q3-c" name="r2-q3" value="C" class="hidden"><label for="r2-q3-c" class="block w-full p-3 border rounded-lg cursor-pointer">Religious beliefs led Dutch collectors to favor small,low-key works of art, despite greater middle class wealth and higher investments in home furnishings.</label></div><div class="question-option"><input type="radio" id="r2-q3-d" name="r2-q3" value="D" class="hidden"><label for="r2-q3-d" class="block w-full p-3 border rounded-lg cursor-pointer">Although the middle class was financially successful,home furnishings and art required sharply higher investments, making it difficult for Dutch collectors to buy the art they favored.</label></div></div>
+                        </div>
+                        <div class="reading-q reading-q-rp2" data-paragraph-id="rp2-p3">
+                            <p class="mb-2 font-medium">4. In paragraph 3, why does the author provide the information that house furnishings and art for a middle-class home could be purchased for 1,000 guilders?</p>
+                            <div class="space-y-2"><div class="question-option"><input type="radio" id="r2-q4-a" name="r2-q4" value="A" class="hidden"><label for="r2-q4-a" class="block w-full p-3 border rounded-lg cursor-pointer">To argue that furnishing a house was quite expensive relative to buying a house in the seventeenth century</label></div><div class="question-option"><input type="radio" id="r2-q4-b" name="r2-q4" value="B" class="hidden"><label for="r2-q4-b" class="block w-full p-3 border rounded-lg cursor-pointer">To emphasize the extent to which the seventeenth-century Dutch middle class valued having works of art in their homes</label></div><div class="question-option"><input type="radio" id="r2-q4-c" name="r2-q4" value="C" class="hidden"><label for="r2-q4-c" class="block w-full p-3 border rounded-lg cursor-pointer">To indicate how much information was available about the middle class from the records of the seventeenth century</label></div><div class="question-option"><input type="radio" id="r2-q4-d" name="r2-q4" value="D" class="hidden"><label for="r2-q4-d" class="block w-full p-3 border rounded-lg cursor-pointer">To support the point that artwork in the seventeenth-century Dutch Republic was affordable for the middle class</label></div></div>
+                        </div>
+                        <div class="reading-q reading-q-rp2" data-paragraph-id="rp2-p3">
+                             <p class="mb-2 font-medium">5. According to paragraph 3, in the seventeenth-century Dutch Republic all of the following paintings would have been expensive EXCEPT</p>
+                            <div class="space-y-2"><div class="question-option"><input type="radio" id="r2-q5-a" name="r2-q5" value="A" class="hidden"><label for="r2-q5-a" class="block w-full p-3 border rounded-lg cursor-pointer">a detailed painting of the interior of a home</label></div><div class="question-option"><input type="radio" id="r2-q5-b" name="r2-q5" value="B" class="hidden"><label for="r2-q5-b" class="block w-full p-3 border rounded-lg cursor-pointer">a portrait commissioned by the buyer</label></div><div class="question-option"><input type="radio" id="r2-q5-c" name="r2-q5" value="C" class="hidden"><label for="r2-q5-c" class="block w-full p-3 border rounded-lg cursor-pointer">a painting by an artist considered to be very good</label></div><div class="question-option"><input type="radio" id="r2-q5-d" name="r2-q5" value="D" class="hidden"><label for="r2-q5-d" class="block w-full p-3 border rounded-lg cursor-pointer">a large,well-framed landscape painting</label></div></div>
+                        </div>
+                        <div class="reading-q reading-q-rp2" data-paragraph-id="rp2-p4">
+                            <p class="mb-2 font-medium">6. According to paragraph 4, Dutch artists sold their works in all of the following ways EXCEPT</p>
+                            <div class="space-y-2"><div class="question-option"><input type="radio" id="r2-q6-a" name="r2-q6" value="A" class="hidden"><label for="r2-q6-a" class="block w-full p-3 border rounded-lg cursor-pointer">directly from their studios</label></div><div class="question-option"><input type="radio" id="r2-q6-b" name="r2-q6" value="B" class="hidden"><label for="r2-q6-b" class="block w-full p-3 border rounded-lg cursor-pointer">by visiting the homes of buyers</label></div><div class="question-option"><input type="radio" id="r2-q6-c" name="r2-q6" value="C" class="hidden"><label for="r2-q6-c" class="block w-full p-3 border rounded-lg cursor-pointer">at public events such as exhibitions and fairs</label></div><div class="question-option"><input type="radio" id="r2-q6-d" name="r2-q6" value="D" class="hidden"><label for="r2-q6-d" class="block w-full p-3 border rounded-lg cursor-pointer">through lotteries</label></div></div>
+                        </div>
+                        <div class="reading-q reading-q-rp2" data-paragraph-id="rp2-p4">
+                            <p class="mb-2 font-medium">7. According to paragraph 4, why did Dutch artists begin to specialize in certain types of paintings?</p>
+                            <div class="space-y-2"><div class="question-option"><input type="radio" id="r2-q7-a" name="r2-q7" value="A" class="hidden"><label for="r2-q7-a" class="block w-full p-3 border rounded-lg cursor-pointer">The art dealers who sold their work would promote only certain styles of art.</label></div><div class="question-option"><input type="radio" id="r2-q7-b" name="r2-q7" value="B" class="hidden"><label for="r2-q7-b" class="block w-full p-3 border rounded-lg cursor-pointer">They believed that some types of paintings had more artistic value than others.</label></div><div class="question-option"><input type="radio" id="r2-q7-c" name="r2-q7" value="C" class="hidden"><label for="r2-q7-c" class="block w-full p-3 border rounded-lg cursor-pointer">They could decrease the size of their studios and thus save money.</label></div><div class="question-option"><input type="radio" id="r2-q7-d" name="r2-q7" value="D" class="hidden"><label for="r2-q7-d" class="block w-full p-3 border rounded-lg cursor-pointer">They wanted to concentrate on the types of paintings that were most likely to sell.</label></div></div>
+                        </div>
+                        <div class="reading-q reading-q-rp2" data-paragraph-id="rp2-p5">
+                            <p class="mb-2 font-medium">8. According to paragraph 5, why were many art dealers also innkeepers?</p>
+                            <div class="space-y-2"><div class="question-option"><input type="radio" id="r2-q8-a" name="r2-q8" value="A" class="hidden"><label for="r2-q8-a" class="block w-full p-3 border rounded-lg cursor-pointer">Inn keeping was a highly profitable business that could supplement an art dealer's small income.</label></div><div class="question-option"><input type="radio" id="r2-q8-b" name="r2-q8" value="B" class="hidden"><label for="r2-q8-b" class="block w-full p-3 border rounded-lg cursor-pointer">Working as innkeepers gave art dealers the opportunity to pay off debts they had incurred when investing in works of art.</label></div><div class="question-option"><input type="radio" id="r2-q8-c" name="r2-q8" value="C" class="hidden"><label for="r2-q8-c" class="block w-full p-3 border rounded-lg cursor-pointer">Artists were more likely to sell their art to innkeepers who were well-liked members of the community than to art dealers who were often strangers.</label></div><div class="question-option"><input type="radio" id="r2-q8-d" name="r2-q8" value="D" class="hidden"><label for="r2-q8-d" class="block w-full p-3 border rounded-lg cursor-pointer">Drinks and food were sometimes paid for with paintings that could then be displayed and sold in inns.</label></div></div>
+                        </div>
+                         <div class="reading-q reading-q-rp2" data-paragraph-id="rp2-p3">
+                            <p class="mb-2 font-medium">9. Look at the squares 【▇】 that indicate where the following sentence can be added to the passage. Where would the sentence best fit?</p>
+                            <p class="mb-2 p-3 bg-blue-100 border-l-4 border-blue-400 rounded-md">"The examination of such documents offers insights into the costs and lifestyles of the time"</p>
+                            <p class="text-gray-600">Click a square in the passage on the left. Your selected position will be highlighted.</p>
+                        </div>
+                        <div class="reading-q reading-q-rp2" data-paragraph-id="all-rp2">
+                            <p class="mb-2 font-medium">10. Directions: An introductory sentence for a brief summary of the passage is provided below. Complete the summary by selecting the THREE answer choices that express the most important ideas in the passage. This question is worth 2 points.</p>
+                            <p class="mb-2 p-3 bg-gray-200 rounded-md">"Changes in Dutch society in the seventeenth century led to major changes in the Dutch art world."</p>
+                            <div class="space-y-2"><div class="question-option"><input type="checkbox" id="r2-q10-a" name="r2-q10" value="A" class="hidden"><label for="r2-q10-a" class="block w-full p-3 border rounded-lg cursor-pointer">A. Traditional art patrons in the Dutch Republic-aristocrats,wealthy businesspeople, and military leaders-played only a minor role in the arts as their attention shifted to the growing economy.</label></div><div class="question-option"><input type="checkbox" id="r2-q10-b" name="r2-q10" value="B" class="hidden"><label for="r2-q10-b" class="block w-full p-3 border rounded-lg cursor-pointer">B. The affordability of Dutch art increased, and collectors focused on images of the everyday life of ordinary people rather than on religious scenes or grander works of art.</label></div><div class="question-option"><input type="checkbox" id="r2-q10-c" name="r2-q10" value="C" class="hidden"><label for="r2-q10-c" class="block w-full p-3 border rounded-lg cursor-pointer">C. Although records and documents from the Dutch Republic have long been the subject of research, art historians now question the accuracy of conclusions based on these sources.</label></div><div class="question-option"><input type="checkbox" id="r2-q10-d" name="r2-q10" value="D" class="hidden"><label for="r2-q10-d" class="block w-full p-3 border rounded-lg cursor-pointer">D. Prosperity among the Dutch middle class promoted an interest in and support of art that led to a change in the kinds of works artists produced to satisfy buyers' tastes</label></div><div class="question-option"><input type="checkbox" id="r2-q10-e" name="r2-q10" value="E" class="hidden"><label for="r2-q10-e" class="block w-full p-3 border rounded-lg cursor-pointer">E. The marketing of Dutch works of art changed,becoming more dependent on sales to a broader public than aristocrats,and this has had a lasting influence on the marketing of art</label></div><div class="question-option"><input type="checkbox" id="r2-q10-f" name="r2-q10" value="F" class="hidden"><label for="r2-q10-f" class="block w-full p-3 border rounded-lg cursor-pointer">F. In the Dutch Republic,artists with commissions from a church,king. or duke were financially far more successful than artists who sold their works on the open market.</label></div></div>
+                        </div>
+                    </div>
+                 </div>
+            </div>
+
+            <div id="reading-nav" class="hidden flex justify-between mt-6 pt-6 border-t">
+                <button id="prev-q-btn" class="bg-gray-500 text-white font-bold py-2 px-6 rounded-lg shadow-md hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-400 transition-transform transform hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed"> &larr; Previous </button>
+                <span id="question-counter" class="text-lg font-semibold text-gray-700 self-center"></span>
+                <button id="next-q-btn" class="bg-indigo-600 text-white font-bold py-2 px-6 rounded-lg shadow-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-transform transform hover:scale-105"> Next &rarr; </button>
+            </div>
+        </div>
+
+        <!-- Results Section -->
+        <div id="results-section" class="hidden text-center">
+            <h2 class="text-2xl font-semibold mb-4 text-green-700">Test Complete!</h2>
+            <p class="text-lg mb-8 text-gray-600">You have finished the practice test. Click the button below to download a file containing all of your answers.</p>
+            <button id="download-btn" class="bg-green-600 text-white font-bold py-3 px-8 rounded-lg shadow-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 transition-transform transform hover:scale-105">
+                Download My Answers
+            </button>
+        </div>
+
+        <!-- Main Navigation -->
+        <div id="main-navigation" class="hidden flex justify-end mt-8 pt-6 border-t">
+            <button id="main-next-btn" class="bg-indigo-600 text-white font-bold py-2 px-6 rounded-lg shadow-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-transform transform hover:scale-105">
+                Next Section &rarr;
+            </button>
+        </div>
+
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // --- State Management ---
+            const userAnswers = {};
+            let currentSection = 'listening';
+            let currentListeningPassageId = 'c1';
+            let currentListeningQIndex = 0;
+            
+            let currentReadingPassageId = 'rp1';
+            let currentReadingQIndex = 0;
+
+
+            // --- Element Selectors ---
+            // Sections
+            const listeningSection = document.getElementById('listening-section');
+            const readingSection = document.getElementById('reading-section');
+            const resultsSection = document.getElementById('results-section');
+            const listeningNav = document.getElementById('listening-nav');
+            const nextListeningQBtn = document.getElementById('next-listening-q-btn');
+            
+            // Passage Data
+            const passageOrder = ['c1', 'l1', 'c2', 'l2', 'l3'];
+            const passageContainers = {};
+            const audioViews = {};
+            const questionViews = {};
+            const questionSets = {};
+            const startQuestionButtons = {};
+
+            passageOrder.forEach(id => {
+                passageContainers[id] = document.getElementById(`${id}-container`);
+                audioViews[id] = document.getElementById(`${id}-audio-view`);
+                questionViews[id] = document.getElementById(`${id}-questions-view`);
+                questionSets[id] = document.querySelectorAll(`.${id}-question`);
+                startQuestionButtons[id] = document.getElementById(`start-${id}-questions-btn`);
+            });
+
+            // Reading Elements
+            const readingIntro1 = document.getElementById('reading-intro-1');
+            const readingIntro2 = document.getElementById('reading-intro-2');
+            const readingPassage1View = document.getElementById('reading-passage-1-view');
+            const readingPassage2View = document.getElementById('reading-passage-2-view');
+
+            const startReading1Btn = document.getElementById('start-reading-1-btn');
+            const startReading2Btn = document.getElementById('start-reading-2-btn');
+            
+            const readingQuestionsRP1 = document.querySelectorAll('.reading-q-rp1');
+            const readingQuestionsRP2 = document.querySelectorAll('.reading-q-rp2');
+            
+            const questionCounter = document.getElementById('question-counter');
+            const readingNav = document.getElementById('reading-nav');
+            const prevQBtn = document.getElementById('prev-q-btn');
+            const nextQBtn = document.getElementById('next-q-btn');
+            
+            // General Elements
+            const mainNavigation = document.getElementById('main-navigation');
+            const mainNextBtn = document.getElementById('main-next-btn');
+            const downloadBtn = document.getElementById('download-btn');
+            
+            // --- Audio Setup ---
+            function setupAudioPlayer(buttonId, audioId, onPlayCallback) {
+                const button = document.getElementById(buttonId);
+                const audio = document.getElementById(audioId);
+                if (button && audio) {
+                    button.addEventListener('click', () => {
+                        audio.play();
+                        button.disabled = true;
+                        if(onPlayCallback) {
+                            onPlayCallback();
+                        }
+                    });
+                }
+            }
+
+            passageOrder.forEach(id => {
+                setupAudioPlayer(`play-${id}-btn`, `audio-${id}`, () => {
+                    startQuestionButtons[id].classList.remove('hidden');
+                    startQuestionButtons[id].disabled = false;
+                });
+            });
+
+            setupAudioPlayer('play-c2-q5-replay-btn', 'audio-c2-q5-replay', null);
+
+            // --- Listening Section Logic ---
+            passageOrder.forEach(id => {
+                startQuestionButtons[id].addEventListener('click', () => {
+                    audioViews[id].classList.add('hidden');
+                    questionViews[id].classList.remove('hidden');
+                    listeningNav.classList.remove('hidden');
+                    displayListeningQuestion();
+                });
+            });
+
+            nextListeningQBtn.addEventListener('click', () => {
+                const currentPassageQuestions = questionSets[currentListeningPassageId];
+                
+                if (currentListeningQIndex < currentPassageQuestions.length - 1) {
+                    currentListeningQIndex++;
+                    displayListeningQuestion();
+                } else {
+                    listeningNav.classList.add('hidden');
+                    passageContainers[currentListeningPassageId].classList.add('hidden');
+
+                    const currentPassageIndex = passageOrder.indexOf(currentListeningPassageId);
+                    if (currentPassageIndex < passageOrder.length - 1) {
+                        const nextPassageId = passageOrder[currentPassageIndex + 1];
+                        currentListeningPassageId = nextPassageId;
+                        currentListeningQIndex = 0;
+                        passageContainers[nextPassageId].classList.remove('hidden');
+                    } else {
+                        listeningSection.classList.add('hidden');
+                        mainNavigation.classList.remove('hidden');
+                        mainNextBtn.disabled = false;
+                    }
+                }
+            });
+
+            function displayListeningQuestion() {
+                const questionsToShow = questionSets[currentListeningPassageId];
+                questionsToShow.forEach((q, index) => {
+                    q.classList.toggle('hidden', index !== currentListeningQIndex);
+                });
+            }
+
+            // --- Reading Section Logic ---
+            mainNextBtn.addEventListener('click', () => {
+                if (currentSection === 'listening') {
+                    listeningSection.classList.add('hidden');
+                    readingSection.classList.remove('hidden');
+                    readingIntro1.classList.remove('hidden');
+                    mainNavigation.classList.add('hidden');
+                    currentSection = 'reading';
+                }
+            });
+
+            startReading1Btn.addEventListener('click', () => {
+                readingIntro1.classList.add('hidden');
+                readingPassage1View.classList.remove('hidden');
+                readingNav.classList.remove('hidden');
+                displayReadingQuestion();
+            });
+
+            startReading2Btn.addEventListener('click', () => {
+                readingIntro2.classList.add('hidden');
+                readingPassage2View.classList.remove('hidden');
+                readingNav.classList.remove('hidden');
+                displayReadingQuestion();
+            });
+            
+            nextQBtn.addEventListener('click', () => {
+                const totalQuestionsInPassage = (currentReadingPassageId === 'rp1') ? readingQuestionsRP1.length : readingQuestionsRP2.length;
+
+                if (currentReadingQIndex < totalQuestionsInPassage - 1) {
+                    currentReadingQIndex++;
+                    displayReadingQuestion();
+                } else {
+                    if (currentReadingPassageId === 'rp1') {
+                        readingPassage1View.classList.add('hidden');
+                        readingNav.classList.add('hidden');
+                        readingIntro2.classList.remove('hidden');
+                        currentReadingPassageId = 'rp2';
+                        currentReadingQIndex = 0;
+                    } else {
+                        readingSection.classList.add('hidden');
+                        resultsSection.classList.remove('hidden');
+                    }
+                }
+            });
+
+            prevQBtn.addEventListener('click', () => {
+                if (currentReadingQIndex > 0) {
+                    currentReadingQIndex--;
+                    displayReadingQuestion();
+                }
+            });
+            
+            function displayReadingQuestion() {
+                const questionsToShow = (currentReadingPassageId === 'rp1') ? readingQuestionsRP1 : readingQuestionsRP2;
+                const totalQuestions = questionsToShow.length;
+
+                questionsToShow.forEach((q, index) => {
+                    q.style.display = (index === currentReadingQIndex) ? 'block' : 'none';
+                });
+                
+                const currentQ = questionsToShow[currentReadingQIndex];
+                questionCounter.textContent = `Question ${currentReadingQIndex + 1} of ${totalQuestions}`;
+
+                const passageContent = (currentReadingPassageId === 'rp1') ? 
+                    document.getElementById('passage-content-1') : 
+                    document.getElementById('passage-content-2');
+                
+                passageContent.querySelectorAll('p').forEach(p => p.style.display = 'none');
+
+                const paraId = currentQ.dataset.paragraphId;
+                if (paraId) {
+                    if (paraId.startsWith('all-')) {
+                         passageContent.querySelectorAll('p').forEach(p => p.style.display = 'block');
+                    }
+                    else {
+                        const paraIds = paraId.split(',');
+                        paraIds.forEach(id => {
+                            const paraToShow = document.getElementById(id);
+                            if (paraToShow) paraToShow.style.display = 'block';
+                        });
+                    }
+                }
+                
+                prevQBtn.disabled = currentReadingQIndex === 0;
+
+                if (currentReadingQIndex === totalQuestions - 1) {
+                    if(currentReadingPassageId === 'rp1') {
+                        nextQBtn.textContent = 'Finish Passage 1';
+                    } else {
+                        nextQBtn.textContent = 'Finish Test';
+                    }
+                } else {
+                    nextQBtn.textContent = 'Next →';
+                }
+            }
+            
+            // --- General Logic (Answer Storage & Download) ---
+             document.querySelectorAll('input[type="radio"], input[type="checkbox"]').forEach(input => {
+                input.addEventListener('change', (e) => {
+                    const name = e.target.name;
+                    if (e.target.type === 'radio') {
+                        userAnswers[name] = e.target.value;
+                    } else {
+                        if (!userAnswers[name]) userAnswers[name] = [];
+                        if (e.target.checked) {
+                            if (!userAnswers[name].includes(e.target.value)) userAnswers[name].push(e.target.value);
+                        } else {
+                            userAnswers[name] = userAnswers[name].filter(val => val !== e.target.value);
+                        }
+                        userAnswers[name].sort();
+                    }
+                });
+            });
+            
+            document.querySelectorAll('.insert-square').forEach(square => {
+                square.addEventListener('click', (e) => {
+                    const passageNum = e.target.dataset.passage;
+                    document.querySelectorAll(`.insert-square[data-passage="${passageNum}"]`).forEach(s => s.classList.remove('selected'));
+                    
+                    square.classList.add('selected');
+                    const questionName = (passageNum === '1') ? 'r-q9-insert' : 'r2-q9-insert';
+                    userAnswers[questionName] = `Position ${square.dataset.location}`;
+                });
+            });
+
+            downloadBtn.addEventListener('click', () => {
+                let report = 'TOEFL Practice Test Answers\n============================\n\n';
+                const questionOrder = [ 
+                    'c1-q1', 'c1-q2', 'c1-q3', 'c1-q4', 'c1-q5', 
+                    'l1-q1', 'l1-q2', 'l1-q3', 'l1-q4', 'l1-q5', 'l1-q6',
+                    'c2-q1', 'c2-q2', 'c2-q3', 'c2-q4', 'c2-q5',
+                    'l2-q1', 'l2-q2', 'l2-q3', 'l2-q4', 'l2-q5', 'l2-q6',
+                    'l3-q1', 'l3-q2', 'l3-q3', 'l3-q4', 'l3-q5', 'l3-q6',
+                    'r-q1', 'r-q2', 'r-q3', 'r-q4', 'r-q5', 'r-q6', 'r-q7', 'r-q8', 'r-q9-insert', 'r-q10',
+                    'r2-q1', 'r2-q2', 'r2-q3', 'r2-q4', 'r2-q5', 'r2-q6', 'r2-q7', 'r2-q8', 'r2-q9-insert', 'r2-q10'
+                ];
+                questionOrder.forEach(key => {
+                    const answer = userAnswers[key];
+                    if (answer && answer.length > 0) {
+                        let formattedAnswer = Array.isArray(answer) ? answer.join(', ') : answer;
+                        report += `${key.toUpperCase()}: ${formattedAnswer}\n`;
+                    } else {
+                        report += `${key.toUpperCase()}: (No Answer)\n`;
+                    }
+                });
+                const blob = new Blob([report], { type: 'text/plain' });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = 'toefl_answers.txt';
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                URL.revokeObjectURL(url);
+            });
+            
+            // Initial setup on load
+            mainNextBtn.disabled = true;
+
+        });
+    </script>
+</body>
+</html>
