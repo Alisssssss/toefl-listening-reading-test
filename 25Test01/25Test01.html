@@ -723,9 +723,13 @@
 
     </div>
 
+    <script src="timer.js"></script>
     <script>
         // 保持原有的JavaScript代码不变
         document.addEventListener('DOMContentLoaded', () => {
+            const LISTENING_DURATION = 18 * 60;
+            const READING_DURATION = 36 * 60;
+
             // --- State Management ---
             const userAnswers = {};
             let currentSection = 'listening';
@@ -743,6 +747,12 @@
             const listeningNav = document.getElementById('listening-nav');
             const nextListeningQBtn = document.getElementById('next-listening-q-btn');
             
+            const timerDisplay = document.getElementById('timer');
+            let listeningTimerRunning = false;
+            let readingTimerStarted = false;
+            let listeningLocked = false;
+            let readingLocked = false;
+
             // Passage Data
             const passageOrder = ['c1', 'l1', 'c2', 'l2', 'l3'];
             const passageContainers = {};
@@ -780,6 +790,18 @@
             const mainNavigation = document.getElementById('main-navigation');
             const mainNextBtn = document.getElementById('main-next-btn');
             const downloadBtn = document.getElementById('download-btn');
+            setTimerVisibility(false);
+
+            let listeningTimer = null;
+            const readingTimer = new CountdownTimer(READING_DURATION, {
+                onTick: (seconds) => {
+                    updateTimerDisplay('Reading', seconds);
+                },
+                onExpire: () => {
+                    lockReadingSection();
+                    showResultsSection();
+                }
+            });
             
             // --- Audio Setup ---
             function setupAudioPlayer(buttonId, audioId, onPlayCallback) {
@@ -812,6 +834,7 @@
                     questionViews[id].classList.remove('hidden');
                     listeningNav.classList.remove('hidden');
                     displayListeningQuestion();
+                    startListeningTimerIfNeeded();
                 });
             });
 
@@ -824,14 +847,22 @@
                 } else {
                     listeningNav.classList.add('hidden');
                     passageContainers[currentListeningPassageId].classList.add('hidden');
+                    pauseListeningTimerForAudio();
 
                     const currentPassageIndex = passageOrder.indexOf(currentListeningPassageId);
                     if (currentPassageIndex < passageOrder.length - 1) {
                         const nextPassageId = passageOrder[currentPassageIndex + 1];
                         currentListeningPassageId = nextPassageId;
                         currentListeningQIndex = 0;
+                        if (audioViews[nextPassageId]) {
+                            audioViews[nextPassageId].classList.remove('hidden');
+                        }
+                        if (questionViews[nextPassageId]) {
+                            questionViews[nextPassageId].classList.add('hidden');
+                        }
                         passageContainers[nextPassageId].classList.remove('hidden');
                     } else {
+                        pauseListeningTimerForAudio();
                         listeningSection.classList.add('hidden');
                         mainNavigation.classList.remove('hidden');
                         mainNextBtn.disabled = false;
@@ -849,11 +880,7 @@
             // --- Reading Section Logic ---
             mainNextBtn.addEventListener('click', () => {
                 if (currentSection === 'listening') {
-                    listeningSection.classList.add('hidden');
-                    readingSection.classList.remove('hidden');
-                    readingIntro1.classList.remove('hidden');
-                    mainNavigation.classList.add('hidden');
-                    currentSection = 'reading';
+                    goToReadingIntro();
                 }
             });
 
@@ -885,8 +912,7 @@
                         currentReadingPassageId = 'rp2';
                         currentReadingQIndex = 0;
                     } else {
-                        readingSection.classList.add('hidden');
-                        resultsSection.classList.remove('hidden');
+                        finishReadingSection();
                     }
                 }
             });
@@ -941,6 +967,151 @@
                     nextQBtn.textContent = 'Next →';
                 }
             }
+
+            function startListeningTimerIfNeeded() {
+                if (!hasVisibleListeningQuestions()) {
+                    pauseListeningTimerForAudio();
+                    return;
+                }
+                if (!listeningTimer) {
+                    listeningTimer = createListeningTimer();
+                }
+                if (listeningTimerRunning) return;
+                setTimerVisibility(true);
+                listeningTimer.start();
+                listeningTimerRunning = true;
+            }
+
+            function pauseListeningTimerForAudio() {
+                if (listeningTimer && listeningTimerRunning) {
+                    listeningTimer.stop();
+                }
+                listeningTimerRunning = false;
+                clearTimerDisplay();
+            }
+
+            function startReadingTimerIfNeeded() {
+                if (readingTimerStarted) return;
+                readingTimerStarted = true;
+                if (listeningTimer) {
+                    listeningTimer.stop();
+                }
+                listeningTimerRunning = false;
+                setTimerVisibility(true);
+                readingTimer.start();
+            }
+
+            function createListeningTimer() {
+                return new CountdownTimer(LISTENING_DURATION, {
+                    onTick: (seconds) => {
+                        updateTimerDisplay('Listening', seconds);
+                    },
+                    onExpire: () => {
+                        listeningTimerRunning = false;
+                        lockListeningSection();
+                        goToReadingIntro();
+                    }
+                });
+            }
+
+            function hasVisibleListeningQuestions() {
+                const questionView = questionViews[currentListeningPassageId];
+                if (!questionView || questionView.classList.contains('hidden')) {
+                    return false;
+                }
+                const visibleQuestionBlocks = questionView.querySelectorAll('.listening-question:not(.hidden)');
+                if (visibleQuestionBlocks.length > 0) {
+                    return true;
+                }
+                const answerInputs = questionView.querySelectorAll('input[type=\"radio\"], input[type=\"checkbox\"], textarea');
+                return answerInputs.length > 0;
+            }
+
+            function lockListeningSection() {
+                if (listeningLocked) return;
+                listeningLocked = true;
+                disableInputs(listeningSection);
+            }
+
+            function lockReadingSection() {
+                if (readingLocked) return;
+                readingLocked = true;
+                disableInputs(readingSection);
+                readingSection.querySelectorAll('.insert-square').forEach(square => {
+                    square.style.pointerEvents = 'none';
+                    square.style.opacity = '0.5';
+                });
+                nextQBtn.disabled = true;
+                prevQBtn.disabled = true;
+                startReading1Btn.disabled = true;
+                startReading2Btn.disabled = true;
+            }
+
+            function disableInputs(container) {
+                container.querySelectorAll('input, textarea, select').forEach(el => {
+                    el.disabled = true;
+                });
+            }
+
+            function updateTimerDisplay(label, seconds) {
+                if (!timerDisplay) return;
+                if (typeof seconds !== 'number' || seconds < 0) {
+                    timerDisplay.textContent = '';
+                    return;
+                }
+                timerDisplay.textContent = `${label} Time: ${formatTime(seconds)}`;
+            }
+
+            function setTimerVisibility(isVisible) {
+                if (!timerDisplay) return;
+                timerDisplay.style.visibility = isVisible ? 'visible' : 'hidden';
+            }
+
+            function formatTime(totalSeconds) {
+                const minutes = Math.floor(totalSeconds / 60);
+                const seconds = totalSeconds % 60;
+                const paddedMinutes = minutes.toString().padStart(2, '0');
+                const paddedSeconds = seconds.toString().padStart(2, '0');
+                return `${paddedMinutes}:${paddedSeconds}`;
+            }
+
+            function clearTimerDisplay() {
+                if (timerDisplay) {
+                    timerDisplay.textContent = '';
+                }
+                setTimerVisibility(false);
+            }
+
+            function goToReadingIntro() {
+                if (currentSection === 'reading') return;
+                listeningSection.classList.add('hidden');
+                mainNavigation.classList.add('hidden');
+                readingSection.classList.remove('hidden');
+                readingIntro1.classList.remove('hidden');
+                readingIntro2.classList.add('hidden');
+                readingPassage1View.classList.add('hidden');
+                readingPassage2View.classList.add('hidden');
+                readingNav.classList.add('hidden');
+                currentSection = 'reading';
+                startReadingTimerIfNeeded();
+            }
+
+            function showResultsSection() {
+                readingTimer.stop();
+                readingSection.classList.add('hidden');
+                readingIntro1.classList.add('hidden');
+                readingIntro2.classList.add('hidden');
+                readingPassage1View.classList.add('hidden');
+                readingPassage2View.classList.add('hidden');
+                readingNav.classList.add('hidden');
+                resultsSection.classList.remove('hidden');
+                mainNavigation.classList.add('hidden');
+                clearTimerDisplay();
+            }
+
+            function finishReadingSection() {
+                showResultsSection();
+            }
             
             // --- General Logic (Answer Storage & Download) ---
              document.querySelectorAll('input[type="radio"], input[type="checkbox"]').forEach(input => {
@@ -962,6 +1133,7 @@
             
             document.querySelectorAll('.insert-square').forEach(square => {
                 square.addEventListener('click', (e) => {
+                    if (readingLocked) return;
                     const passageNum = e.target.dataset.passage;
                     document.querySelectorAll(`.insert-square[data-passage="${passageNum}"]`).forEach(s => s.classList.remove('selected'));
                     
