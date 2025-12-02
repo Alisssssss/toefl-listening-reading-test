@@ -1,0 +1,1197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive TOEFL Practice Test - 25 Test 03</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .question-option {
+            transition: background-color 0.2s ease-in-out;
+        }
+        .question-option:hover {
+            background-color: #eef2ff; /* indigo-50 */
+        }
+        .question-option input:checked + label {
+            background-color: #c7d2fe; /* indigo-200 */
+            border-color: #6366f1; /* indigo-500 */
+        }
+        .insert-square {
+            cursor: pointer;
+            color: #6366f1;
+            font-weight: bold;
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            text-align: center;
+            line-height: 20px;
+            border: 1px solid transparent;
+        }
+        .insert-square.selected {
+            background-color: #6366f1;
+            color: white;
+            border-color: #4338ca;
+        }
+        .paragraph-highlight {
+            background-color: #eef2ff; /* indigo-50 */
+            border-left: 3px solid #6366f1; /* indigo-500 */
+            padding-left: 1em;
+            margin-left: -1em;
+            transition: all 0.3s ease-in-out;
+        }
+        .highlighted-sentence {
+            background-color: #fef9c3; /* yellow-100 */
+            padding: 2px 0;
+        }
+        .replay-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 0 8px;
+            display: inline-flex;
+            align-items: center;
+            vertical-align: middle;
+        }
+        .replay-btn:disabled svg {
+            fill: #9ca3af; /* gray-400 */
+        }
+        .vocab-highlight {
+            background-color: #eef2ff; /* subtle indigo tint */
+            border-bottom: 1px dashed #6366f1;
+            color: #4338ca;
+        }
+
+
+    </style>
+</head>
+<body class="bg-gray-100 text-gray-800">
+
+    <div id="app-container" class="container mx-auto max-w-7xl p-4 md:p-8 my-8 bg-white rounded-2xl shadow-lg">
+        
+        <!-- Header -->
+        <header class="flex justify-between items-center pb-4 border-b mb-6">
+            <h1 class="text-2xl md:text-3xl font-bold text-gray-700">TOEFL Practice Test - 25 Test 03</h1>
+            <div id="timer" class="text-xl font-semibold text-indigo-600"></div>
+        </header>
+
+        <!-- Intro Section -->
+        <div id="intro-section" class="mb-8 p-6 bg-gray-50 rounded-lg">
+            <h2 class="text-2xl font-bold text-indigo-700 mb-3">Welcome to TOEFL Practice Test - 25 Test 03</h2>
+            <p class="text-gray-700 mb-4">This practice test includes Reading and Listening sections. You will start with Reading. When you're ready, click the button below to begin.</p>
+            <button id="start-test-btn" class="bg-indigo-600 text-white font-bold py-3 px-8 rounded-lg shadow-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-transform transform hover:scale-105">Start Test</button>
+        </div>
+
+        <!-- Reading Section -->
+        <div id="reading-section" class="hidden">
+            <h2 class="text-xl font-semibold mb-4 text-indigo-700 border-l-4 border-indigo-500 pl-3">Section 2: Reading</h2>
+
+            <div id="reading-intro-1">
+                <div class="p-6 bg-gray-50 rounded-lg">
+                    <h3 class="font-bold text-lg mb-4">Reading Passage 1: Reconstructing the Spread of the Grain Weevil</h3>
+                    <div class="prose max-w-none text-gray-700 leading-relaxed space-y-4">
+                        <p><b>P1</b> Perhaps the most common, most widespread, and arguably most destructive pest of stored grain in history is the grain weevil Sitophilus granarius. A member of the beetle family, it is small (3-5 mm), dark, heavily built, and cylindrical in shape. It has a long snout on the front of its head, at the very end of which are its jaws. It chews a deep drill-hole down into the center of a mature grain seed, then it turns around and lays a single egg at the bottom of the hole. Each grain of wheat or barley is large enough to feed one larva through to adulthood. The empty grain shell with a large, chewed hole through which the adult weevil emerges is a distinctive feature of this insect's damage. In archaeological digs the characteristic hollowed grain shells, as well as preserved weevil body parts, are clear evidence of the beetle's widespread occurrence throughout Asia, Africa, and Europe nearly 8,000 years ago. Because of the beetle's continuing importance as a major grain pest, there has been much interest and study in where it came from and how it came to be so closely associated with humans.</p>
+                        <p><b>P2</b> Various studies have tried to map the species' spread across the globe, shadowing the spread of grain agriculture. Records are <span class="vocab-highlight">sparse</span>, and although intriguing, they remain <span class="vocab-highlight">inconclusive</span>. The earliest known infestations were in what is now Turkey, in 5750- 5500 B.C.E., and the eastern Mediterranean (5550 B.C.E.), and this fits neatly with the idea of a Middle Eastern origin for both grain and pest, but they were also in faraway Germany in 5140 B.C.E., long before they seemingly arrived in neighboring Egypt (2950 B.C.E.) or Greece (1650 B.C.E.). Our ideas of early agriculture are still hazy, but this disparate spread of grain weevil infestations actually gives us some interesting clues.</p>
+                        <p><b>P3</b> One suggestion is that the grain weevil was already a widespread wild species some 6,000-10,000 years ago and that it quickly moved in to take advantage of human stores of grain wherever agriculture was established. This is patently not the case, because the species cannot survive in temperate regions outside heated or at least sheltered buildings, and development from egg, through larva, to adult can only take place at the elevated temperatures found indoors.</p>
+                        <p><b>P4</b> An alternative scenario is that it became established as a pest somewhere in the warmer climate of the eastern Mediterranean or Southwest Asia, and had already, by the sixth century B.C.E., been spread far and wide by trade. Trying to track any prehistoric grain trade from archaeological evidence is now impossible, but European trade in other items like obsidian was well established at this time. This is beginning to look like the only possibility. Later evidence emphasizes the trade-route idea. The grain weevil seems to have arrived in Britain with the Roman invasion, around 47 C.E. in Londinium (present-day London), and shortly afterwards in various military outposts. The military machine offered good conditions for sustaining and transporting the beetle about the country. Notably, however, with the later withdrawal of the Romans, the beetle declined and was apparently absent from 400 C.E. until the arrival of another mainland European military force: the Norman invasion of 1066.</p>
+                        <p><b>P5</b> The likelihood is that it was climatic factors that kept the species under control, or at least subdued enough without the Roman trade network to constantly reinforce it (beetle fragments have been found in drowned grain cargoes from Imperial Roman shipwrecks dated to the second and third centuries C.E.). The grain weevil requires a temperature range of 15-35"Celsius (optimum 26- 30°C) to complete its life cycle, but Britain was just at the difficult edge of this natural limitation. Large grain stores, as existed under the Romans, might have helped insulate pockets to this comfortable temperature, but if the popular history books are to be believed, the presence of little to eat during the early Middle Ages (500-1000 C.E.) saw them disappear. The species was really a Mediterranean beetle, as was the wheat it invaded.</p>
+                        <p><b>P6</b> Even so, the original source of the grain weevil is still steeped in mystery. Unlike the biscuit beetles living in the natural habitat of spilled grass seed in birds' nests, grain weevils were never found outside storing areas, even where the original natural precursors of wheat and barley grow wild today.</p>
+                    </div>
+                </div>
+                <div class="text-center mt-6">
+                    <button id="start-reading-1-btn" class="bg-indigo-600 text-white font-bold py-3 px-8 rounded-lg shadow-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-transform transform hover:scale-105">Start Questions for Passage 1</button>
+                </div>
+            </div>
+
+            <div id="reading-intro-2" class="hidden">
+                 <div class="p-6 bg-gray-50 rounded-lg mt-8">
+                    <h3 class="font-bold text-lg mb-4">Reading Passage 2: The Deforestation of England</h3>
+                    <div class="prose max-w-none text-gray-700 leading-relaxed space-y-4">
+                        <p><b>P1</b> Today's typical English countryside of rolling green fields and few trees did not evolve naturally. England was originally wooded. Forests of oak and other hardwoods had filled the southern lands, while conifer stands populated the higher latitudes. Sheepherders over the centuries converted many of these to pastureland. Nevertheless, the domestic wood supply remained great enough to handle timber and firewood demands. Then, beginning in the 1540s, came new manufacturing industries that destroyed the forests for their fuel. This new wave of deforestation started with the iron industry--an early royal effort to boost manufacturing in accord with trade-based economic theory --since the production of iron required immense amounts of heat and, initially, used charcoal (which is derived from wood) as fuel. In 1543, Parliament first addressed the impending timber shortage with the Act for the Preservation of Woods, which restricted farmers from using woodlands more than two furlongs (about 400 meters) from their homes. British forests were rapidly disappearing.</p>
+                        <p><b>P2</b> The situation worsened during the long reign of Queen Elizabeth I (1558-1603). She promoted numerous other wood-fuel-driven manufacturing industries, including copper smelting (the process of obtaining metal from metallic mineral deposits), salt making, and glass production. (The coal industry, which was beginning, could not meet the rapidly increasing demand for fuel.) One writer from this period commented, "Never so much [oak] hath been spent in a hundred years before as is in 10 years of our time." The price of firewood doubled between 1540 and 1570. This pushed some citizens out of the firewood market, and it became commonplace for the poor to shiver through the winters. The timber shortage had turned a product once freely available for the cutting into a valuable commodity.</p>
+                        <p><b>P3</b> But fuel needs did not fully account for England's timber demand. Wood was also necessary in the construction of ships. And Queen Elizabeth, in addition to promoting domestic manufacturing, had championed shipbuilding, part of the Crown's long-term strategy to <span class="vocab-highlight">contest</span> Spanish sea power and strengthen English commercial trade. Few industries in history have depended on wood quite like shipbuilding (at least before the conversion to iron and steel ship parts in the mid-nineteenth century). A large naval warship, known as a ship of the line and constructed almost entirely from wood, weighed over one hundred tons in the early seventeenth century. The bodies of such vessels required about two thousand mature oaks, which meant at least fifty acres of forest (200,000 square meters) had to be stripped. While oak supplied the timber for much of the ship, it was <span class="vocab-highlight">too inflexible and heavy for ship masts</span>, the poles that supported the canvas sails. Instead, these required lighter and more shock-resistant softwoods, such as pines and firs. The largest masts were about a meter wide at their base and over 30 meters tall-roughly one meter in height per inch in width. To maintain these wooden cathedrals of the sea, shipwrights (skilled workers who build and repair ships) relied on a range of forest products, known as naval stores, extracted from pines as well as firs. Most notable were the tar, pitch, and turpentine used to seal the wood and protect it from seawater. These materials were essential for maintaining the integrity and longevity of the ships, ensuring that they were watertight and resistant to the rotting effects of the ocean. The procurement of these naval stores was itself a significant undertaking, requiring extensive knowledge of forestry and sustainable harvesting techniques to ensure a steady supply without depleting the forests.</p>
+                        <p><b>P4</b> The twin demands of shipbuilding and a manufacturing industry hungry for wood fuel had turned England into a wood importer. In particular, the country had to trade for masts and naval stores, since it had no suitably commercial conifer forests. The preferred mast trees, called Riga firs or Scotch pines, came from an Eastern European region around the city of Riga (in present-day Latvia), but several northern countries had giant spruce forests that were also <span class="vocab-highlight">exploited</span> for naval stores. The trade centered on ports in Scandinavia and the Baltic Sea-the latter, which included Riga, accessible only through narrow straits (waterways) between Denmark and Sweden. Rulers who controlled the various ports and access to the straits knew that England's sea power depended on forest products and, consequently, kept duties, taxes, and shipping fees high. The Danish, for example, collected tolls for each crossing. If England ever lost access to these ports, it would cripple the entire English shipping industry, and with it the Royal Navy.</p>
+                    </div>
+                </div>
+                <div class="text-center mt-6">
+                    <button id="start-reading-2-btn" class="bg-indigo-600 text-white font-bold py-3 px-8 rounded-lg shadow-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-transform transform hover:scale-105">Start Questions for Passage 2</button>
+                </div>
+            </div>
+            
+            <div id="reading-passage-1-view" class="hidden">
+                 <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div id="passage-container-1" class="bg-gray-50 p-4 rounded-lg overflow-y-auto max-h-[85vh]">
+                         <div id="passage-content-1" class="prose max-w-none text-gray-700 leading-relaxed space-y-4">
+                            <p id="p1"><b>P1</b> Perhaps the most common, most widespread, and arguably most destructive pest of stored grain in history is the grain weevil Sitophilus granarius. A member of the beetle family, it is small (3-5 mm), dark, heavily built, and cylindrical in shape. <span class="insert-square" data-passage="1" data-location="1">▇</span>It has a long snout on the front of its head, at the very end of which are its jaws. <span class="insert-square" data-passage="1" data-location="2">▇</span>It chews a deep drill-hole down into the center of a mature grain seed, then it turns around and lays a single egg at the bottom of the hole. <span class="insert-square" data-passage="1" data-location="3">▇</span>Each grain of wheat or barley is large enough to feed one larva through to adulthood. <span class="insert-square" data-passage="1" data-location="4">▇</span>The empty grain shell with a large, chewed hole through which the adult weevil emerges is a distinctive feature of this insect's damage. In archaeological digs the characteristic hollowed grain shells, as well as preserved weevil body parts, are clear evidence of the beetle's widespread occurrence throughout Asia, Africa, and Europe nearly 8,000 years ago. Because of the beetle's continuing importance as a major grain pest, there has been much interest and study in where it came from and how it came to be so closely associated with humans.</p>
+                            <p id="p2"><b>P2</b> Various studies have tried to map the species' spread across the globe, shadowing the spread of grain agriculture. Records are <span class="vocab-highlight">sparse</span>, and although intriguing, they remain <span class="vocab-highlight">inconclusive</span>. The earliest known infestations were in what is now Turkey, in 5750- 5500 B.C.E., and the eastern Mediterranean (5550 B.C.E.), and this fits neatly with the idea of a Middle Eastern origin for both grain and pest, but they were also in faraway Germany in 5140 B.C.E., long before they seemingly arrived in neighboring Egypt (2950 B.C.E.) or Greece (1650 B.C.E.). Our ideas of early agriculture are still hazy, but this disparate spread of grain weevil infestations actually gives us some interesting clues.</p>
+                            <p id="p3"><b>P3</b> One suggestion is that the grain weevil was already a widespread wild species some 6,000-10,000 years ago and that it quickly moved in to take advantage of human stores of grain wherever agriculture was established. <span class="highlighted-sentence">This is patently not the case, because the species cannot survive in temperate regions outside heated or at least sheltered buildings, and development from egg, through larva, to adult can only take place at the elevated temperatures found indoors.</span></p>
+                            <p id="p4"><b>P4</b> An alternative scenario is that it became established as a pest somewhere in the warmer climate of the eastern Mediterranean or Southwest Asia, and had already, by the sixth century B.C.E., been spread far and wide by trade. Trying to track any prehistoric grain trade from archaeological evidence is now impossible, but European trade in other items like obsidian was well established at this time. This is beginning to look like the only possibility. Later evidence emphasizes the trade-route idea. The grain weevil seems to have arrived in Britain with the Roman invasion, around 47 C.E. in Londinium (present-day London), and shortly afterwards in various military outposts. The military machine offered good conditions for sustaining and transporting the beetle about the country. Notably, however, with the later withdrawal of the Romans, the beetle declined and was apparently absent from 400 C.E. until the arrival of another mainland European military force: the Norman invasion of 1066.</p>
+                            <p id="p5"><b>P5</b> The likelihood is that it was climatic factors that kept the species under control, or at least subdued enough without the Roman trade network to constantly reinforce it (beetle fragments have been found in drowned grain cargoes from Imperial Roman shipwrecks dated to the second and third centuries C.E.). The grain weevil requires a temperature range of 15-35"Celsius (optimum 26- 30°C) to complete its life cycle, but Britain was just at the difficult edge of this natural limitation. Large grain stores, as existed under the Romans, might have helped insulate pockets to this comfortable temperature, but if the popular history books are to be believed, the presence of little to eat during the early Middle Ages (500-1000 C.E.) saw them disappear. The species was really a Mediterranean beetle, as was the wheat it invaded.</p>
+                            <p id="p6"><b>P6</b> Even so, the original source of the grain weevil is still steeped in mystery. Unlike the biscuit beetles living in the natural habitat of spilled grass seed in birds' nests, grain weevils were never found outside storing areas, even where the original natural precursors of wheat and barley grow wild today.</p>
+                        </div>
+                    </div>
+                    <div id="questions-container-1">
+                        <div class="reading-q reading-q-rp1" data-paragraph-id="p1">
+                            <p class="mb-2 font-medium">1. According to paragraph 1, what do grain shells and grain weevil body parts found at archaeological sites reveal about grain weevils?</p>
+                            <div class="space-y-2">
+                                <div class="question-option"><input type="radio" id="r-q1-a" name="r-q1" value="A" class="hidden"><label for="r-q1-a" class="block w-full p-3 border rounded-lg cursor-pointer">Grain weevils' bodies have evolved over time in ways that make them more destructive to grain supplies.</label></div>
+                                <div class="question-option"><input type="radio" id="r-q1-b" name="r-q1" value="B" class="hidden"><label for="r-q1-b" class="block w-full p-3 border rounded-lg cursor-pointer">Grain weevils had already become a major grain pest in many areas nearly 8,000 years ago.</label></div>
+                                <div class="question-option"><input type="radio" id="r-q1-c" name="r-q1" value="C" class="hidden"><label for="r-q1-c" class="block w-full p-3 border rounded-lg cursor-pointer">Grain weevils have changed the way they hollow out grain shells over time.</label></div>
+                                <div class="question-option"><input type="radio" id="r-q1-d" name="r-q1" value="D" class="hidden"><label for="r-q1-d" class="block w-full p-3 border rounded-lg cursor-pointer">Grain weevils were not always as closely associated with humans as they are today.</label></div>
+                            </div>
+                        </div>
+                        <div class="reading-q reading-q-rp1" data-paragraph-id="p2">
+                            <p class="mb-2 font-medium">2. The word "sparse" in the passage is closest in meaning to</p>
+                            <div class="space-y-2">
+                                <div class="question-option"><input type="radio" id="r-q2-a" name="r-q2" value="A" class="hidden"><label for="r-q2-a" class="block w-full p-3 border rounded-lg cursor-pointer">few</label></div>
+                                <div class="question-option"><input type="radio" id="r-q2-b" name="r-q2" value="B" class="hidden"><label for="r-q2-b" class="block w-full p-3 border rounded-lg cursor-pointer">available</label></div>
+                                <div class="question-option"><input type="radio" id="r-q2-c" name="r-q2" value="C" class="hidden"><label for="r-q2-c" class="block w-full p-3 border rounded-lg cursor-pointer">recent</label></div>
+                                <div class="question-option"><input type="radio" id="r-q2-d" name="r-q2" value="D" class="hidden"><label for="r-q2-d" class="block w-full p-3 border rounded-lg cursor-pointer">unclear</label></div>
+                            </div>
+                        </div>
+                        <div class="reading-q reading-q-rp1" data-paragraph-id="p2">
+                            <p class="mb-2 font-medium">3. In saying that the records are "inconclusive," the author means these records are</p>
+                            <div class="space-y-2">
+                                <div class="question-option"><input type="radio" id="r-q3-a" name="r-q3" value="A" class="hidden"><label for="r-q3-a" class="block w-full p-3 border rounded-lg cursor-pointer">not recognized as official</label></div>
+                                <div class="question-option"><input type="radio" id="r-q3-b" name="r-q3" value="B" class="hidden"><label for="r-q3-b" class="block w-full p-3 border rounded-lg cursor-pointer">by themselves not decisive</label></div>
+                                <div class="question-option"><input type="radio" id="r-q3-c" name="r-q3" value="C" class="hidden"><label for="r-q3-c" class="block w-full p-3 border rounded-lg cursor-pointer">not complete</label></div>
+                                <div class="question-option"><input type="radio" id="r-q3-d" name="r-q3" value="D" class="hidden"><label for="r-q3-d" class="block w-full p-3 border rounded-lg cursor-pointer">largely undiscovered</label></div>
+                            </div>
+                        </div>
+                        <div class="reading-q reading-q-rp1" data-paragraph-id="p2">
+                            <p class="mb-2 font-medium">4. What does paragraph 2 suggest is surprising about the spread of grain weevils?</p>
+                            <div class="space-y-2">
+                                <div class="question-option"><input type="radio" id="r-q4-a" name="r-q4" value="A" class="hidden"><label for="r-q4-a" class="block w-full p-3 border rounded-lg cursor-pointer">That they appeared in some places before grain agriculture had spread there</label></div>
+                                <div class="question-option"><input type="radio" id="r-q4-b" name="r-q4" value="B" class="hidden"><label for="r-q4-b" class="block w-full p-3 border rounded-lg cursor-pointer">That they appeared first in Turkey</label></div>
+                                <div class="question-option"><input type="radio" id="r-q4-c" name="r-q4" value="C" class="hidden"><label for="r-q4-c" class="block w-full p-3 border rounded-lg cursor-pointer">That they appeared in a country far from their origin before appearing in countries closer to their origin</label></div>
+                                <div class="question-option"><input type="radio" id="r-q4-d" name="r-q4" value="D" class="hidden"><label for="r-q4-d" class="block w-full p-3 border rounded-lg cursor-pointer">That they appeared in Turkey and the eastern Mediterranean at around the same time</label></div>
+                            </div>
+                        </div>
+                        <div class="reading-q reading-q-rp1" data-paragraph-id="p3">
+                            <p class="mb-2 font-medium">5. Which of the sentences below best expresses the essential information in the highlighted sentence in the passage? Incorrect choices change the meaning in important ways or leave out essential information.</p>
+                            <div class="space-y-2">
+                                <div class="question-option"><input type="radio" id="r-q5-a" name="r-q5" value="A" class="hidden"><label for="r-q5-a" class="block w-full p-3 border rounded-lg cursor-pointer">This is definitely not the case because the developing egg and larva will not survive if indoor temperatures become too elevated</label></div>
+                                <div class="question-option"><input type="radio" id="r-q5-b" name="r-q5" value="B" class="hidden"><label for="r-q5-b" class="block w-full p-3 border rounded-lg cursor-pointer">It cannot be true that developing and adult species must remain indoors in heated or sheltered buildings to survive.</label></div>
+                                <div class="question-option"><input type="radio" id="r-q5-c" name="r-q5" value="C" class="hidden"><label for="r-q5-c" class="block w-full p-3 border rounded-lg cursor-pointer">This is definitely not the case because developing weevils require higher temperatures to survive compared to adult weevils.</label></div>
+                                <div class="question-option"><input type="radio" id="r-q5-d" name="r-q5" value="D" class="hidden"><label for="r-q5-d" class="block w-full p-3 border rounded-lg cursor-pointer">This cannot be true because in temperate regions, the species requires the warmth of indoor temperatures to develop and survive.</label></div>
+                            </div>
+                        </div>
+                        <div class="reading-q reading-q-rp1" data-paragraph-id="p4">
+                            <p class="mb-2 font-medium">6. What is the author's purpose in providing the information that "European trade in other items like obsidian was well established at this time"?</p>
+                            <div class="space-y-2">
+                                <div class="question-option"><input type="radio" id="r-q6-a" name="r-q6" value="A" class="hidden"><label for="r-q6-a" class="block w-full p-3 border rounded-lg cursor-pointer">To suggest that it may not be as difficult to track the prehistoric grain trade as some people think</label></div>
+                                <div class="question-option"><input type="radio" id="r-q6-b" name="r-q6" value="B" class="hidden"><label for="r-q6-b" class="block w-full p-3 border rounded-lg cursor-pointer">To argue that trade better explains the spread of the grain weevil through Europe than its spread through the Mediterranean</label></div>
+                                <div class="question-option"><input type="radio" id="r-q6-c" name="r-q6" value="C" class="hidden"><label for="r-q6-c" class="block w-full p-3 border rounded-lg cursor-pointer">To support the claim that the grain trade probably began later than trade in obsidian and other items</label></div>
+                                <div class="question-option"><input type="radio" id="r-q6-d" name="r-q6" value="D" class="hidden"><label for="r-q6-d" class="block w-full p-3 border rounded-lg cursor-pointer">To provide evidence that trade networks were sufficiently developed by that time to be a source of the spread of grain weevils</label></div>
+                            </div>
+                        </div>
+                        <div class="reading-q reading-q-rp1" data-paragraph-id="p4">
+                            <p class="mb-2 font-medium">7. According to paragraph 4, which of the following statements is true about the history of the grain weevil in Britain?</p>
+                            <div class="space-y-2">
+                                <div class="question-option"><input type="radio" id="r-q7-a" name="r-q7" value="A" class="hidden"><label for="r-q7-a" class="block w-full p-3 border rounded-lg cursor-pointer">The grain weevil had probably already spread to Britain through prehistoric trade routes before the Romans arrived in 47 C.E.</label></div>
+                                <div class="question-option"><input type="radio" id="r-q7-b" name="r-q7" value="B" class="hidden"><label for="r-q7-b" class="block w-full p-3 border rounded-lg cursor-pointer">The grain weevil spread quickly to different military stations throughout Britain after arriving in Londinium.</label></div>
+                                <div class="question-option"><input type="radio" id="r-q7-c" name="r-q7" value="C" class="hidden"><label for="r-q7-c" class="block w-full p-3 border rounded-lg cursor-pointer">The effect of the Roman military on the spread of the grain weevil was strongest between 400 and 1066 C.E.</label></div>
+                                <div class="question-option"><input type="radio" id="r-q7-d" name="r-q7" value="D" class="hidden"><label for="r-q7-d" class="block w-full p-3 border rounded-lg cursor-pointer">The grain weevil disappeared from Britain following the Norman invasion of 1066 C.E.</label></div>
+                            </div>
+                        </div>
+                        <div class="reading-q reading-q-rp1" data-paragraph-id="p4,p5">
+                            <p class="mb-2 font-medium">8. According to paragraphs 4 and 5, all of the following factors probably contributed to the disappearance of the grain weevil from Britain EXCEPT:</p>
+                            <div class="space-y-2">
+                                <div class="question-option"><input type="radio" id="r-q8-a" name="r-q8" value="A" class="hidden"><label for="r-q8-a" class="block w-full p-3 border rounded-lg cursor-pointer">the withdrawal of Roman military forces</label></div>
+                                <div class="question-option"><input type="radio" id="r-q8-b" name="r-q8" value="B" class="hidden"><label for="r-q8-b" class="block w-full p-3 border rounded-lg cursor-pointer">grain supplies lost in shipwrecks</label></div>
+                                <div class="question-option"><input type="radio" id="r-q8-c" name="r-q8" value="C" class="hidden"><label for="r-q8-c" class="block w-full p-3 border rounded-lg cursor-pointer">Britain's relatively cold temperatures</label></div>
+                                <div class="question-option"><input type="radio" id="r-q8-d" name="r-q8" value="D" class="hidden"><label for="r-q8-d" class="block w-full p-3 border rounded-lg cursor-pointer">food shortages during the early Middle Ages</label></div>
+                            </div>
+                        </div>
+                        <div class="reading-q reading-q-rp1" data-paragraph-id="p1">
+                            <p class="mb-2 font-medium">9. Look at the zero squares 【▇】 that indicate where the following sentence can be added to the passage.<br>It is this unusual physical feature of the beetle that produces all the damage to the grain.<br>Where would the sentence best fit?</p>
+                            <p class="text-gray-600">Click a square in the passage on the left. Your selected position will be highlighted.</p>
+                        </div>
+                        <div class="reading-q reading-q-rp1" data-paragraph-id="all-rp1">
+                            <p class="mb-2 font-medium">10. Directions: An introductory sentence for a brief summary of the passage is provided below.Complete the summary by selecting the THREE answer choices that express the most important ideas in the passage.Some answer choices do not belong in the summary because they express ideas that are not presented in the passage or are minor ideas in the passage. This questions is worth 2 points</p>
+                            <p class="mb-2 p-3 bg-gray-200 rounded-md">"The grain weevil is a widespread pest that feeds on grain and whose origins are somewhat mysterious."</p>
+                            <div class="space-y-2">
+                                <div class="question-option"><input type="checkbox" id="r-q10-a" name="r-q10" value="A" class="hidden"><label for="r-q10-a" class="block w-full p-3 border rounded-lg cursor-pointer">A. In some parts of the Mediterranean and the Middle East, grain weevil infestations that began about 8,000 years ago may have slowed the spread of agriculture to nearby areas.</label></div>
+                                <div class="question-option"><input type="checkbox" id="r-q10-b" name="r-q10" value="B" class="hidden"><label for="r-q10-b" class="block w-full p-3 border rounded-lg cursor-pointer">B. It is unlikely that the grain weevil was originally a widespread wild species because it can survive only in a limited temperature range.</label></div>
+                                <div class="question-option"><input type="checkbox" id="r-q10-c" name="r-q10" value="C" class="hidden"><label for="r-q10-c" class="block w-full p-3 border rounded-lg cursor-pointer">C. Grain weevils invaded and destroyed large quantities of Mediterranean wheat during the early Middle Ages, leading to food shortages throughout Europe.</label></div>
+                                <div class="question-option"><input type="checkbox" id="r-q10-d" name="r-q10" value="D" class="hidden"><label for="r-q10-d" class="block w-full p-3 border rounded-lg cursor-pointer">D. The earliest evidence of grain weevils is found in warm climates where agriculture is thought to have originated, but how they spread from there has been the basis for various hypotheses.</label></div>
+                                <div class="question-option"><input type="checkbox" id="r-q10-e" name="r-q10" value="E" class="hidden"><label for="r-q10-e" class="block w-full p-3 border rounded-lg cursor-pointer">E. Archaeological evidence shows that different species of grain weevil were found in Asia, Africa, and Europe, suggesting separate origins for each species.</label></div>
+                                <div class="question-option"><input type="checkbox" id="r-q10-f" name="r-q10" value="F" class="hidden"><label for="r-q10-f" class="block w-full p-3 border rounded-lg cursor-pointer">F. It is thought that weevils spread to temperate climates by trade routes and military networks, through which weevil populations were transported and then often sustained in large grain stores.</label></div>
+                            </div>
+                        </div>
+                    </div>
+                 </div>
+            </div>
+            <div id="reading-passage-2-view" class="hidden">
+                 <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div id="passage-container-2" class="bg-gray-50 p-4 rounded-lg overflow-y-auto max-h-[85vh]">
+                        <div id="passage-content-2" class="prose max-w-none text-gray-700 leading-relaxed space-y-4">
+                            <p id="rp2-p1"><b>P1</b> Today's typical English countryside of rolling green fields and few trees did not evolve naturally. <span class="insert-square" data-passage="2" data-location="1">▇</span>England was originally wooded. <span class="insert-square" data-passage="2" data-location="2">▇</span>Forests of oak and other hardwoods had filled the southern lands, while conifer stands populated the higher latitudes. <span class="insert-square" data-passage="2" data-location="3">▇</span>Sheepherders over the centuries converted many of these to pastureland. <span class="insert-square" data-passage="2" data-location="4">▇</span>Nevertheless, the domestic wood supply remained great enough to handle timber and firewood demands. Then, beginning in the 1540s, came new manufacturing industries that destroyed the forests for their fuel. <span class="highlighted-sentence">This new wave of deforestation started with the iron industry--an early royal effort to boost manufacturing in accord with trade-based economic theory --since the production of iron required immense amounts of heat and, initially, used charcoal (which is derived from wood) as fuel.</span> In 1543, Parliament first addressed the impending timber shortage with the Act for the Preservation of Woods, which restricted farmers from using woodlands more than two furlongs (about 400 meters) from their homes. British forests were rapidly disappearing.</p>
+                            <p id="rp2-p2"><b>P2</b> The situation worsened during the long reign of Queen Elizabeth I (1558-1603). She promoted numerous other wood-fuel-driven manufacturing industries, including copper smelting (the process of obtaining metal from metallic mineral deposits), salt making, and glass production. (The coal industry, which was beginning, could not meet the rapidly increasing demand for fuel.) One writer from this period commented, "Never so much [oak] hath been spent in a hundred years before as is in 10 years of our time." The price of firewood doubled between 1540 and 1570. This pushed some citizens out of the firewood market, and it became commonplace for the poor to shiver through the winters. The timber shortage had turned a product once freely available for the cutting into a valuable commodity.</p>
+                            <p id="rp2-p3"><b>P3</b> But fuel needs did not fully account for England's timber demand. Wood was also necessary in the construction of ships. And Queen Elizabeth, in addition to promoting domestic manufacturing, had championed shipbuilding, part of the Crown's long-term strategy to <span class="vocab-highlight">contest</span> Spanish sea power and strengthen English commercial trade. Few industries in history have depended on wood quite like shipbuilding (at least before the conversion to iron and steel ship parts in the mid-nineteenth century). A large naval warship, known as a ship of the line and constructed almost entirely from wood, weighed over one hundred tons in the early seventeenth century. The bodies of such vessels required about two thousand mature oaks, which meant at least fifty acres of forest (200,000 square meters) had to be stripped. While oak supplied the timber for much of the ship, it was <span class="vocab-highlight">too inflexible and heavy for ship masts</span>, the poles that supported the canvas sails. Instead, these required lighter and more shock-resistant softwoods, such as pines and firs. The largest masts were about a meter wide at their base and over 30 meters tall-roughly one meter in height per inch in width. To maintain these wooden cathedrals of the sea, shipwrights (skilled workers who build and repair ships) relied on a range of forest products, known as naval stores, extracted from pines as well as firs. Most notable were the tar, pitch, and turpentine used to seal the wood and protect it from seawater. These materials were essential for maintaining the integrity and longevity of the ships, ensuring that they were watertight and resistant to the rotting effects of the ocean. The procurement of these naval stores was itself a significant undertaking, requiring extensive knowledge of forestry and sustainable harvesting techniques to ensure a steady supply without depleting the forests.</p>
+                            <p id="rp2-p4"><b>P4</b> The twin demands of shipbuilding and a manufacturing industry hungry for wood fuel had turned England into a wood importer. In particular, the country had to trade for masts and naval stores, since it had no suitably commercial conifer forests. The preferred mast trees, called Riga firs or Scotch pines, came from an Eastern European region around the city of Riga (in present-day Latvia), but several northern countries had giant spruce forests that were also <span class="vocab-highlight">exploited</span> for naval stores. The trade centered on ports in Scandinavia and the Baltic Sea-the latter, which included Riga, accessible only through narrow straits (waterways) between Denmark and Sweden. Rulers who controlled the various ports and access to the straits knew that England's sea power depended on forest products and, consequently, kept duties, taxes, and shipping fees high. The Danish, for example, collected tolls for each crossing. If England ever lost access to these ports, it would cripple the entire English shipping industry, and with it the Royal Navy.</p>
+                        </div>
+                    </div>
+                    <div id="questions-container-2">
+                        <!-- Reading Passage 2 Questions -->
+                        <div class="reading-q reading-q-rp2" data-paragraph-id="rp2-p1">
+                            <p class="mb-2 font-medium">1. Which of the sentences below best expresses the essential information in the highlighted sentence in the passage? Incorrect choices change the meaning in important ways or leave out essential information.</p>
+                            <div class="space-y-2">
+                                <div class="question-option"><input type="radio" id="r2-q1-a" name="r2-q1" value="A" class="hidden"><label for="r2-q1-a" class="block w-full p-3 border rounded-lg cursor-pointer">There was an effort to boost manufacturing and improve the economy by replacing charcoal with other fuels not derived from wood.</label></div>
+                                <div class="question-option"><input type="radio" id="r2-q1-b" name="r2-q1" value="B" class="hidden"><label for="r2-q1-b" class="block w-full p-3 border rounded-lg cursor-pointer">A new wave of deforestation occurred as a result of a royal effort to get the iron industry to use charcoal to generate heat.</label></div>
+                                <div class="question-option"><input type="radio" id="r2-q1-c" name="r2-q1" value="C" class="hidden"><label for="r2-q1-c" class="block w-full p-3 border rounded-lg cursor-pointer">Wood-derived charcoal was initially the source of the immense amounts of heat needed for the production of iron.</label></div>
+                                <div class="question-option"><input type="radio" id="r2-q1-d" name="r2-q1" value="D" class="hidden"><label for="r2-q1-d" class="block w-full p-3 border rounded-lg cursor-pointer">The royal promotion of the iron industry, which used large amounts of wood-derived charcoal for fuel, began a new wave of deforestation.</label></div>
+                            </div>
+                        </div>
+                        <div class="reading-q reading-q-rp2" data-paragraph-id="rp2-p1">
+                            <p class="mb-2 font-medium">2. According to paragraph 1, which of the following was true of English forests before the 1540s?</p>
+                            <div class="space-y-2">
+                                <div class="question-option"><input type="radio" id="r2-q2-a" name="r2-q2" value="A" class="hidden"><label for="r2-q2-a" class="block w-full p-3 border rounded-lg cursor-pointer">They usually contained a mixture of conifers and hardwood trees.</label></div>
+                                <div class="question-option"><input type="radio" id="r2-q2-b" name="r2-q2" value="B" class="hidden"><label for="r2-q2-b" class="block w-full p-3 border rounded-lg cursor-pointer">Those at higher latitudes remained largely untouched.</label></div>
+                                <div class="question-option"><input type="radio" id="r2-q2-c" name="r2-q2" value="C" class="hidden"><label for="r2-q2-c" class="block w-full p-3 border rounded-lg cursor-pointer">They provided enough wood to meet the country's needs.</label></div>
+                                <div class="question-option"><input type="radio" id="r2-q2-d" name="r2-q2" value="D" class="hidden"><label for="r2-q2-d" class="block w-full p-3 border rounded-lg cursor-pointer">Nearly all of them had been converted to pastureland.</label></div>
+                            </div>
+                        </div>
+                        <div class="reading-q reading-q-rp2" data-paragraph-id="rp2-p1">
+                            <p class="mb-2 font-medium">3. According to paragraph 1, the 1543 Act for the Preservation of Woods made it illegal for farmers to</p>
+                            <div class="space-y-2">
+                                <div class="question-option"><input type="radio" id="r2-q3-a" name="r2-q3" value="A" class="hidden"><label for="r2-q3-a" class="block w-full p-3 border rounded-lg cursor-pointer">obtain wood that originated far from their homes</label></div>
+                                <div class="question-option"><input type="radio" id="r2-q3-b" name="r2-q3" value="B" class="hidden"><label for="r2-q3-b" class="block w-full p-3 border rounded-lg cursor-pointer">use forests within two furlongs of their homes</label></div>
+                                <div class="question-option"><input type="radio" id="r2-q3-c" name="r2-q3" value="C" class="hidden"><label for="r2-q3-c" class="block w-full p-3 border rounded-lg cursor-pointer">build a home within two furlongs of a forest</label></div>
+                                <div class="question-option"><input type="radio" id="r2-q3-d" name="r2-q3" value="D" class="hidden"><label for="r2-q3-d" class="block w-full p-3 border rounded-lg cursor-pointer">keep a distance of two furlongs between their home and any forest</label></div>
+                            </div>
+                        </div>
+                        <div class="reading-q reading-q-rp2" data-paragraph-id="rp2-p2">
+                            <p class="mb-2 font-medium">4. Paragraph 2 suggests that the price of firewood doubled between 1540 and 1570 for which of the following reasons?</p>
+                            <div class="space-y-2">
+                                <div class="question-option"><input type="radio" id="r2-q4-a" name="r2-q4" value="A" class="hidden"><label for="r2-q4-a" class="block w-full p-3 border rounded-lg cursor-pointer">Trees had become much less plentiful.</label></div>
+                                <div class="question-option"><input type="radio" id="r2-q4-b" name="r2-q4" value="B" class="hidden"><label for="r2-q4-b" class="block w-full p-3 border rounded-lg cursor-pointer">The new coal industry was slow to supply fuel for home heating.</label></div>
+                                <div class="question-option"><input type="radio" id="r2-q4-c" name="r2-q4" value="C" class="hidden"><label for="r2-q4-c" class="block w-full p-3 border rounded-lg cursor-pointer">People who had previously marketed firewood worked in industrial production instead.</label></div>
+                                <div class="question-option"><input type="radio" id="r2-q4-d" name="r2-q4" value="D" class="hidden"><label for="r2-q4-d" class="block w-full p-3 border rounded-lg cursor-pointer">The queen restricted the availability of wood for commercial use.</label></div>
+                            </div>
+                        </div>
+                        <div class="reading-q reading-q-rp2" data-paragraph-id="rp2-p3">
+                            <p class="mb-2 font-medium">5. The word "contest" in the passage is closest in meaning to</p>
+                            <div class="space-y-2">
+                                <div class="question-option"><input type="radio" id="r2-q5-a" name="r2-q5" value="A" class="hidden"><label for="r2-q5-a" class="block w-full p-3 border rounded-lg cursor-pointer">equal</label></div>
+                                <div class="question-option"><input type="radio" id="r2-q5-b" name="r2-q5" value="B" class="hidden"><label for="r2-q5-b" class="block w-full p-3 border rounded-lg cursor-pointer">learn from</label></div>
+                                <div class="question-option"><input type="radio" id="r2-q5-c" name="r2-q5" value="C" class="hidden"><label for="r2-q5-c" class="block w-full p-3 border rounded-lg cursor-pointer">destroy</label></div>
+                                <div class="question-option"><input type="radio" id="r2-q5-d" name="r2-q5" value="D" class="hidden"><label for="r2-q5-d" class="block w-full p-3 border rounded-lg cursor-pointer">challenge</label></div>
+                            </div>
+                        </div>
+                        <div class="reading-q reading-q-rp2" data-paragraph-id="rp2-p3">
+                            <p class="mb-2 font-medium">6. Why does the author point out that oak wood was "too inflexible and heavy for ship masts"?</p>
+                            <div class="space-y-2">
+                                <div class="question-option"><input type="radio" id="r2-q6-a" name="r2-q6" value="A" class="hidden"><label for="r2-q6-a" class="block w-full p-3 border rounded-lg cursor-pointer">To identify a reason why the use of oak eventually declined in ship building</label></div>
+                                <div class="question-option"><input type="radio" id="r2-q6-b" name="r2-q6" value="B" class="hidden"><label for="r2-q6-b" class="block w-full p-3 border rounded-lg cursor-pointer">To emphasize the difficulty of maintaining a full supply of naval stores</label></div>
+                                <div class="question-option"><input type="radio" id="r2-q6-c" name="r2-q6" value="C" class="hidden"><label for="r2-q6-c" class="block w-full p-3 border rounded-lg cursor-pointer">To explain why a variety of forest materials were needed for building ships</label></div>
+                                <div class="question-option"><input type="radio" id="r2-q6-d" name="r2-q6" value="D" class="hidden"><label for="r2-q6-d" class="block w-full p-3 border rounded-lg cursor-pointer">To help explain why shipbuilding involved stripping the trees from many acres of land</label></div>
+                            </div>
+                        </div>
+                        <div class="reading-q reading-q-rp2" data-paragraph-id="rp2-p4">
+                            <p class="mb-2 font-medium">7. The word "exploited" in the passage is closest in meaning to</p>
+                            <div class="space-y-2">
+                                <div class="question-option"><input type="radio" id="r2-q7-a" name="r2-q7" value="A" class="hidden"><label for="r2-q7-a" class="block w-full p-3 border rounded-lg cursor-pointer">chosen</label></div>
+                                <div class="question-option"><input type="radio" id="r2-q7-b" name="r2-q7" value="B" class="hidden"><label for="r2-q7-b" class="block w-full p-3 border rounded-lg cursor-pointer">used</label></div>
+                                <div class="question-option"><input type="radio" id="r2-q7-c" name="r2-q7" value="C" class="hidden"><label for="r2-q7-c" class="block w-full p-3 border rounded-lg cursor-pointer">managed</label></div>
+                                <div class="question-option"><input type="radio" id="r2-q7-d" name="r2-q7" value="D" class="hidden"><label for="r2-q7-d" class="block w-full p-3 border rounded-lg cursor-pointer">exported</label></div>
+                            </div>
+                        </div>
+                        <div class="reading-q reading-q-rp2" data-paragraph-id="rp2-p4">
+                            <p class="mb-2 font-medium">8. According to paragraph 4, England needed which of the following in order to have access to essential forest products?</p>
+                            <div class="space-y-2">
+                                <div class="question-option"><input type="radio" id="r2-q8-a" name="r2-q8" value="A" class="hidden"><label for="r2-q8-a" class="block w-full p-3 border rounded-lg cursor-pointer">Access to conifer forests in remote parts of northern England</label></div>
+                                <div class="question-option"><input type="radio" id="r2-q8-b" name="r2-q8" value="B" class="hidden"><label for="r2-q8-b" class="block w-full p-3 border rounded-lg cursor-pointer">Access to ports in Scandinavia and the Baltic Sea</label></div>
+                                <div class="question-option"><input type="radio" id="r2-q8-c" name="r2-q8" value="C" class="hidden"><label for="r2-q8-c" class="block w-full p-3 border rounded-lg cursor-pointer">The construction of new, wider waterways between Denmark and Sweden</label></div>
+                                <div class="question-option"><input type="radio" id="r2-q8-d" name="r2-q8" value="D" class="hidden"><label for="r2-q8-d" class="block w-full p-3 border rounded-lg cursor-pointer">The creation of a trade deal with Denmark that eliminated shipping fees</label></div>
+                            </div>
+                        </div>
+                        <div class="reading-q reading-q-rp2" data-paragraph-id="rp2-p1">
+                            <p class="mb-2 font-medium">9. Look at the zero squares 【▇】 that indicate where the following sentence can be added to the passage.<br>Exactly when trees began being cleared for this reason remains uncertain, but by 1000 B.C.E. much of England's original forests had been removed<br>Where would the sentence best fit?</p>
+                            <p class="text-gray-600">Click a square in the passage on the left. Your selected position will be highlighted.</p>
+                        </div>
+                        <div class="reading-q reading-q-rp2" data-paragraph-id="all-rp2">
+                            <p class="mb-2 font-medium">10. Directions: An introductory sentence for a brief summary of the passage is provided below.Complete the summary by selecting the THREE answer choices that express the most important ideas in the passage.Some answer choices do not belong in the summary because they express ideas that are not presented in the passage or are minor ideas in the passage. This questions is worth 2 points</p>
+                            <p class="mb-2 p-3 bg-gray-200 rounded-md">"England's increasing need for wood led to firewood shortages and deforestation in the sixteenth century."</p>
+                            <div class="space-y-2">
+                                <div class="question-option"><input type="checkbox" id="r2-q10-a" name="r2-q10" value="A" class="hidden"><label for="r2-q10-a" class="block w-full p-3 border rounded-lg cursor-pointer">A. England's increasing need for wood led to firewood shortages and deforestation in the sixteenth century.</label></div>
+                                <div class="question-option"><input type="checkbox" id="r2-q10-b" name="r2-q10" value="B" class="hidden"><label for="r2-q10-b" class="block w-full p-3 border rounded-lg cursor-pointer">B. Largely as a result of increases in the practice of converting forests to pastureland for sheep, England began experiencing wood shortages in the early 1500s.</label></div>
+                                <div class="question-option"><input type="checkbox" id="r2-q10-c" name="r2-q10" value="C" class="hidden"><label for="r2-q10-c" class="block w-full p-3 border rounded-lg cursor-pointer">C. In an effort to evenly distribute the shrinking supply of wood, rural inhabitants were given exclusive access to small portions of woodland next to their properties.</label></div>
+                                <div class="question-option"><input type="checkbox" id="r2-q10-d" name="r2-q10" value="D" class="hidden"><label for="r2-q10-d" class="block w-full p-3 border rounded-lg cursor-pointer">D. Shipbuilding, which was essential to build up the nation's navy and promote its commercial trade, required massive amounts of trees, putting a great strain on the nation's oak forests.</label></div>
+                                <div class="question-option"><input type="checkbox" id="r2-q10-e" name="r2-q10" value="E" class="hidden"><label for="r2-q10-e" class="block w-full p-3 border rounded-lg cursor-pointer">E. With the approval of Queen Elizabeth I, Parliament addressed the harmful effects of the wood shortage on farmers and the poor by passing the Act for the Preservation of Woods.</label></div>
+                                <div class="question-option"><input type="checkbox" id="r2-q10-f" name="r2-q10" value="F" class="hidden"><label for="r2-q10-f" class="block w-full p-3 border rounded-lg cursor-pointer">F. Queen Elizabeth I promoted the iron industry and other industries that similarly required great amounts of heat produced by charcoal or other fuels derived from wood.</label></div>
+                            </div>
+                        </div>
+                    </div>
+                 </div>
+            </div>
+
+            <div id="reading-nav" class="hidden flex justify-between mt-6 pt-6 border-t">
+                <button id="prev-q-btn" class="bg-gray-500 text-white font-bold py-2 px-6 rounded-lg shadow-md hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-400 transition-transform transform hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed"> &larr; Previous </button>
+                <span id="question-counter" class="text-lg font-semibold text-gray-700 self-center"></span>
+                <button id="next-q-btn" class="bg-indigo-600 text-white font-bold py-2 px-6 rounded-lg shadow-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-transform transform hover:scale-105"> Next &rarr; </button>
+            </div>
+        </div>
+
+        <!-- Listening Section -->
+        <div id="listening-section" class="hidden">
+            <h2 class="text-xl font-semibold mb-4 text-indigo-700 border-l-4 border-indigo-500 pl-3">Section 1: Listening</h2>
+            
+            <!-- Conversation 1 Container -->
+            <div id="c1-container">
+                <div id="c1-audio-view" class="mb-8 p-6 bg-gray-50 rounded-lg text-center">
+                    <h3 class="font-bold text-xl mb-4">Conversation 1 (25Z03-C1)</h3>
+                    <p class="text-gray-600 mb-6">Click the button to play the audio. You can only play it once.</p>
+                    <button id="play-c1-btn" class="bg-indigo-600 text-white font-bold py-3 px-6 rounded-lg shadow-md hover:bg-indigo-700 disabled:bg-gray-400 disabled:cursor-not-allowed transition">Play Audio</button>
+                    <audio id="audio-c1" src="2025Test03/2503-C1.mp3" preload="auto"></audio>
+                    <div class="mt-6">
+                        <button id="start-c1-questions-btn" class="bg-green-600 text-white font-bold py-2 px-6 rounded-lg shadow-md hover:bg-green-700 disabled:opacity-50 disabled:cursor-not-allowed transition hidden">Start Questions</button>
+                    </div>
+                </div>
+                <div id="c1-questions-view" class="hidden mb-8 p-6 bg-gray-50 rounded-lg">
+                    <div class="listening-question c1-question">
+                        <p class="mb-2 font-medium">1. Why does the professor want to speak with the man?</p>
+                        <div class="space-y-2">
+                            <div class="question-option"><input type="radio" id="c1-q1-a" name="c1-q1" value="A" class="hidden"><label for="c1-q1-a" class="block w-full p-3 border rounded-lg cursor-pointer">To critique a presentation that he recently made in class</label></div>
+                            <div class="question-option"><input type="radio" id="c1-q1-b" name="c1-q1" value="B" class="hidden"><label for="c1-q1-b" class="block w-full p-3 border rounded-lg cursor-pointer">To describe research that she would like him to develop into a presentation</label></div>
+                            <div class="question-option"><input type="radio" id="c1-q1-c" name="c1-q1" value="C" class="hidden"><label for="c1-q1-c" class="block w-full p-3 border rounded-lg cursor-pointer">To suggest a way for him to narrow the focus of his presentation</label></div>
+                            <div class="question-option"><input type="radio" id="c1-q1-d" name="c1-q1" value="D" class="hidden"><label for="c1-q1-d" class="block w-full p-3 border rounded-lg cursor-pointer">To find out if he would rather give a presentation or write a paper</label></div>
+                        </div>
+                    </div>
+                    <div class="listening-question c1-question hidden">
+                        <p class="mb-2 font-medium">2. What does the professor imply about Irene Pepperberg's research?</p>
+                        <div class="space-y-2">
+                            <div class="question-option"><input type="radio" id="c1-q2-a" name="c1-q2" value="A" class="hidden"><label for="c1-q2-a" class="block w-full p-3 border rounded-lg cursor-pointer">It challenges traditional thinking about the cognitive abilities of animals other than primates.</label></div>
+                            <div class="question-option"><input type="radio" id="c1-q2-b" name="c1-q2" value="B" class="hidden"><label for="c1-q2-b" class="block w-full p-3 border rounded-lg cursor-pointer">It suggests an evolutionary connection between birds and the great apes.</label></div>
+                            <div class="question-option"><input type="radio" id="c1-q2-c" name="c1-q2" value="C" class="hidden"><label for="c1-q2-c" class="block w-full p-3 border rounded-lg cursor-pointer">It proves that an animal's brain size helps determine its communicative abilities.</label></div>
+                            <div class="question-option"><input type="radio" id="c1-q2-d" name="c1-q2" value="D" class="hidden"><label for="c1-q2-d" class="block w-full p-3 border rounded-lg cursor-pointer">It shows that African gray parrots can hear an unusually wide range of sounds.</label></div>
+                        </div>
+                    </div>
+                    <div class="listening-question c1-question hidden">
+                        <p class="mb-2 font-medium">3. What point does the professor make about African gray parrots when she mentions color?</p>
+                        <div class="space-y-2">
+                            <div class="question-option"><input type="radio" id="c1-q3-a" name="c1-q3" value="A" class="hidden"><label for="c1-q3-a" class="block w-full p-3 border rounded-lg cursor-pointer">They perceive more colors than great apes do.</label></div>
+                            <div class="question-option"><input type="radio" id="c1-q3-b" name="c1-q3" value="B" class="hidden"><label for="c1-q3-b" class="block w-full p-3 border rounded-lg cursor-pointer">They can count objects.</label></div>
+                            <div class="question-option"><input type="radio" id="c1-q3-c" name="c1-q3" value="C" class="hidden"><label for="c1-q3-c" class="block w-full p-3 border rounded-lg cursor-pointer">They understand that certain concepts can be grouped into categories.</label></div>
+                            <div class="question-option"><input type="radio" id="c1-q3-d" name="c1-q3" value="D" class="hidden"><label for="c1-q3-d" class="block w-full p-3 border rounded-lg cursor-pointer">They mimic color words more clearly than other parrot species do.</label></div>
+                        </div>
+                    </div>
+                    <div class="listening-question c1-question hidden">
+                        <p class="mb-2 font-medium">4. What factors does the professor associate with the development of the African gray parrot's brain? <span class="font-normal text-gray-500">(Click on 3 answers)</span></p>
+                        <div class="space-y-2">
+                            <div class="question-option"><input type="checkbox" id="c1-q4-a" name="c1-q4" value="A" class="hidden"><label for="c1-q4-a" class="block w-full p-3 border rounded-lg cursor-pointer">The parrot's relationship with humans</label></div>
+                            <div class="question-option"><input type="checkbox" id="c1-q4-b" name="c1-q4" value="B" class="hidden"><label for="c1-q4-b" class="block w-full p-3 border rounded-lg cursor-pointer">The complexity of the parrot's habitat</label></div>
+                            <div class="question-option"><input type="checkbox" id="c1-q4-c" name="c1-q4" value="C" class="hidden"><label for="c1-q4-c" class="block w-full p-3 border rounded-lg cursor-pointer">The amount of territory that the parrot covers on a daily basis</label></div>
+                            <div class="question-option"><input type="checkbox" id="c1-q4-d" name="c1-q4" value="D" class="hidden"><label for="c1-q4-d" class="block w-full p-3 border rounded-lg cursor-pointer">The parrot's life expectancy</label></div>
+                            <div class="question-option"><input type="checkbox" id="c1-q4-e" name="c1-q4" value="E" class="hidden"><label for="c1-q4-e" class="block w-full p-3 border rounded-lg cursor-pointer">The number of species the parrot competes with for food</label></div>
+                        </div>
+                    </div>
+                    <div class="listening-question c1-question hidden">
+                        <p class="mb-2 font-medium">5. Why does the professor say this:</p>
+                        <div class="space-y-2">
+                            <div class="question-option"><input type="radio" id="c1-q5-a" name="c1-q5" value="A" class="hidden"><label for="c1-q5-a" class="block w-full p-3 border rounded-lg cursor-pointer">To remind the student of material that was covered in class</label></div>
+                            <div class="question-option"><input type="radio" id="c1-q5-b" name="c1-q5" value="B" class="hidden"><label for="c1-q5-b" class="block w-full p-3 border rounded-lg cursor-pointer">To confirm that the student understands the assignment</label></div>
+                            <div class="question-option"><input type="radio" id="c1-q5-c" name="c1-q5" value="C" class="hidden"><label for="c1-q5-c" class="block w-full p-3 border rounded-lg cursor-pointer">To caution the student against overgeneralizing a concept</label></div>
+                            <div class="question-option"><input type="radio" id="c1-q5-d" name="c1-q5" value="D" class="hidden"><label for="c1-q5-d" class="block w-full p-3 border rounded-lg cursor-pointer">To remind the student that research on the topic is ongoing</label></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Lecture 1 Container -->
+            <div id="l1-container" class="hidden">
+                 <div id="l1-audio-view" class="mb-8 p-6 bg-gray-50 rounded-lg text-center">
+                    <h3 class="font-bold text-xl mb-4">Lecture 1 (25Z03-L1)</h3>
+                    <p class="text-gray-600 mb-6">Click the button to play the audio. You can only play it once.</p>
+                    <button id="play-l1-btn" class="bg-indigo-600 text-white font-bold py-3 px-6 rounded-lg shadow-md hover:bg-indigo-700 disabled:bg-gray-400 disabled:cursor-not-allowed transition">Play Audio</button>
+                    <audio id="audio-l1" src="2025Test03/2503-L1.mp3" preload="auto"></audio>
+                    <div class="mt-6">
+                        <button id="start-l1-questions-btn" class="bg-green-600 text-white font-bold py-2 px-6 rounded-lg shadow-md hover:bg-green-700 disabled:opacity-50 disabled:cursor-not-allowed transition hidden">Start Questions</button>
+                    </div>
+                </div>
+                <div id="l1-questions-view" class="hidden mb-8 p-6 bg-gray-50 rounded-lg">
+                    <div class="listening-question l1-question">
+                        <p class="mb-2 font-medium">1. What is main purpose of the lecture?</p>
+                        <div class="space-y-2">
+                            <div class="question-option"><input type="radio" id="l1-q1-a" name="l1-q1" value="A" class="hidden"><label for="l1-q1-a" class="block w-full p-3 border rounded-lg cursor-pointer">To compare the feeding habits of two closely related bat species</label></div>
+                            <div class="question-option"><input type="radio" id="l1-q1-b" name="l1-q1" value="B" class="hidden"><label for="l1-q1-b" class="block w-full p-3 border rounded-lg cursor-pointer">To explain why relatively few mammals have coevolved with plants</label></div>
+                            <div class="question-option"><input type="radio" id="l1-q1-c" name="l1-q1" value="C" class="hidden"><label for="l1-q1-c" class="block w-full p-3 border rounded-lg cursor-pointer">To contrast pollination strategies used in mainland and island ecosystems</label></div>
+                            <div class="question-option"><input type="radio" id="l1-q1-d" name="l1-q1" value="D" class="hidden"><label for="l1-q1-d" class="block w-full p-3 border rounded-lg cursor-pointer">To describe some ways in which species rely on each other for survival</label></div>
+                        </div>
+                    </div>
+                    <div class="listening-question l1-question hidden">
+                        <p class="mb-2 font-medium">2. What does the professor point out about the relationship between Anoura fistulata and the flower it feeds on?</p>
+                        <div class="space-y-2">
+                            <div class="question-option"><input type="radio" id="l1-q2-a" name="l1-q2" value="A" class="hidden"><label for="l1-q2-a" class="block w-full p-3 border rounded-lg cursor-pointer">The relationship prevents the flower's pollen from being transferred to plants of other species.</label></div>
+                            <div class="question-option"><input type="radio" id="l1-q2-b" name="l1-q2" value="B" class="hidden"><label for="l1-q2-b" class="block w-full p-3 border rounded-lg cursor-pointer">The relationship ensures that there is always enough nectar available for other bat species.</label></div>
+                            <div class="question-option"><input type="radio" id="l1-q2-c" name="l1-q2" value="C" class="hidden"><label for="l1-q2-c" class="block w-full p-3 border rounded-lg cursor-pointer">The relationship allows Anoura fistulata to inhabit a large geographical area.</label></div>
+                            <div class="question-option"><input type="radio" id="l1-q2-d" name="l1-q2" value="D" class="hidden"><label for="l1-q2-d" class="block w-full p-3 border rounded-lg cursor-pointer">The relationship helps control the population of Anoura fistulata.</label></div>
+                        </div>
+                    </div>
+                    <div class="listening-question l1-question hidden">
+                        <p class="mb-2 font-medium">3. What is the professor’s attitude when she introduces the term “bat syndrome”?</p>
+                        <div class="space-y-2">
+                            <div class="question-option"><input type="radio" id="l1-q3-a" name="l1-q3" value="A" class="hidden"><label for="l1-q3-a" class="block w-full p-3 border rounded-lg cursor-pointer">Amusement about the term’s name</label></div>
+                            <div class="question-option"><input type="radio" id="l1-q3-b" name="l1-q3" value="B" class="hidden"><label for="l1-q3-b" class="block w-full p-3 border rounded-lg cursor-pointer">Worry that her definition of the term is not clear.</label></div>
+                            <div class="question-option"><input type="radio" id="l1-q3-c" name="l1-q3" value="C" class="hidden"><label for="l1-q3-c" class="block w-full p-3 border rounded-lg cursor-pointer">Enthusiasm, because the term refers to an achievement in biological research.</label></div>
+                            <div class="question-option"><input type="radio" id="l1-q3-d" name="l1-q3" value="D" class="hidden"><label for="l1-q3-d" class="block w-full p-3 border rounded-lg cursor-pointer">Caution, since use of the term is controversial within the field of biology.</label></div>
+                        </div>
+                    </div>
+                    <div class="listening-question l1-question hidden">
+                        <p class="mb-2 font-medium">4. What bat-syndrome traits in plants does the professor mention? <span class="font-normal text-gray-500">(Click on 2 answers)</span></p>
+                        <div class="space-y-2">
+                            <div class="question-option"><input type="checkbox" id="l1-q4-a" name="l1-q4" value="A" class="hidden"><label for="l1-q4-a" class="block w-full p-3 border rounded-lg cursor-pointer">Highly sticky pollen grains</label></div>
+                            <div class="question-option"><input type="checkbox" id="l1-q4-b" name="l1-q4" value="B" class="hidden"><label for="l1-q4-b" class="block w-full p-3 border rounded-lg cursor-pointer">Tubular flower shapes</label></div>
+                            <div class="question-option"><input type="checkbox" id="l1-q4-c" name="l1-q4" value="C" class="hidden"><label for="l1-q4-c" class="block w-full p-3 border rounded-lg cursor-pointer">Nighttime odor change</label></div>
+                            <div class="question-option"><input type="checkbox" id="l1-q4-d" name="l1-q4" value="D" class="hidden"><label for="l1-q4-d" class="block w-full p-3 border rounded-lg cursor-pointer">Brightly colored flower petals</label></div>
+                        </div>
+                    </div>
+                    <div class="listening-question l1-question hidden">
+                        <p class="mb-2 font-medium">5. What does the professor imply when she discuss the behavior of Orii’s flying fox?</p>
+                        <div class="space-y-2">
+                            <div class="question-option"><input type="radio" id="l1-q5-a" name="l1-q5" value="A" class="hidden"><label for="l1-q5-a" class="block w-full p-3 border rounded-lg cursor-pointer">It is active during the day unlike most other bat species.</label></div>
+                            <div class="question-option"><input type="radio" id="l1-q5-b" name="l1-q5" value="B" class="hidden"><label for="l1-q5-b" class="block w-full p-3 border rounded-lg cursor-pointer">It is one of many animals in southern Japan that pollinate plants.</label></div>
+                            <div class="question-option"><input type="radio" id="l1-q5-c" name="l1-q5" value="C" class="hidden"><label for="l1-q5-c" class="block w-full p-3 border rounded-lg cursor-pointer">It began eating figs shortly after being introduced in southern Japan.</label></div>
+                            <div class="question-option"><input type="radio" id="l1-q5-d" name="l1-q5" value="D" class="hidden"><label for="l1-q5-d" class="block w-full p-3 border rounded-lg cursor-pointer">Its eating behavior has been thoroughly documented by researchers.</label></div>
+                        </div>
+                    </div>
+                    <div class="listening-question l1-question hidden">
+                        <p class="mb-2 font-medium">6. What does the professor imply about fig seeds she discusses?</p>
+                        <div class="space-y-2">
+                            <div class="question-option"><input type="radio" id="l1-q6-a" name="l1-q6" value="A" class="hidden"><label for="l1-q6-a" class="block w-full p-3 border rounded-lg cursor-pointer">They are eaten by a wide variety of species.</label></div>
+                            <div class="question-option"><input type="radio" id="l1-q6-b" name="l1-q6" value="B" class="hidden"><label for="l1-q6-b" class="block w-full p-3 border rounded-lg cursor-pointer">They have a small chance of taking root unless they are eaten first.</label></div>
+                            <div class="question-option"><input type="radio" id="l1-q6-c" name="l1-q6" value="C" class="hidden"><label for="l1-q6-c" class="block w-full p-3 border rounded-lg cursor-pointer">They generally do not take root underneath trees.</label></div>
+                            <div class="question-option"><input type="radio" id="l1-q6-d" name="l1-q6" value="D" class="hidden"><label for="l1-q6-d" class="block w-full p-3 border rounded-lg cursor-pointer">They tend to grow slower in soil that contains bat waste.</label></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Conversation 2 Container -->
+            <div id="c2-container" class="hidden">
+                <div id="c2-audio-view" class="mb-8 p-6 bg-gray-50 rounded-lg text-center">
+                    <h3 class="font-bold text-xl mb-4">Conversation 2 (25Z03-C2)</h3>
+                    <p class="text-gray-600 mb-6">Click the button to play the audio. You can only play it once.</p>
+                    <button id="play-c2-btn" class="bg-indigo-600 text-white font-bold py-3 px-6 rounded-lg shadow-md hover:bg-indigo-700 disabled:bg-gray-400 disabled:cursor-not-allowed transition">Play Audio</button>
+                    <audio id="audio-c2" src="2025Test03/2503-C2.mp3" preload="auto"></audio>
+                    <div class="mt-6">
+                        <button id="start-c2-questions-btn" class="bg-green-600 text-white font-bold py-2 px-6 rounded-lg shadow-md hover:bg-green-700 disabled:opacity-50 disabled:cursor-not-allowed transition hidden">Start Questions</button>
+                    </div>
+                </div>
+                <div id="c2-questions-view" class="hidden mb-8 p-6 bg-gray-50 rounded-lg">
+                    <div class="listening-question c2-question">
+                        <p class="mb-2 font-medium">1. Why does the man go to see the woman?</p>
+                        <div class="space-y-2">
+                            <div class="question-option"><input type="radio" id="c2-q1-a" name="c2-q1" value="A" class="hidden"><label for="c2-q1-a" class="block w-full p-3 border rounded-lg cursor-pointer">To report some problems that students are experiencing in a new dormitory building</label></div>
+                            <div class="question-option"><input type="radio" id="c2-q1-b" name="c2-q1" value="B" class="hidden"><label for="c2-q1-b" class="block w-full p-3 border rounded-lg cursor-pointer">To arrange for a repair to be made in his dormitory room</label></div>
+                            <div class="question-option"><input type="radio" id="c2-q1-c" name="c2-q1" value="C" class="hidden"><label for="c2-q1-c" class="block w-full p-3 border rounded-lg cursor-pointer">To ask if he must pay for damage he caused in his dormitory room</label></div>
+                            <div class="question-option"><input type="radio" id="c2-q1-d" name="c2-q1" value="D" class="hidden"><label for="c2-q1-d" class="block w-full p-3 border rounded-lg cursor-pointer">To report a difficulty with opening the windows in his dormitory room</label></div>
+                        </div>
+                    </div>
+                    <div class="listening-question c2-question hidden">
+                        <p class="mb-2 font-medium">2. What does the woman imply about Edwards Hall?</p>
+                        <div class="space-y-2">
+                            <div class="question-option"><input type="radio" id="c2-q2-a" name="c2-q2" value="A" class="hidden"><label for="c2-q2-a" class="block w-full p-3 border rounded-lg cursor-pointer">New windows were installed there last summer.</label></div>
+                            <div class="question-option"><input type="radio" id="c2-q2-b" name="c2-q2" value="B" class="hidden"><label for="c2-q2-b" class="block w-full p-3 border rounded-lg cursor-pointer">Students prefer it to other dormitory buildings.</label></div>
+                            <div class="question-option"><input type="radio" id="c2-q2-c" name="c2-q2" value="C" class="hidden"><label for="c2-q2-c" class="block w-full p-3 border rounded-lg cursor-pointer">It is next to Molina Hall.</label></div>
+                            <div class="question-option"><input type="radio" id="c2-q2-d" name="c2-q2" value="D" class="hidden"><label for="c2-q2-d" class="block w-full p-3 border rounded-lg cursor-pointer">It is older than Molina Hall.</label></div>
+                        </div>
+                    </div>
+                    <div class="listening-question c2-question hidden">
+                        <p class="mb-2 font-medium">3. Why does the man suggest that there might be a defect in the window? <span class="font-normal text-gray-500">(Click on 2 answers)</span></p>
+                        <div class="space-y-2">
+                            <div class="question-option"><input type="checkbox" id="c2-q3-a" name="c2-q3" value="A" class="hidden"><label for="c2-q3-a" class="block w-full p-3 border rounded-lg cursor-pointer">The window shows no signs of impact.</label></div>
+                            <div class="question-option"><input type="checkbox" id="c2-q3-b" name="c2-q3" value="B" class="hidden"><label for="c2-q3-b" class="block w-full p-3 border rounded-lg cursor-pointer">Other students have reported a similar issue.</label></div>
+                            <div class="question-option"><input type="checkbox" id="c2-q3-c" name="c2-q3" value="C" class="hidden"><label for="c2-q3-c" class="block w-full p-3 border rounded-lg cursor-pointer">Minor problems are common in new construction.</label></div>
+                            <div class="question-option"><input type="checkbox" id="c2-q3-d" name="c2-q3" value="D" class="hidden"><label for="c2-q3-d" class="block w-full p-3 border rounded-lg cursor-pointer">The window is cracked in more than one place.</label></div>
+                        </div>
+                    </div>
+                    <div class="listening-question c2-question hidden">
+                        <p class="mb-2 font-medium">4. What is the man's attitude regarding maintenance workers moving his belongings?</p>
+                        <div class="space-y-2">
+                            <div class="question-option"><input type="radio" id="c2-q4-a" name="c2-q4" value="A" class="hidden"><label for="c2-q4-a" class="block w-full p-3 border rounded-lg cursor-pointer">He regrets being unable to do it himself</label></div>
+                            <div class="question-option"><input type="radio" id="c2-q4-b" name="c2-q4" value="B" class="hidden"><label for="c2-q4-b" class="block w-full p-3 border rounded-lg cursor-pointer">He is relieved they will be there to help him lift heavy objects.</label></div>
+                            <div class="question-option"><input type="radio" id="c2-q4-c" name="c2-q4" value="C" class="hidden"><label for="c2-q4-c" class="block w-full p-3 border rounded-lg cursor-pointer">He disagrees with the need to move any of his belongings.</label></div>
+                            <div class="question-option"><input type="radio" id="c2-q4-d" name="c2-q4" value="D" class="hidden"><label for="c2-q4-d" class="block w-full p-3 border rounded-lg cursor-pointer">He is embarrassed because his room is disorganized</label></div>
+                        </div>
+                    </div>
+                    <div class="listening-question c2-question hidden">
+                        <p class="mb-2 font-medium">5. What does the man mean when he says this:
+                            <button id="play-c2-q5-replay-btn" class="replay-btn" title="Play audio clip">
+                                <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24" class="fill-indigo-600"><path d="M320-200v-560l440 280-440 280Zm80-280Zm0 134 210-134-210-134v268Z"/></svg>
+                            </button>
+                            <audio id="audio-c2-q5-replay" src="2025Test03/2503-C2Replay.mp3" preload="auto"></audio>
+                        </p>
+                        <div class="space-y-2">
+                            <div class="question-option"><input type="radio" id="c2-q5-a" name="c2-q5" value="A" class="hidden"><label for="c2-q5-a" class="block w-full p-3 border rounded-lg cursor-pointer">His roommate is not very dependable.</label></div>
+                            <div class="question-option"><input type="radio" id="c2-q5-b" name="c2-q5" value="B" class="hidden"><label for="c2-q5-b" class="block w-full p-3 border rounded-lg cursor-pointer">His roommate is not sure how to help.</label></div>
+                            <div class="question-option"><input type="radio" id="c2-q5-c" name="c2-q5" value="C" class="hidden"><label for="c2-q5-c" class="block w-full p-3 border rounded-lg cursor-pointer">His roommate is unavailable to help.</label></div>
+                            <div class="question-option"><input type="radio" id="c2-q5-d" name="c2-q5" value="D" class="hidden"><label for="c2-q5-d" class="block w-full p-3 border rounded-lg cursor-pointer">His roommate disagrees about what should be done about the window.</label></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Lecture 2 Container -->
+            <div id="l2-container" class="hidden">
+                <div id="l2-audio-view" class="mb-8 p-6 bg-gray-50 rounded-lg text-center">
+                    <h3 class="font-bold text-xl mb-4">Lecture 2 (25Z03-L2)</h3>
+                    <p class="text-gray-600 mb-6">Click the button to play the audio. You can only play it once.</p>
+                    <button id="play-l2-btn" class="bg-indigo-600 text-white font-bold py-3 px-6 rounded-lg shadow-md hover:bg-indigo-700 disabled:bg-gray-400 disabled:cursor-not-allowed transition">Play Audio</button>
+                    <audio id="audio-l2" src="2025Test03/2503-L2.mp3" preload="auto"></audio>
+                    <div class="mt-6">
+                        <button id="start-l2-questions-btn" class="bg-green-600 text-white font-bold py-2 px-6 rounded-lg shadow-md hover:bg-green-700 disabled:opacity-50 disabled:cursor-not-allowed transition hidden">Start Questions</button>
+                    </div>
+                </div>
+                <div id="l2-questions-view" class="hidden mb-8 p-6 bg-gray-50 rounded-lg">
+                    <div class="listening-question l2-question">
+                        <p class="mb-2 font-medium">1. What aspect of Michelangelo's David is the lecture mainly about?</p>
+                        <div class="space-y-2">
+                            <div class="question-option"><input type="radio" id="l2-q1-a" name="l2-q1" value="A" class="hidden"><label for="l2-q1-a" class="block w-full p-3 border rounded-lg cursor-pointer">Problems that Michelangelo encountered when creating it</label></div>
+                            <div class="question-option"><input type="radio" id="l2-q1-b" name="l2-q1" value="B" class="hidden"><label for="l2-q1-b" class="block w-full p-3 border rounded-lg cursor-pointer">A serious defect in it that requires special treatment</label></div>
+                            <div class="question-option"><input type="radio" id="l2-q1-c" name="l2-q1" value="C" class="hidden"><label for="l2-q1-c" class="block w-full p-3 border rounded-lg cursor-pointer">The reasons for its quick deterioration in Florence</label></div>
+                            <div class="question-option"><input type="radio" id="l2-q1-d" name="l2-q1" value="D" class="hidden"><label for="l2-q1-d" class="block w-full p-3 border rounded-lg cursor-pointer">A repair project that caused severe damage to it</label></div>
+                        </div>
+                    </div>
+                    <div class="listening-question l2-question hidden">
+                        <p class="mb-2 font-medium">2. What does the professor imply when he describes the face of the David?</p>
+                        <div class="space-y-2">
+                            <div class="question-option"><input type="radio" id="l2-q2-a" name="l2-q2" value="A" class="hidden"><label for="l2-q2-a" class="block w-full p-3 border rounded-lg cursor-pointer">The David is a self-portrait of Michelangelo.</label></div>
+                            <div class="question-option"><input type="radio" id="l2-q2-b" name="l2-q2" value="B" class="hidden"><label for="l2-q2-b" class="block w-full p-3 border rounded-lg cursor-pointer">The David depicts a well-known warrior from Florence.</label></div>
+                            <div class="question-option"><input type="radio" id="l2-q2-c" name="l2-q2" value="C" class="hidden"><label for="l2-q2-c" class="block w-full p-3 border rounded-lg cursor-pointer">The face of the David was the most difficult part of the sculpture to carve.</label></div>
+                            <div class="question-option"><input type="radio" id="l2-q2-d" name="l2-q2" value="D" class="hidden"><label for="l2-q2-d" class="block w-full p-3 border rounded-lg cursor-pointer">The facial expression of the David reflects the determination of Florence to remain independent.</label></div>
+                        </div>
+                    </div>
+                    <div class="listening-question l2-question hidden">
+                        <p class="mb-2 font-medium">3. Why did researchers test miniature models of the David?</p>
+                        <div class="space-y-2">
+                            <div class="question-option"><input type="radio" id="l2-q3-a" name="l2-q3" value="A" class="hidden"><label for="l2-q3-a" class="block w-full p-3 border rounded-lg cursor-pointer">To detect the location of the little holes in the stone</label></div>
+                            <div class="question-option"><input type="radio" id="l2-q3-b" name="l2-q3" value="B" class="hidden"><label for="l2-q3-b" class="block w-full p-3 border rounded-lg cursor-pointer">To identify the physical forces that affected the statue's ankles in the past</label></div>
+                            <div class="question-option"><input type="radio" id="l2-q3-c" name="l2-q3" value="C" class="hidden"><label for="l2-q3-c" class="block w-full p-3 border rounded-lg cursor-pointer">To find out why the statue leans at an angle of fifteen degrees</label></div>
+                            <div class="question-option"><input type="radio" id="l2-q3-d" name="l2-q3" value="D" class="hidden"><label for="l2-q3-d" class="block w-full p-3 border rounded-lg cursor-pointer">To determine how much stress the statue's ankles can bear</label></div>
+                        </div>
+                    </div>
+                    <div class="listening-question l2-question hidden">
+                        <p class="mb-2 font-medium">4. Why does the professor discuss the efforts of a sculptor who was older than Michelangelo?</p>
+                        <div class="space-y-2">
+                            <div class="question-option"><input type="radio" id="l2-q4-a" name="l2-q4" value="A" class="hidden"><label for="l2-q4-a" class="block w-full p-3 border rounded-lg cursor-pointer">To contrast his failure with Michelangelo's achievement</label></div>
+                            <div class="question-option"><input type="radio" id="l2-q4-b" name="l2-q4" value="B" class="hidden"><label for="l2-q4-b" class="block w-full p-3 border rounded-lg cursor-pointer">To explain that he taught carving techniques to Michelangelo</label></div>
+                            <div class="question-option"><input type="radio" id="l2-q4-c" name="l2-q4" value="C" class="hidden"><label for="l2-q4-c" class="block w-full p-3 border rounded-lg cursor-pointer">To indicate the proper way to transport a block of marble from a quarry</label></div>
+                            <div class="question-option"><input type="radio" id="l2-q4-d" name="l2-q4" value="D" class="hidden"><label for="l2-q4-d" class="block w-full p-3 border rounded-lg cursor-pointer">To show that both sculptors made similar mistakes</label></div>
+                        </div>
+                    </div>
+                    <div class="listening-question l2-question hidden">
+                        <p class="mb-2 font-medium">5. According to the professor, what caused the damage to the David after it was completed?</p>
+                        <div class="space-y-2">
+                            <div class="question-option"><input type="radio" id="l2-q5-a" name="l2-q5" value="A" class="hidden"><label for="l2-q5-a" class="block w-full p-3 border rounded-lg cursor-pointer">Moving the statue to an indoor location</label></div>
+                            <div class="question-option"><input type="radio" id="l2-q5-b" name="l2-q5" value="B" class="hidden"><label for="l2-q5-b" class="block w-full p-3 border rounded-lg cursor-pointer">An attack by soldiers of a neighboring city</label></div>
+                            <div class="question-option"><input type="radio" id="l2-q5-c" name="l2-q5" value="C" class="hidden"><label for="l2-q5-c" class="block w-full p-3 border rounded-lg cursor-pointer">Conditions at the display site in Florence's main square</label></div>
+                            <div class="question-option"><input type="radio" id="l2-q5-d" name="l2-q5" value="D" class="hidden"><label for="l2-q5-d" class="block w-full p-3 border rounded-lg cursor-pointer">A natural process that causes marble to become brittle</label></div>
+                        </div>
+                    </div>
+                    <div class="listening-question l2-question hidden">
+                        <p class="mb-2 font-medium">6. What attitude does the professor express when he discusses equipping the David with an antiseismic base?</p>
+                        <div class="space-y-2">
+                            <div class="question-option"><input type="radio" id="l2-q6-a" name="l2-q6" value="A" class="hidden"><label for="l2-q6-a" class="block w-full p-3 border rounded-lg cursor-pointer">He is disappointed that the David is too large to be placed on an antiseismic base.</label></div>
+                            <div class="question-option"><input type="radio" id="l2-q6-b" name="l2-q6" value="B" class="hidden"><label for="l2-q6-b" class="block w-full p-3 border rounded-lg cursor-pointer">He worries that the motion of so many visitors in the museum may cause vibrations.</label></div>
+                            <div class="question-option"><input type="radio" id="l2-q6-c" name="l2-q6" value="C" class="hidden"><label for="l2-q6-c" class="block w-full p-3 border rounded-lg cursor-pointer">He reluctantly accepts that delays in such a project must be expected.</label></div>
+                            <div class="question-option"><input type="radio" id="l2-q6-d" name="l2-q6" value="D" class="hidden"><label for="l2-q6-d" class="block w-full p-3 border rounded-lg cursor-pointer">He is shocked that the museum allowed the David to remain in a leaning position for so long.</label></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Lecture 3 Container -->
+            <div id="l3-container" class="hidden">
+                <div id="l3-audio-view" class="mb-8 p-6 bg-gray-50 rounded-lg text-center">
+                    <h3 class="font-bold text-xl mb-4">Lecture 3 (25Z03-L3)</h3>
+                    <p class="text-gray-600 mb-6">Click the button to play the audio. You can only play it once.</p>
+                    <button id="play-l3-btn" class="bg-indigo-600 text-white font-bold py-3 px-6 rounded-lg shadow-md hover:bg-indigo-700 disabled:bg-gray-400 disabled:cursor-not-allowed transition">Play Audio</button>
+                    <audio id="audio-l3" src="2025Test03/2503-L3.mp3" preload="auto"></audio>
+                    <div class="mt-6">
+                        <button id="start-l3-questions-btn" class="bg-green-600 text-white font-bold py-2 px-6 rounded-lg shadow-md hover:bg-green-700 disabled:opacity-50 disabled:cursor-not-allowed transition hidden">Start Questions</button>
+                    </div>
+                </div>
+                <div id="l3-questions-view" class="hidden mb-8 p-6 bg-gray-50 rounded-lg">
+                    <div class="listening-question l3-question">
+                        <p class="mb-2 font-medium">1. What is the lecture mainly about?</p>
+                        <div class="space-y-2">
+                            <div class="question-option"><input type="radio" id="l3-q1-a" name="l3-q1" value="A" class="hidden"><label for="l3-q1-a" class="block w-full p-3 border rounded-lg cursor-pointer">Techniques musicians can use to improve their improvisational skills</label></div>
+                            <div class="question-option"><input type="radio" id="l3-q1-b" name="l3-q1" value="B" class="hidden"><label for="l3-q1-b" class="block w-full p-3 border rounded-lg cursor-pointer">Recent research into brain activity during creative tasks</label></div>
+                            <div class="question-option"><input type="radio" id="l3-q1-c" name="l3-q1" value="C" class="hidden"><label for="l3-q1-c" class="block w-full p-3 border rounded-lg cursor-pointer">A controversy involving the use of fMRI in brain studies</label></div>
+                            <div class="question-option"><input type="radio" id="l3-q1-d" name="l3-q1" value="D" class="hidden"><label for="l3-q1-d" class="block w-full p-3 border rounded-lg cursor-pointer">A new study documenting the development of creativity over time</label></div>
+                        </div>
+                    </div>
+                    <div class="listening-question l3-question hidden">
+                        <p class="mb-2 font-medium">2. What point does the professor make about human creativity?</p>
+                        <div class="space-y-2">
+                            <div class="question-option"><input type="radio" id="l3-q2-a" name="l3-q2" value="A" class="hidden"><label for="l3-q2-a" class="block w-full p-3 border rounded-lg cursor-pointer">It is a complex but common human trait that is worthy of scientific study.</label></div>
+                            <div class="question-option"><input type="radio" id="l3-q2-b" name="l3-q2" value="B" class="hidden"><label for="l3-q2-b" class="block w-full p-3 border rounded-lg cursor-pointer">It is probably too complex to ever be fully understood.</label></div>
+                            <div class="question-option"><input type="radio" id="l3-q2-c" name="l3-q2" value="C" class="hidden"><label for="l3-q2-c" class="block w-full p-3 border rounded-lg cursor-pointer">Individuals vary widely in their potential to develop it.</label></div>
+                            <div class="question-option"><input type="radio" id="l3-q2-d" name="l3-q2" value="D" class="hidden"><label for="l3-q2-d" class="block w-full p-3 border rounded-lg cursor-pointer">Scientists should focus mainly on its genetic basis.</label></div>
+                        </div>
+                    </div>
+                    <div class="listening-question l3-question hidden">
+                        <p class="mb-2 font-medium">3. According to the professor, why is musical improvisation well suited to an experimental setting?</p>
+                        <div class="space-y-2">
+                            <div class="question-option"><input type="radio" id="l3-q3-a" name="l3-q3" value="A" class="hidden"><label for="l3-q3-a" class="block w-full p-3 border rounded-lg cursor-pointer">Musical improvisation involves many different areas of the brain.</label></div>
+                            <div class="question-option"><input type="radio" id="l3-q3-b" name="l3-q3" value="B" class="hidden"><label for="l3-q3-b" class="block w-full p-3 border rounded-lg cursor-pointer">Musical improvisation has been researched extensively in the past.</label></div>
+                            <div class="question-option"><input type="radio" id="l3-q3-c" name="l3-q3" value="C" class="hidden"><label for="l3-q3-c" class="block w-full p-3 border rounded-lg cursor-pointer">Musical improvisation requires less training than other creative activities do.</label></div>
+                            <div class="question-option"><input type="radio" id="l3-q3-d" name="l3-q3" value="D" class="hidden"><label for="l3-q3-d" class="block w-full p-3 border rounded-lg cursor-pointer">Musical improvisation is flexible enough to fit into a desired time frame.</label></div>
+                        </div>
+                    </div>
+                    <div class="listening-question l3-question hidden">
+                        <p class="mb-2 font-medium">4. What does the improvisation study suggest about amateur musicians who have difficulty improvising?</p>
+                        <div class="space-y-2">
+                            <div class="question-option"><input type="radio" id="l3-q4-a" name="l3-q4" value="A" class="hidden"><label for="l3-q4-a" class="block w-full p-3 border rounded-lg cursor-pointer">Very few areas of their brains are engaged when they try to improvise.</label></div>
+                            <div class="question-option"><input type="radio" id="l3-q4-b" name="l3-q4" value="B" class="hidden"><label for="l3-q4-b" class="block w-full p-3 border rounded-lg cursor-pointer">An area of their brains associated with pleasure is inactive.</label></div>
+                            <div class="question-option"><input type="radio" id="l3-q4-c" name="l3-q4" value="C" class="hidden"><label for="l3-q4-c" class="block w-full p-3 border rounded-lg cursor-pointer">Rehearsing music they have memorized may improve their improvisational skills.</label></div>
+                            <div class="question-option"><input type="radio" id="l3-q4-d" name="l3-q4" value="D" class="hidden"><label for="l3-q4-d" class="block w-full p-3 border rounded-lg cursor-pointer">They may need to stop self-consciously monitoring their musical output.</label></div>
+                        </div>
+                    </div>
+                    <div class="listening-question l3-question hidden">
+                        <p class="mb-2 font-medium">5. According to the professor, what is one valid criticism of the improvisation study?</p>
+                        <div class="space-y-2">
+                            <div class="question-option"><input type="radio" id="l3-q5-a" name="l3-q5" value="A" class="hidden"><label for="l3-q5-a" class="block w-full p-3 border rounded-lg cursor-pointer">There are few practical applications for the study's findings.</label></div>
+                            <div class="question-option"><input type="radio" id="l3-q5-b" name="l3-q5" value="B" class="hidden"><label for="l3-q5-b" class="block w-full p-3 border rounded-lg cursor-pointer">The study should have included both professional and amateur musicians.</label></div>
+                            <div class="question-option"><input type="radio" id="l3-q5-c" name="l3-q5" value="C" class="hidden"><label for="l3-q5-c" class="block w-full p-3 border rounded-lg cursor-pointer">The study's findings need to be confirmed using additional research methods.</label></div>
+                            <div class="question-option"><input type="radio" id="l3-q5-d" name="l3-q5" value="D" class="hidden"><label for="l3-q5-d" class="block w-full p-3 border rounded-lg cursor-pointer">The musicians improvised differently because they could not hold their instruments normally.</label></div>
+                        </div>
+                    </div>
+                    <div class="listening-question l3-question hidden">
+                        <p class="mb-2 font-medium">6. Why does the professor mention an experiment involving a series of paintings?</p>
+                        <div class="space-y-2">
+                            <div class="question-option"><input type="radio" id="l3-q6-a" name="l3-q6" value="A" class="hidden"><label for="l3-q6-a" class="block w-full p-3 border rounded-lg cursor-pointer">To compare creativity in the performing arts with creativity in the visual arts</label></div>
+                            <div class="question-option"><input type="radio" id="l3-q6-b" name="l3-q6" value="B" class="hidden"><label for="l3-q6-b" class="block w-full p-3 border rounded-lg cursor-pointer">To show that the improvisation study is part of a larger trend in brain research</label></div>
+                            <div class="question-option"><input type="radio" id="l3-q6-c" name="l3-q6" value="C" class="hidden"><label for="l3-q6-c" class="block w-full p-3 border rounded-lg cursor-pointer">To suggest that studying creativity necessarily involves making inferences</label></div>
+                            <div class="question-option"><input type="radio" id="l3-q6-d" name="l3-q6" value="D" class="hidden"><label for="l3-q6-d" class="block w-full p-3 border rounded-lg cursor-pointer">To recommend a way of improving future fMRI studies of musical improvisation</label></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Listening Navigation -->
+            <div id="listening-nav" class="hidden flex justify-end mt-8 pt-6 border-t">
+                 <button id="next-listening-q-btn" class="bg-indigo-600 text-white font-bold py-2 px-6 rounded-lg shadow-md hover:bg-indigo-700">Next &rarr;</button>
+            </div>
+
+        </div>
+
+                <!-- Results Section -->
+        <div id="results-section" class="hidden text-center">
+            <h2 class="text-2xl font-semibold mb-4 text-green-700">Test Complete!</h2>
+            <p class="text-lg mb-8 text-gray-600">You have finished the practice test. Click the button below to download a file containing all of your answers.</p>
+            <button id="download-btn" class="bg-green-600 text-white font-bold py-3 px-8 rounded-lg shadow-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 transition-transform transform hover:scale-105">
+                Download My Answers
+            </button>
+        </div>
+
+        <!-- Main Navigation -->
+        <div id="main-navigation" class="hidden flex justify-end mt-8 pt-6 border-t">
+            <button id="main-next-btn" class="bg-indigo-600 text-white font-bold py-2 px-6 rounded-lg shadow-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-transform transform hover:scale-105">
+                Next Section &rarr;
+            </button>
+        </div>
+
+    </div>
+
+    <script src="timer.js"></script>
+    <script>
+        // 保持原有的JavaScript代码不变
+        document.addEventListener('DOMContentLoaded', () => {
+            const LISTENING_DURATION = 18 * 60;
+            const READING_DURATION = 36 * 60;
+
+            // --- State Management ---
+            const userAnswers = {};
+            let currentSection = 'intro';
+            let currentListeningPassageId = 'c1';
+            let currentListeningQIndex = 0;
+            
+            let currentReadingPassageId = 'rp1';
+            let currentReadingQIndex = 0;
+
+            // --- Element Selectors ---
+            // Sections
+            const introSection = document.getElementById('intro-section');
+            const startTestBtn = document.getElementById('start-test-btn');
+            const listeningSection = document.getElementById('listening-section');
+            const readingSection = document.getElementById('reading-section');
+            const resultsSection = document.getElementById('results-section');
+            const listeningNav = document.getElementById('listening-nav');
+            const nextListeningQBtn = document.getElementById('next-listening-q-btn');
+            
+            const timerDisplay = document.getElementById('timer');
+            let listeningTimerRunning = false;
+            let readingTimerStarted = false;
+            let listeningLocked = false;
+            let readingLocked = false;
+
+            // Passage Data
+            const passageOrder = ['c1', 'l1', 'c2', 'l2', 'l3'];
+            const passageContainers = {};
+            const audioViews = {};
+            const questionViews = {};
+            const questionSets = {};
+            const startQuestionButtons = {};
+
+            passageOrder.forEach(id => {
+                passageContainers[id] = document.getElementById(`${id}-container`);
+                audioViews[id] = document.getElementById(`${id}-audio-view`);
+                questionViews[id] = document.getElementById(`${id}-questions-view`);
+                questionSets[id] = document.querySelectorAll(`.${id}-question`);
+                startQuestionButtons[id] = document.getElementById(`start-${id}-questions-btn`);
+            });
+
+            // Reading Elements
+            const readingIntro1 = document.getElementById('reading-intro-1');
+            const readingIntro2 = document.getElementById('reading-intro-2');
+            const readingPassage1View = document.getElementById('reading-passage-1-view');
+            const readingPassage2View = document.getElementById('reading-passage-2-view');
+
+            const startReading1Btn = document.getElementById('start-reading-1-btn');
+            const startReading2Btn = document.getElementById('start-reading-2-btn');
+            
+            const readingQuestionsRP1 = document.querySelectorAll('.reading-q-rp1');
+            const readingQuestionsRP2 = document.querySelectorAll('.reading-q-rp2');
+            
+            const questionCounter = document.getElementById('question-counter');
+            const readingNav = document.getElementById('reading-nav');
+            const prevQBtn = document.getElementById('prev-q-btn');
+            const nextQBtn = document.getElementById('next-q-btn');
+            
+            // General Elements
+            const mainNavigation = document.getElementById('main-navigation');
+            const mainNextBtn = document.getElementById('main-next-btn');
+            const downloadBtn = document.getElementById('download-btn');
+            setTimerVisibility(false);
+
+            let listeningTimer = null;
+            const readingTimer = new CountdownTimer(READING_DURATION, {
+                onTick: (seconds) => {
+                    updateTimerDisplay('Reading', seconds);
+                },
+                onExpire: () => {
+                    lockReadingSection();
+                    goToListeningSection();
+                }
+            });
+            
+            // --- Audio Setup ---
+            function setupAudioPlayer(buttonId, audioId, onPlayCallback) {
+                const button = document.getElementById(buttonId);
+                const audio = document.getElementById(audioId);
+                if (button && audio) {
+                    button.addEventListener('click', () => {
+                        audio.play();
+                        button.disabled = true;
+                        if(onPlayCallback) {
+                            onPlayCallback();
+                        }
+                    });
+                }
+            }
+
+            passageOrder.forEach(id => {
+                setupAudioPlayer(`play-${id}-btn`, `audio-${id}`, () => {
+                    startQuestionButtons[id].classList.remove('hidden');
+                    startQuestionButtons[id].disabled = false;
+                });
+            });
+
+            setupAudioPlayer('play-c2-q5-replay-btn', 'audio-c2-q5-replay', null);
+
+            // --- Listening Section Logic ---
+            passageOrder.forEach(id => {
+                startQuestionButtons[id].addEventListener('click', () => {
+                    audioViews[id].classList.add('hidden');
+                    questionViews[id].classList.remove('hidden');
+                    listeningNav.classList.remove('hidden');
+                    displayListeningQuestion();
+                    startListeningTimerIfNeeded();
+                });
+            });
+
+            nextListeningQBtn.addEventListener('click', () => {
+                const currentPassageQuestions = questionSets[currentListeningPassageId];
+                
+                if (currentListeningQIndex < currentPassageQuestions.length - 1) {
+                    currentListeningQIndex++;
+                    displayListeningQuestion();
+                } else {
+                    listeningNav.classList.add('hidden');
+                    passageContainers[currentListeningPassageId].classList.add('hidden');
+                    pauseListeningTimerForAudio();
+
+                    const currentPassageIndex = passageOrder.indexOf(currentListeningPassageId);
+                    if (currentPassageIndex < passageOrder.length - 1) {
+                        const nextPassageId = passageOrder[currentPassageIndex + 1];
+                        currentListeningPassageId = nextPassageId;
+                        currentListeningQIndex = 0;
+                        if (audioViews[nextPassageId]) {
+                            audioViews[nextPassageId].classList.remove('hidden');
+                        }
+                        if (questionViews[nextPassageId]) {
+                            questionViews[nextPassageId].classList.add('hidden');
+                        }
+                        passageContainers[nextPassageId].classList.remove('hidden');
+                    } else {
+                        pauseListeningTimerForAudio();
+                        listeningSection.classList.add('hidden');
+                        mainNavigation.classList.remove('hidden');
+                        mainNextBtn.disabled = false;
+                    }
+                }
+            });
+
+            function displayListeningQuestion() {
+                const questionsToShow = questionSets[currentListeningPassageId];
+                questionsToShow.forEach((q, index) => {
+                    q.classList.toggle('hidden', index !== currentListeningQIndex);
+                });
+            }
+
+            // --- Reading Section Logic ---
+            mainNextBtn.addEventListener('click', () => {
+                if (currentSection === 'listening') {
+                    showResultsSection();
+                }
+            });
+
+            startTestBtn.addEventListener('click', () => {
+                introSection.classList.add('hidden');
+                readingSection.classList.remove('hidden');
+                currentSection = 'reading';
+                startReadingTimerIfNeeded();
+            });
+
+            startReading1Btn.addEventListener('click', () => {
+                readingIntro1.classList.add('hidden');
+                readingPassage1View.classList.remove('hidden');
+                readingNav.classList.remove('hidden');
+                displayReadingQuestion();
+            });
+
+            startReading2Btn.addEventListener('click', () => {
+                readingIntro2.classList.add('hidden');
+                readingPassage2View.classList.remove('hidden');
+                readingNav.classList.remove('hidden');
+                displayReadingQuestion();
+            });
+            
+            nextQBtn.addEventListener('click', () => {
+                const totalQuestionsInPassage = (currentReadingPassageId === 'rp1') ? readingQuestionsRP1.length : readingQuestionsRP2.length;
+
+                if (currentReadingQIndex < totalQuestionsInPassage - 1) {
+                    currentReadingQIndex++;
+                    displayReadingQuestion();
+                } else {
+                    if (currentReadingPassageId === 'rp1') {
+                        readingPassage1View.classList.add('hidden');
+                        readingNav.classList.add('hidden');
+                        readingIntro2.classList.remove('hidden');
+                        currentReadingPassageId = 'rp2';
+                        currentReadingQIndex = 0;
+                    } else {
+                        finishReadingSection();
+                    }
+                }
+            });
+
+            prevQBtn.addEventListener('click', () => {
+                if (currentReadingQIndex > 0) {
+                    currentReadingQIndex--;
+                    displayReadingQuestion();
+                }
+            });
+            
+            function displayReadingQuestion() {
+                const questionsToShow = (currentReadingPassageId === 'rp1') ? readingQuestionsRP1 : readingQuestionsRP2;
+                const totalQuestions = questionsToShow.length;
+
+                questionsToShow.forEach((q, index) => {
+                    q.style.display = (index === currentReadingQIndex) ? 'block' : 'none';
+                });
+                
+                const currentQ = questionsToShow[currentReadingQIndex];
+                questionCounter.textContent = `Question ${currentReadingQIndex + 1} of ${totalQuestions}`;
+
+                const passageContent = (currentReadingPassageId === 'rp1') ? 
+                    document.getElementById('passage-content-1') : 
+                    document.getElementById('passage-content-2');
+                
+                passageContent.querySelectorAll('p').forEach(p => p.style.display = 'none');
+
+                const paraId = currentQ.dataset.paragraphId;
+                if (paraId) {
+                    if (paraId.startsWith('all-')) {
+                         passageContent.querySelectorAll('p').forEach(p => p.style.display = 'block');
+                    }
+                    else {
+                        const paraIds = paraId.split(',');
+                        paraIds.forEach(id => {
+                            const paraToShow = document.getElementById(id);
+                            if (paraToShow) paraToShow.style.display = 'block';
+                        });
+                    }
+                }
+                
+                prevQBtn.disabled = currentReadingQIndex === 0;
+
+                if (currentReadingQIndex === totalQuestions - 1) {
+                    if(currentReadingPassageId === 'rp1') {
+                        nextQBtn.textContent = 'Finish Passage 1';
+                    } else {
+                        nextQBtn.textContent = 'Finish Test';
+                    }
+                } else {
+                    nextQBtn.textContent = 'Next →';
+                }
+            }
+
+            function startListeningTimerIfNeeded() {
+                if (!hasVisibleListeningQuestions()) {
+                    pauseListeningTimerForAudio();
+                    return;
+                }
+                if (!listeningTimer) {
+                    listeningTimer = createListeningTimer();
+                }
+                if (listeningTimerRunning) return;
+                setTimerVisibility(true);
+                listeningTimer.start();
+                listeningTimerRunning = true;
+            }
+
+            function pauseListeningTimerForAudio() {
+                if (listeningTimer && listeningTimerRunning) {
+                    listeningTimer.stop();
+                }
+                listeningTimerRunning = false;
+                clearTimerDisplay();
+            }
+
+            function startReadingTimerIfNeeded() {
+                if (readingTimerStarted) return;
+                readingTimerStarted = true;
+                if (listeningTimer) {
+                    listeningTimer.stop();
+                }
+                listeningTimerRunning = false;
+                setTimerVisibility(true);
+                readingTimer.start();
+            }
+
+            function createListeningTimer() {
+                return new CountdownTimer(LISTENING_DURATION, {
+                    onTick: (seconds) => {
+                        updateTimerDisplay('Listening', seconds);
+                    },
+                    onExpire: () => {
+                        listeningTimerRunning = false;
+                        lockListeningSection();
+                        showResultsSection();
+                    }
+                });
+            }
+
+            function hasVisibleListeningQuestions() {
+                const questionView = questionViews[currentListeningPassageId];
+                if (!questionView || questionView.classList.contains('hidden')) {
+                    return false;
+                }
+                const visibleQuestionBlocks = questionView.querySelectorAll('.listening-question:not(.hidden)');
+                if (visibleQuestionBlocks.length > 0) {
+                    return true;
+                }
+                const answerInputs = questionView.querySelectorAll('input[type=\"radio\"], input[type=\"checkbox\"], textarea');
+                return answerInputs.length > 0;
+            }
+
+            function lockListeningSection() {
+                if (listeningLocked) return;
+                listeningLocked = true;
+                disableInputs(listeningSection);
+            }
+
+            function lockReadingSection() {
+                if (readingLocked) return;
+                readingLocked = true;
+                disableInputs(readingSection);
+                readingSection.querySelectorAll('.insert-square').forEach(square => {
+                    square.style.pointerEvents = 'none';
+                    square.style.opacity = '0.5';
+                });
+                nextQBtn.disabled = true;
+                prevQBtn.disabled = true;
+                startReading1Btn.disabled = true;
+                startReading2Btn.disabled = true;
+            }
+
+            function disableInputs(container) {
+                container.querySelectorAll('input, textarea, select').forEach(el => {
+                    el.disabled = true;
+                });
+            }
+
+            function updateTimerDisplay(label, seconds) {
+                if (!timerDisplay) return;
+                if (typeof seconds !== 'number' || seconds < 0) {
+                    timerDisplay.textContent = '';
+                    return;
+                }
+                timerDisplay.textContent = `${label} Time: ${formatTime(seconds)}`;
+            }
+
+            function setTimerVisibility(isVisible) {
+                if (!timerDisplay) return;
+                timerDisplay.style.visibility = isVisible ? 'visible' : 'hidden';
+            }
+
+            function formatTime(totalSeconds) {
+                const minutes = Math.floor(totalSeconds / 60);
+                const seconds = totalSeconds % 60;
+                const paddedMinutes = minutes.toString().padStart(2, '0');
+                const paddedSeconds = seconds.toString().padStart(2, '0');
+                return `${paddedMinutes}:${paddedSeconds}`;
+            }
+
+            function clearTimerDisplay() {
+                if (timerDisplay) {
+                    timerDisplay.textContent = '';
+                }
+                setTimerVisibility(false);
+            }
+
+            function goToReadingIntro() {
+                if (currentSection === 'reading') return;
+                listeningSection.classList.add('hidden');
+                mainNavigation.classList.add('hidden');
+                readingSection.classList.remove('hidden');
+                readingIntro1.classList.remove('hidden');
+                readingIntro2.classList.add('hidden');
+                readingPassage1View.classList.add('hidden');
+                readingPassage2View.classList.add('hidden');
+                readingNav.classList.add('hidden');
+                currentSection = 'reading';
+                startReadingTimerIfNeeded();
+            }
+
+            function goToListeningSection() {
+                readingTimer.stop();
+                readingTimerStarted = false;
+                readingSection.classList.add('hidden');
+                introSection.classList.add('hidden');
+                readingIntro1.classList.add('hidden');
+                readingIntro2.classList.add('hidden');
+                readingPassage1View.classList.add('hidden');
+                readingPassage2View.classList.add('hidden');
+                readingNav.classList.add('hidden');
+                resultsSection.classList.add('hidden');
+                passageOrder.forEach((id, index) => {
+                    passageContainers[id].classList.toggle('hidden', index !== 0);
+                    if (audioViews[id]) audioViews[id].classList.toggle('hidden', index !== 0);
+                    if (questionViews[id]) questionViews[id].classList.add('hidden');
+                });
+                currentListeningPassageId = 'c1';
+                currentListeningQIndex = 0;
+                listeningNav.classList.add('hidden');
+                listeningSection.classList.remove('hidden');
+                mainNavigation.classList.add('hidden');
+                currentSection = 'listening';
+                clearTimerDisplay();
+            }
+
+            function showResultsSection() {
+                readingTimer.stop();
+                readingSection.classList.add('hidden');
+                readingIntro1.classList.add('hidden');
+                readingIntro2.classList.add('hidden');
+                readingPassage1View.classList.add('hidden');
+                readingPassage2View.classList.add('hidden');
+                readingNav.classList.add('hidden');
+                resultsSection.classList.remove('hidden');
+                mainNavigation.classList.add('hidden');
+                clearTimerDisplay();
+            }
+
+            function finishReadingSection() {
+                goToListeningSection();
+            }
+            
+            // --- General Logic (Answer Storage & Download) ---
+             document.querySelectorAll('input[type="radio"], input[type="checkbox"]').forEach(input => {
+                input.addEventListener('change', (e) => {
+                    const name = e.target.name;
+                    if (e.target.type === 'radio') {
+                        userAnswers[name] = e.target.value;
+                    } else {
+                        if (!userAnswers[name]) userAnswers[name] = [];
+                        if (e.target.checked) {
+                            if (!userAnswers[name].includes(e.target.value)) userAnswers[name].push(e.target.value);
+                        } else {
+                            userAnswers[name] = userAnswers[name].filter(val => val !== e.target.value);
+                        }
+                        userAnswers[name].sort();
+                    }
+                });
+            });
+            
+            document.querySelectorAll('.insert-square').forEach(square => {
+                square.addEventListener('click', (e) => {
+                    if (readingLocked) return;
+                    const passageNum = e.target.dataset.passage;
+                    document.querySelectorAll(`.insert-square[data-passage="${passageNum}"]`).forEach(s => s.classList.remove('selected'));
+                    
+                    square.classList.add('selected');
+                    const questionName = (passageNum === '1') ? 'r-q9-insert' : 'r2-q9-insert';
+                    userAnswers[questionName] = `Position ${square.dataset.location}`;
+                });
+            });
+
+            downloadBtn.addEventListener('click', () => {
+                let report = 'TOEFL Practice Test Answers\n============================\n\n';
+                const questionOrder = [ 
+                    'c1-q1', 'c1-q2', 'c1-q3', 'c1-q4', 'c1-q5', 
+                    'l1-q1', 'l1-q2', 'l1-q3', 'l1-q4', 'l1-q5', 'l1-q6',
+                    'c2-q1', 'c2-q2', 'c2-q3', 'c2-q4', 'c2-q5',
+                    'l2-q1', 'l2-q2', 'l2-q3', 'l2-q4', 'l2-q5', 'l2-q6',
+                    'l3-q1', 'l3-q2', 'l3-q3', 'l3-q4', 'l3-q5', 'l3-q6',
+                    'r-q1', 'r-q2', 'r-q3', 'r-q4', 'r-q5', 'r-q6', 'r-q7', 'r-q8', 'r-q9-insert', 'r-q10',
+                    'r2-q1', 'r2-q2', 'r2-q3', 'r2-q4', 'r2-q5', 'r2-q6', 'r2-q7', 'r2-q8', 'r2-q9-insert', 'r2-q10'
+                ];
+                questionOrder.forEach(key => {
+                    const answer = userAnswers[key];
+                    if (answer && answer.length > 0) {
+                        let formattedAnswer = Array.isArray(answer) ? answer.join(', ') : answer;
+                        report += `${key.toUpperCase()}: ${formattedAnswer}\n`;
+                    } else {
+                        report += `${key.toUpperCase()}: (No Answer)\n`;
+                    }
+                });
+                const blob = new Blob([report], { type: 'text/plain' });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = 'toefl_answers.txt';
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                URL.revokeObjectURL(url);
+            });
+            
+            // Initial setup on load
+            mainNextBtn.disabled = true;
+            if (currentSection === 'intro') {
+                readingSection.classList.add('hidden');
+                listeningSection.classList.add('hidden');
+                setTimerVisibility(false);
+            }
+
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,46 @@
+I am working in this Git project:
+
+/Users/coo/Desktop/TOEFL-Reading-Listening-Test
+
+Goal: Set up Test 03 using Test 01 as the template.
+
+Please do the following, and ONLY these steps for now:
+
+1. Understand the template structure
+   - Read `25Test01/25Test01_V1.html` carefully.
+   - This file shows the full structure for one TOEFL practice test:
+     - Section 1: Listening (intro page, audio-only page(s), question page(s), timers, navigation)
+     - Section 2: Reading (passages, questions, timers, navigation)
+   - Do NOT modify any files in `25Test01` and do NOT change `timer.js`.
+
+2. Create the HTML skeleton for Test 03
+   - In the `25Test03` folder, create a new file named `25Test03.html`.
+   - Use the structure of `25Test01_V1.html` as the template:
+     - Copy over the same HTML layout, section order, class names, IDs, and JS/CSS includes.
+     - Make sure the timer-related elements and any data attributes are preserved so `timer.js` will work with Test 03 exactly as with Test 01.
+   - For all audio files in Listening, use the existing MP3 files already in `25Test03` (e.g. `2503-C1.mp3`, `2503-C1Replay.mp3`, `2503-C2.mp3`, etc.), matching them to the correct conversations/lectures in the DOCX.
+
+3. Fill in Test 03 content from the DOCX
+   - Open `25Test03/25Test03_T.docx`.
+   - Extract ALL textual content needed for the test:
+     - Listening section: instructions, conversation/lecture titles, speaker lines (if shown), questions, answer choices.
+     - Reading section: passages, questions, answer choices.
+   - Replace the Test 01 content in `25Test03.html` with the appropriate Test 03 content from `25Test03_T.docx`, following the same mapping / structure used in `25Test01_V1.html`.
+     - Each Listening conversation/lecture in the DOCX should map to the same kind of block as the corresponding conversation/lecture in `25Test01_V1.html`.
+     - Each Reading passage + its questions should follow the same HTML structure (wrapping divs, classes, question blocks, etc.) as the template.
+   - Keep all IDs, classes, and structural hooks that JavaScript relies on the same wherever possible; only change the visible text and audio file paths.
+
+4. Constraints / safety
+   - Do NOT modify:
+     - `25Test01_V1.html`
+     - `timer.js`
+     - Shared CSS files or `index.html` unless explicitly necessary for Test 03 to work.
+   - If the DOCX formatting is slightly different from Test 01, follow the logical intent and keep the HTML structure consistent with `25Test01_V1.html` instead of inventing a new layout.
+
+5. After you finish:
+   - Summarize exactly which files you created or edited.
+   - Briefly explain how you mapped:
+     - Listening parts in `25Test03_T.docx` → blocks in `25Test03.html`
+     - Reading parts in `25Test03_T.docx` → blocks in `25Test03.html`
+   - Then run a quick internal check (no need to open a browser) that:
+     - All audio `<source>` paths in `25Test03.html` point to existing MP3 files in the `25Test03` folder.

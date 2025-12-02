@@ -1,0 +1,1183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive TOEFL Practice Test - 25 Test 01</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .question-option {
+            transition: background-color 0.2s ease-in-out;
+        }
+        .question-option:hover {
+            background-color: #eef2ff; /* indigo-50 */
+        }
+        .question-option input:checked + label {
+            background-color: #c7d2fe; /* indigo-200 */
+            border-color: #6366f1; /* indigo-500 */
+        }
+        .insert-square {
+            cursor: pointer;
+            color: #6366f1;
+            font-weight: bold;
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            text-align: center;
+            line-height: 20px;
+            border: 1px solid transparent;
+        }
+        .insert-square.selected {
+            background-color: #6366f1;
+            color: white;
+            border-color: #4338ca;
+        }
+        .paragraph-highlight {
+            background-color: #eef2ff; /* indigo-50 */
+            border-left: 3px solid #6366f1; /* indigo-500 */
+            padding-left: 1em;
+            margin-left: -1em;
+            transition: all 0.3s ease-in-out;
+        }
+        .highlighted-sentence {
+            background-color: #fef9c3; /* yellow-100 */
+            padding: 2px 0;
+        }
+        .replay-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 0 8px;
+            display: inline-flex;
+            align-items: center;
+            vertical-align: middle;
+        }
+        .replay-btn:disabled svg {
+            fill: #9ca3af; /* gray-400 */
+        }
+
+
+    </style>
+</head>
+<body class="bg-gray-100 text-gray-800">
+
+    <div id="app-container" class="container mx-auto max-w-7xl p-4 md:p-8 my-8 bg-white rounded-2xl shadow-lg">
+        
+        <!-- Header -->
+        <header class="flex justify-between items-center pb-4 border-b mb-6">
+            <h1 class="text-2xl md:text-3xl font-bold text-gray-700">TOEFL Practice Test - 25 Test 01</h1>
+            <div id="timer" class="text-xl font-semibold text-indigo-600"></div>
+        </header>
+
+        <!-- Listening Section -->
+        <div id="listening-section">
+            <h2 class="text-xl font-semibold mb-4 text-indigo-700 border-l-4 border-indigo-500 pl-3">Section 1: Listening</h2>
+            
+            <!-- Conversation 1 Container -->
+            <div id="c1-container">
+                <div id="c1-audio-view" class="mb-8 p-6 bg-gray-50 rounded-lg text-center">
+                    <h3 class="font-bold text-xl mb-4">Conversation 1 (25Z01-C1)</h3>
+                    <p class="text-gray-600 mb-6">Click the button to play the audio. You can only play it once.</p>
+                    <button id="play-c1-btn" class="bg-indigo-600 text-white font-bold py-3 px-6 rounded-lg shadow-md hover:bg-indigo-700 disabled:bg-gray-400 disabled:cursor-not-allowed transition">Play Audio</button>
+                    <audio id="audio-c1" src="25Z01-C1.mp3" preload="auto"></audio>
+                    <div class="mt-6">
+                        <button id="start-c1-questions-btn" class="bg-green-600 text-white font-bold py-2 px-6 rounded-lg shadow-md hover:bg-green-700 disabled:opacity-50 disabled:cursor-not-allowed transition hidden">Start Questions</button>
+                    </div>
+                </div>
+                <div id="c1-questions-view" class="hidden mb-8 p-6 bg-gray-50 rounded-lg">
+                    <div class="listening-question c1-question">
+                        <p class="mb-2 font-medium">1. Why does the student go to see the professor?</p>
+                        <div class="space-y-2">
+                            <div class="question-option"><input type="radio" id="c1-q1-a" name="c1-q1" value="A" class="hidden"><label for="c1-q1-a" class="block w-full p-3 border rounded-lg cursor-pointer">To ask him to speak to her film class</label></div>
+                            <div class="question-option"><input type="radio" id="c1-q1-b" name="c1-q1" value="B" class="hidden"><label for="c1-q1-b" class="block w-full p-3 border rounded-lg cursor-pointer">To find out whether he received an e-mail that she sent him</label></div>
+                            <div class="question-option"><input type="radio" id="c1-q1-c" name="c1-q1" value="C" class="hidden"><label for="c1-q1-c" class="block w-full p-3 border rounded-lg cursor-pointer">To invite him to participate in a project she is working on</label></div>
+                            <div class="question-option"><input type="radio" id="c1-q1-d" name="c1-q1" value="D" class="hidden"><label for="c1-q1-d" class="block w-full p-3 border rounded-lg cursor-pointer">To get advice about how to succeed in a new field of study</label></div>
+                        </div>
+                    </div>
+                    <div class="listening-question c1-question hidden">
+                        <p class="mb-2 font-medium">2. What advice from the professor did the student find helpful in her first year at the university? <span class="font-normal text-gray-500">(Click on 2 answers)</span></p>
+                        <div class="space-y-2">
+                            <div class="question-option"><input type="checkbox" id="c1-q2-a" name="c1-q2" value="A" class="hidden"><label for="c1-q2-a" class="block w-full p-3 border rounded-lg cursor-pointer">Take classes in a variety of subject areas.</label></div>
+                            <div class="question-option"><input type="checkbox" id="c1-q2-b" name="c1-q2" value="B" class="hidden"><label for="c1-q2-b" class="block w-full p-3 border rounded-lg cursor-pointer">Visit professors during their office hours.</label></div>
+                            <div class="question-option"><input type="checkbox" id="c1-q2-c" name="c1-q2" value="C" class="hidden"><label for="c1-q2-c" class="block w-full p-3 border rounded-lg cursor-pointer">Study together with other students.</label></div>
+                            <div class="question-option"><input type="checkbox" id="c1-q2-d" name="c1-q2" value="D" class="hidden"><label for="c1-q2-d" class="block w-full p-3 border rounded-lg cursor-pointer">Ask questions during class.</label></div>
+                        </div>
+                    </div>
+                    <div class="listening-question c1-question hidden">
+                        <p class="mb-2 font-medium">3. Why does the professor mention his research?</p>
+                        <div class="space-y-2">
+                            <div class="question-option"><input type="radio" id="c1-q3-a" name="c1-q3" value="A" class="hidden"><label for="c1-q3-a" class="block w-full p-3 border rounded-lg cursor-pointer">To suggest that the student might want to participate in a research study</label></div>
+                            <div class="question-option"><input type="radio" id="c1-q3-b" name="c1-q3" value="B" class="hidden"><label for="c1-q3-b" class="block w-full p-3 border rounded-lg cursor-pointer">To let the student know that most of his time is devoted to research</label></div>
+                            <div class="question-option"><input type="radio" id="c1-q3-c" name="c1-q3" value="C" class="hidden"><label for="c1-q3-c" class="block w-full p-3 border rounded-lg cursor-pointer">To confirm a conclusion that the student drew from her own experience</label></div>
+                            <div class="question-option"><input type="radio" id="c1-q3-d" name="c1-q3" value="D" class="hidden"><label for="c1-q3-d" class="block w-full p-3 border rounded-lg cursor-pointer">To propose an alternative way for the student to communicate her ideas</label></div>
+                        </div>
+                    </div>
+                    <div class="listening-question c1-question hidden">
+                        <p class="mb-2 font-medium">4. What can be inferred about the professor when he talks about his lectures for an online course?</p>
+                        <div class="space-y-2">
+                            <div class="question-option"><input type="radio" id="c1-q4-a" name="c1-q4" value="A" class="hidden"><label for="c1-q4-a" class="block w-full p-3 border rounded-lg cursor-pointer">He thinks that his lectures for the online course might have been too short to be useful.</label></div>
+                            <div class="question-option"><input type="radio" id="c1-q4-b" name="c1-q4" value="B" class="hidden"><label for="c1-q4-b" class="block w-full p-3 border rounded-lg cursor-pointer">He is not pleased with the way he appears in video recordings.</label></div>
+                            <div class="question-option"><input type="radio" id="c1-q4-c" name="c1-q4" value="C" class="hidden"><label for="c1-q4-c" class="block w-full p-3 border rounded-lg cursor-pointer">He would be more comfortable if he could deliver a lecture rather than be interviewed.</label></div>
+                            <div class="question-option"><input type="radio" id="c1-q4-d" name="c1-q4" value="D" class="hidden"><label for="c1-q4-d" class="block w-full p-3 border rounded-lg cursor-pointer">He is confident that the experience will make his classroom lectures more engaging.</label></div>
+                        </div>
+                    </div>
+                    <div class="listening-question c1-question hidden">
+                        <p class="mb-2 font-medium">5. What do the speakers indicate they will do next?</p>
+                        <div class="space-y-2">
+                            <div class="question-option"><input type="radio" id="c1-q5-a" name="c1-q5" value="A" class="hidden"><label for="c1-q5-a" class="block w-full p-3 border rounded-lg cursor-pointer">Discuss ideas for the content of a film</label></div>
+                            <div class="question-option"><input type="radio" id="c1-q5-b" name="c1-q5" value="B" class="hidden"><label for="c1-q5-b" class="block w-full p-3 border rounded-lg cursor-pointer">Watch a video of a lecture</label></div>
+                            <div class="question-option"><input type="radio" id="c1-q5-c" name="c1-q5" value="C" class="hidden"><label for="c1-q5-c" class="block w-full p-3 border rounded-lg cursor-pointer">Listen to an audio recording of the professor's class</label></div>
+                            <div class="question-option"><input type="radio" id="c1-q5-d" name="c1-q5" value="D" class="hidden"><label for="c1-q5-d" class="block w-full p-3 border rounded-lg cursor-pointer">Work on a speech that the student wants to give in her class</label></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Lecture 1 Container -->
+            <div id="l1-container" class="hidden">
+                 <div id="l1-audio-view" class="mb-8 p-6 bg-gray-50 rounded-lg text-center">
+                    <h3 class="font-bold text-xl mb-4">Lecture 1 (25Z01-L1)</h3>
+                    <p class="text-gray-600 mb-6">Click the button to play the audio. You can only play it once.</p>
+                    <button id="play-l1-btn" class="bg-indigo-600 text-white font-bold py-3 px-6 rounded-lg shadow-md hover:bg-indigo-700 disabled:bg-gray-400 disabled:cursor-not-allowed transition">Play Audio</button>
+                    <audio id="audio-l1" src="25Z01-L1.mp3" preload="auto"></audio>
+                    <div class="mt-6">
+                        <button id="start-l1-questions-btn" class="bg-green-600 text-white font-bold py-2 px-6 rounded-lg shadow-md hover:bg-green-700 disabled:opacity-50 disabled:cursor-not-allowed transition hidden">Start Questions</button>
+                    </div>
+                </div>
+                <div id="l1-questions-view" class="hidden mb-8 p-6 bg-gray-50 rounded-lg">
+                    <div class="listening-question l1-question">
+                        <p class="mb-2 font-medium">1. What is the lecture mainly about?</p>
+                        <div class="space-y-2">
+                            <div class="question-option"><input type="radio" id="l1-q1-a" name="l1-q1" value="A" class="hidden"><label for="l1-q1-a" class="block w-full p-3 border rounded-lg cursor-pointer">How forests affect the environment</label></div>
+                            <div class="question-option"><input type="radio" id="l1-q1-b" name="l1-q1" value="B" class="hidden"><label for="l1-q1-b" class="block w-full p-3 border rounded-lg cursor-pointer">New research findings about tree harvesting</label></div>
+                            <div class="question-option"><input type="radio" id="l1-q1-c" name="l1-q1" value="C" class="hidden"><label for="l1-q1-c" class="block w-full p-3 border rounded-lg cursor-pointer">Important considerations for choosing a tree-harvesting method</label></div>
+                            <div class="question-option"><input type="radio" id="l1-q1-d" name="l1-q1" value="D" class="hidden"><label for="l1-q1-d" class="block w-full p-3 border rounded-lg cursor-pointer">The role of forest managers in tree-harvesting operations</label></div>
+                        </div>
+                    </div>
+                    <div class="listening-question l1-question hidden">
+                        <p class="mb-2 font-medium">2. According to the professor, what kind of trees are usually replanted after clear-cutting?</p>
+                        <div class="space-y-2">
+                            <div class="question-option"><input type="radio" id="l1-q2-a" name="l1-q2" value="A" class="hidden"><label for="l1-q2-a" class="block w-full p-3 border rounded-lg cursor-pointer">Trees that improve overall soil quality</label></div>
+                            <div class="question-option"><input type="radio" id="l1-q2-b" name="l1-q2" value="B" class="hidden"><label for="l1-q2-b" class="block w-full p-3 border rounded-lg cursor-pointer">Trees that reach maturity quickly</label></div>
+                            <div class="question-option"><input type="radio" id="l1-q2-c" name="l1-q2" value="C" class="hidden"><label for="l1-q2-c" class="block w-full p-3 border rounded-lg cursor-pointer">Trees that are resistant to fire</label></div>
+                            <div class="question-option"><input type="radio" id="l1-q2-d" name="l1-q2" value="D" class="hidden"><label for="l1-q2-d" class="block w-full p-3 border rounded-lg cursor-pointer">Trees that are similar to those in the original forest</label></div>
+                        </div>
+                    </div>
+                     <div class="listening-question l1-question hidden">
+                        <p class="mb-2 font-medium">3. Why does the professor mention road building?</p>
+                        <div class="space-y-2">
+                            <div class="question-option"><input type="radio" id="l1-q3-a" name="l1-q3" value="A" class="hidden"><label for="l1-q3-a" class="block w-full p-3 border rounded-lg cursor-pointer">To point out a potential negative consequence of selective cutting</label></div>
+                            <div class="question-option"><input type="radio" id="l1-q3-b" name="l1-q3" value="B" class="hidden"><label for="l1-q3-b" class="block w-full p-3 border rounded-lg cursor-pointer">To emphasize that forests need to be made accessible to the public</label></div>
+                            <div class="question-option"><input type="radio" id="l1-q3-c" name="l1-q3" value="C" class="hidden"><label for="l1-q3-c" class="block w-full p-3 border rounded-lg cursor-pointer">To explain why clear-cutting is sometimes more expensive than selective cutting</label></div>
+                            <div class="question-option"><input type="radio" id="l1-q3-d" name="l1-q3" value="D" class="hidden"><label for="l1-q3-d" class="block w-full p-3 border rounded-lg cursor-pointer">To give an example of a benefit of tree harvesting that most people are not aware of</label></div>
+                        </div>
+                    </div>
+                    <div class="listening-question l1-question hidden">
+                        <p class="mb-2 font-medium">4. What point does the professor make about privately owned forested land in the United States?</p>
+                        <div class="space-y-2">
+                            <div class="question-option"><input type="radio" id="l1-q4-a" name="l1-q4" value="A" class="hidden"><label for="l1-q4-a" class="block w-full p-3 border rounded-lg cursor-pointer">The amount of forested land that is privately owned is rapidly decreasing.</label></div>
+                            <div class="question-option"><input type="radio" id="l1-q4-b" name="l1-q4" value="B" class="hidden"><label for="l1-q4-b" class="block w-full p-3 border rounded-lg cursor-pointer">The government should not regulate how privately owned forested land can be used.</label></div>
+                            <div class="question-option"><input type="radio" id="l1-q4-c" name="l1-q4" value="C" class="hidden"><label for="l1-q4-c" class="block w-full p-3 border rounded-lg cursor-pointer">Most privately owned forested land has never been logged commercially.</label></div>
+                            <div class="question-option"><input type="radio" id="l1-q4-d" name="l1-q4" value="D" class="hidden"><label for="l1-q4-d" class="block w-full p-3 border rounded-lg cursor-pointer">Most privately owned forested land belongs to families and individuals.</label></div>
+                        </div>
+                    </div>
+                    <div class="listening-question l1-question hidden">
+                        <p class="mb-2 font-medium">5. What does the professor imply about companies that are hired by owners of family forests to harvest trees on their property?</p>
+                        <div class="space-y-2">
+                            <div class="question-option"><input type="radio" id="l1-q5-a" name="l1-q5" value="A" class="hidden"><label for="l1-q5-a" class="block w-full p-3 border rounded-lg cursor-pointer">They tend to be large corporations.</label></div>
+                            <div class="question-option"><input type="radio" id="l1-q5-b" name="l1-q5" value="B" class="hidden"><label for="l1-q5-b" class="block w-full p-3 border rounded-lg cursor-pointer">Their goals might be different from the owners' goals.</label></div>
+                            <div class="question-option"><input type="radio" id="l1-q5-c" name="l1-q5" value="C" class="hidden"><label for="l1-q5-c" class="block w-full p-3 border rounded-lg cursor-pointer">They sometimes know more about managing forests than professional forest managers do.</label></div>
+                            <div class="question-option"><input type="radio" id="l1-q5-d" name="l1-q5" value="D" class="hidden"><label for="l1-q5-d" class="block w-full p-3 border rounded-lg cursor-pointer">They may be able to provide forestry services that are not directly related to tree harvesting.</label></div>
+                        </div>
+                    </div>
+                    <div class="listening-question l1-question hidden">
+                        <p class="mb-2 font-medium">6. What is the professor's attitude about the term "selective cutting"?</p>
+                        <div class="space-y-2">
+                            <div class="question-option"><input type="radio" id="l1-q6-a" name="l1-q6" value="A" class="hidden"><label for="l1-q6-a" class="block w-full p-3 border rounded-lg cursor-pointer">She is pleased that most people are familiar with it.</label></div>
+                            <div class="question-option"><input type="radio" id="l1-q6-b" name="l1-q6" value="B" class="hidden"><label for="l1-q6-b" class="block w-full p-3 border rounded-lg cursor-pointer">She thinks it is more useful than the term "high grading."</label></div>
+                            <div class="question-option"><input type="radio" id="l1-q6-c" name="l1-q6" value="C" class="hidden"><label for="l1-q6-c" class="block w-full p-3 border rounded-lg cursor-pointer">She is surprised that it is not more widely used in contracts.</label></div>
+                            <div class="question-option"><input type="radio" id="l1-q6-d" name="l1-q6" value="D" class="hidden"><label for="l1-q6-d" class="block w-full p-3 border rounded-lg cursor-pointer">She is concerned that it can be misleading.</label></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Conversation 2 Container -->
+            <div id="c2-container" class="hidden">
+                <div id="c2-audio-view" class="mb-8 p-6 bg-gray-50 rounded-lg text-center">
+                    <h3 class="font-bold text-xl mb-4">Conversation 2 (25Z01-C2)</h3>
+                    <p class="text-gray-600 mb-6">Click the button to play the audio. You can only play it once.</p>
+                    <button id="play-c2-btn" class="bg-indigo-600 text-white font-bold py-3 px-6 rounded-lg shadow-md hover:bg-indigo-700 disabled:bg-gray-400 disabled:cursor-not-allowed transition">Play Audio</button>
+                    <audio id="audio-c2" src="25Z01-C2.mp3" preload="auto"></audio>
+                    <div class="mt-6">
+                        <button id="start-c2-questions-btn" class="bg-green-600 text-white font-bold py-2 px-6 rounded-lg shadow-md hover:bg-green-700 disabled:opacity-50 disabled:cursor-not-allowed transition hidden">Start Questions</button>
+                    </div>
+                </div>
+                <div id="c2-questions-view" class="hidden mb-8 p-6 bg-gray-50 rounded-lg">
+                    <div class="listening-question c2-question">
+                        <p class="mb-2 font-medium">1. Why does the man go to speak to the woman?</p>
+                        <div class="space-y-2">
+                            <div class="question-option"><input type="radio" id="c2-q1-a" name="c2-q1" value="A" class="hidden"><label for="c2-q1-a" class="block w-full p-3 border rounded-lg cursor-pointer">To share his favorite techniques for growing sunflowers</label></div>
+                            <div class="question-option"><input type="radio" id="c2-q1-b" name="c2-q1" value="B" class="hidden"><label for="c2-q1-b" class="block w-full p-3 border rounded-lg cursor-pointer">To find out how to make a formal request to the Grounds Committee</label></div>
+                            <div class="question-option"><input type="radio" id="c2-q1-c" name="c2-q1" value="C" class="hidden"><label for="c2-q1-c" class="block w-full p-3 border rounded-lg cursor-pointer">To ask permission to beautify an area near his dormitory</label></div>
+                            <div class="question-option"><input type="radio" id="c2-q1-d" name="c2-q1" value="D" class="hidden"><label for="c2-q1-d" class="block w-full p-3 border rounded-lg cursor-pointer">To request information about forming a gardening club</label></div>
+                        </div>
+                    </div>
+                    <div class="listening-question c2-question hidden">
+                        <p class="mb-2 font-medium">2. What does the woman imply about the Grounds Committee?</p>
+                        <div class="space-y-2">
+                            <div class="question-option"><input type="radio" id="c2-q2-a" name="c2-q2" value="A" class="hidden"><label for="c2-q2-a" class="block w-full p-3 border rounded-lg cursor-pointer">It does not have much funding available for new projects.</label></div>
+                            <div class="question-option"><input type="radio" id="c2-q2-b" name="c2-q2" value="B" class="hidden"><label for="c2-q2-b" class="block w-full p-3 border rounded-lg cursor-pointer">It is composed of both faculty and students.</label></div>
+                            <div class="question-option"><input type="radio" id="c2-q2-c" name="c2-q2" value="C" class="hidden"><label for="c2-q2-c" class="block w-full p-3 border rounded-lg cursor-pointer">It is developing a plan to improve the landscaping on campus.</label></div>
+                            <div class="question-option"><input type="radio" id="c2-q2-d" name="c2-q2" value="D" class="hidden"><label for="c2-q2-d" class="block w-full p-3 border rounded-lg cursor-pointer">It is likely to be too busy to address the man's concerns.</label></div>
+                        </div>
+                    </div>
+                    <div class="listening-question c2-question hidden">
+                        <p class="mb-2 font-medium">3. What benefits of forming a student gardening club does the woman mention? <span class="font-normal text-gray-500">(Click on 3 answers)</span></p>
+                        <div class="space-y-2">
+                            <div class="question-option"><input type="checkbox" id="c2-q3-a" name="c2-q3" value="A" class="hidden"><label for="c2-q3-a" class="block w-full p-3 border rounded-lg cursor-pointer">The man will be able to avoid a long approval process.</label></div>
+                            <div class="question-option"><input type="checkbox" id="c2-q3-b" name="c2-q3" value="B" class="hidden"><label for="c2-q3-b" class="block w-full p-3 border rounded-lg cursor-pointer">The man will enlarge his group of friends.</label></div>
+                            <div class="question-option"><input type="checkbox" id="c2-q3-c" name="c2-q3" value="C" class="hidden"><label for="c2-q3-c" class="block w-full p-3 border rounded-lg cursor-pointer">The club members will gain valuable experience.</label></div>
+                            <div class="question-option"><input type="checkbox" id="c2-q3-d" name="c2-q3" value="D" class="hidden"><label for="c2-q3-d" class="block w-full p-3 border rounded-lg cursor-pointer">The club will receive money to use for its activities.</label></div>
+                            <div class="question-option"><input type="checkbox" id="c2-q3-e" name="c2-q3" value="E" class="hidden"><label for="c2-q3-e" class="block w-full p-3 border rounded-lg cursor-pointer">Land that was once a garden may be provided to the club</label></div>
+                        </div>
+                    </div>
+                    <div class="listening-question c2-question hidden">
+                        <p class="mb-2 font-medium">4. What is the woman's attitude toward the man?</p>
+                        <div class="space-y-2">
+                            <div class="question-option"><input type="radio" id="c2-q4-a" name="c2-q4" value="A" class="hidden"><label for="c2-q4-a" class="block w-full p-3 border rounded-lg cursor-pointer">She admires him for trying to find a way to carry out his idea.</label></div>
+                            <div class="question-option"><input type="radio" id="c2-q4-b" name="c2-q4" value="B" class="hidden"><label for="c2-q4-b" class="block w-full p-3 border rounded-lg cursor-pointer">She is surprised that he is so interested in creating a garden.</label></div>
+                            <div class="question-option"><input type="radio" id="c2-q4-c" name="c2-q4" value="C" class="hidden"><label for="c2-q4-c" class="block w-full p-3 border rounded-lg cursor-pointer">She is grateful that he asked for permission before starting a garden.</label></div>
+                            <div class="question-option"><input type="radio" id="c2-q4-d" name="c2-q4" value="D" class="hidden"><label for="c2-q4-d" class="block w-full p-3 border rounded-lg cursor-pointer">She is impressed by the extent of his gardening knowledge.</label></div>
+                        </div>
+                    </div>
+                    <div class="listening-question c2-question hidden">
+                        <p class="mb-2 font-medium">5. What can be inferred about the woman when she says this:
+                            <button id="play-c2-q5-replay-btn" class="replay-btn" title="Play audio clip">
+                                <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24" class="fill-indigo-600"><path d="M320-200v-560l440 280-440 280Zm80-280Zm0 134 210-134-210-134v268Z"/></svg>
+                            </button>
+                            <audio id="audio-c2-q5-replay" src="25Z01-C2Replay.mp3" preload="auto"></audio>
+                        </p>
+                        <div class="space-y-2">
+                            <div class="question-option"><input type="radio" id="c2-q5-a" name="c2-q5" value="A" class="hidden"><label for="c2-q5-a" class="block w-full p-3 border rounded-lg cursor-pointer">She can give sunflower plants to the man.</label></div>
+                            <div class="question-option"><input type="radio" id="c2-q5-b" name="c2-q5" value="B" class="hidden"><label for="c2-q5-b" class="block w-full p-3 border rounded-lg cursor-pointer">She is willing to become an advisor to the gardening club</label></div>
+                            <div class="question-option"><input type="radio" id="c2-q5-c" name="c2-q5" value="C" class="hidden"><label for="c2-q5-c" class="block w-full p-3 border rounded-lg cursor-pointer">She is surprised that some people do not love sunflowers.</label></div>
+                            <div class="question-option"><input type="radio" id="c2-q5-d" name="c2-q5" value="D" class="hidden"><label for="c2-q5-d" class="block w-full p-3 border rounded-lg cursor-pointer">She will send the man's request to some faculty and staff.</label></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Lecture 2 Container -->
+            <div id="l2-container" class="hidden">
+                <div id="l2-audio-view" class="mb-8 p-6 bg-gray-50 rounded-lg text-center">
+                    <h3 class="font-bold text-xl mb-4">Lecture 2 (25Z01-L2)</h3>
+                    <p class="text-gray-600 mb-6">Click the button to play the audio. You can only play it once.</p>
+                    <button id="play-l2-btn" class="bg-indigo-600 text-white font-bold py-3 px-6 rounded-lg shadow-md hover:bg-indigo-700 disabled:bg-gray-400 disabled:cursor-not-allowed transition">Play Audio</button>
+                    <audio id="audio-l2" src="25Z01-L2.mp3" preload="auto"></audio>
+                    <div class="mt-6">
+                        <button id="start-l2-questions-btn" class="bg-green-600 text-white font-bold py-2 px-6 rounded-lg shadow-md hover:bg-green-700 disabled:opacity-50 disabled:cursor-not-allowed transition hidden">Start Questions</button>
+                    </div>
+                </div>
+                <div id="l2-questions-view" class="hidden mb-8 p-6 bg-gray-50 rounded-lg">
+                    <div class="listening-question l2-question">
+                        <p class="mb-2 font-medium">1. What does the professor mainly discuss?</p>
+                        <div class="space-y-2">
+                            <div class="question-option"><input type="radio" id="l2-q1-a" name="l2-q1" value="A" class="hidden"><label for="l2-q1-a" class="block w-full p-3 border rounded-lg cursor-pointer">The life cycles of frog species in dry and wet habitats</label></div>
+                            <div class="question-option"><input type="radio" id="l2-q1-b" name="l2-q1" value="B" class="hidden"><label for="l2-q1-b" class="block w-full p-3 border rounded-lg cursor-pointer">The relationship between forest fragmentation and frog populations</label></div>
+                            <div class="question-option"><input type="radio" id="l2-q1-c" name="l2-q1" value="C" class="hidden"><label for="l2-q1-c" class="block w-full p-3 border rounded-lg cursor-pointer">A research study about the adaptation of frogs to dry climates</label></div>
+                            <div class="question-option"><input type="radio" id="l2-q1-d" name="l2-q1" value="D" class="hidden"><label for="l2-q1-d" class="block w-full p-3 border rounded-lg cursor-pointer">A new theory about land-breeding amphibians</label></div>
+                        </div>
+                    </div>
+                    <div class="listening-question l2-question hidden">
+                        <p class="mb-2 font-medium">2. Why does the professor mention building houses along a lake?</p>
+                        <div class="space-y-2">
+                            <div class="question-option"><input type="radio" id="l2-q2-a" name="l2-q2" value="A" class="hidden"><label for="l2-q2-a" class="block w-full p-3 border rounded-lg cursor-pointer">To show how wet and dry habitats can become divided</label></div>
+                            <div class="question-option"><input type="radio" id="l2-q2-b" name="l2-q2" value="B" class="hidden"><label for="l2-q2-b" class="block w-full p-3 border rounded-lg cursor-pointer">To emphasize the large amount of building in the Atlantic Forest</label></div>
+                            <div class="question-option"><input type="radio" id="l2-q2-c" name="l2-q2" value="C" class="hidden"><label for="l2-q2-c" class="block w-full p-3 border rounded-lg cursor-pointer">To explain why some frogs no longer breed in a wet habitat</label></div>
+                            <div class="question-option"><input type="radio" id="l2-q2-d" name="l2-q2" value="D" class="hidden"><label for="l2-q2-d" class="block w-full p-3 border rounded-lg cursor-pointer">To demonstrate the effects of lake pollution on juvenile frogs</label></div>
+                        </div>
+                    </div>
+                    <div class="listening-question l2-question hidden">
+                        <p class="mb-2 font-medium">3. According to the professor, why is the Atlantic Forest in Brazil a good place to study habitat split? <span class="font-normal text-gray-500">(Click on 2 answers)</span></p>
+                        <div class="space-y-2">
+                            <div class="question-option"><input type="checkbox" id="l2-q3-a" name="l2-q3" value="A" class="hidden"><label for="l2-q3-a" class="block w-full p-3 border rounded-lg cursor-pointer">Many animal species in the forest are endangered.</label></div>
+                            <div class="question-option"><input type="checkbox" id="l2-q3-b" name="l2-q3" value="B" class="hidden"><label for="l2-q3-b" class="block w-full p-3 border rounded-lg cursor-pointer">Many streams have recently dried up in the forest.</label></div>
+                            <div class="question-option"><input type="checkbox" id="l2-q3-c" name="l2-q3" value="C" class="hidden"><label for="l2-q3-c" class="block w-full p-3 border rounded-lg cursor-pointer">The forest is home to a large number of amphibian species.</label></div>
+                            <div class="question-option"><input type="checkbox" id="l2-q3-d" name="l2-q3" value="D" class="hidden"><label for="l2-q3-d" class="block w-full p-3 border rounded-lg cursor-pointer">The forest that still exists is highly fragmented.</label></div>
+                        </div>
+                    </div>
+                    <div class="listening-question l2-question hidden">
+                        <p class="mb-2 font-medium">4. Why does the professor talk about the concept of habitat loss?</p>
+                        <div class="space-y-2">
+                            <div class="question-option"><input type="radio" id="l2-q4-a" name="l2-q4" value="A" class="hidden"><label for="l2-q4-a" class="block w-full p-3 border rounded-lg cursor-pointer">To identify a way of measuring the size of an amphibian habitat</label></div>
+                            <div class="question-option"><input type="radio" id="l2-q4-b" name="l2-q4" value="B" class="hidden"><label for="l2-q4-b" class="block w-full p-3 border rounded-lg cursor-pointer">To explain the reasons for the appearance of new frog populations in forest habitats</label></div>
+                            <div class="question-option"><input type="radio" id="l2-q4-c" name="l2-q4" value="C" class="hidden"><label for="l2-q4-c" class="block w-full p-3 border rounded-lg cursor-pointer">To propose an alternative reason for the results of the study in the Atlantic Forest</label></div>
+                            <div class="question-option"><input type="radio" id="l2-q4-d" name="l2-q4" value="D" class="hidden"><label for="l2-q4-d" class="block w-full p-3 border rounded-lg cursor-pointer">To correct a student's misunderstanding regarding the focus of the study in the Atlantic Forest</label></div>
+                        </div>
+                    </div>
+                    <div class="listening-question l2-question hidden">
+                        <p class="mb-2 font-medium">5. What was a finding in the study of the Atlantic Forest in Brazil?</p>
+                        <div class="space-y-2">
+                            <div class="question-option"><input type="radio" id="l2-q5-a" name="l2-q5" value="A" class="hidden"><label for="l2-q5-a" class="block w-full p-3 border rounded-lg cursor-pointer">Land-breeding frogs were more affected by habitat split than water- breeding frogs were.</label></div>
+                            <div class="question-option"><input type="radio" id="l2-q5-b" name="l2-q5" value="B" class="hidden"><label for="l2-q5-b" class="block w-full p-3 border rounded-lg cursor-pointer">Only small numbers of juvenile frogs reached dry forest fragments after leaving the water.</label></div>
+                            <div class="question-option"><input type="radio" id="l2-q5-c" name="l2-q5" value="C" class="hidden"><label for="l2-q5-c" class="block w-full p-3 border rounded-lg cursor-pointer">Juvenile frogs may be able to adapt to environments affected by habitat split.</label></div>
+                            <div class="question-option"><input type="radio" id="l2-q5-d" name="l2-q5" value="D" class="hidden"><label for="l2-q5-d" class="block w-full p-3 border rounded-lg cursor-pointer">The total habitat loss in the forest was less than originally thought.</label></div>
+                        </div>
+                    </div>
+                    <div class="listening-question l2-question hidden">
+                        <p class="mb-2 font-medium">6. What is the professor's opinion of habitat split as the main reason for the reduction in amphibian populations worldwide?</p>
+                        <div class="space-y-2">
+                            <div class="question-option"><input type="radio" id="l2-q6-a" name="l2-q6" value="A" class="hidden"><label for="l2-q6-a" class="block w-full p-3 border rounded-lg cursor-pointer">She thinks it has been adequately confirmed by research in many parts of the world.</label></div>
+                            <div class="question-option"><input type="radio" id="l2-q6-b" name="l2-q6" value="B" class="hidden"><label for="l2-q6-b" class="block w-full p-3 border rounded-lg cursor-pointer">She thinks there is not yet enough evidence to support that conclusion.</label></div>
+                            <div class="question-option"><input type="radio" id="l2-q6-c" name="l2-q6" value="C" class="hidden"><label for="l2-q6-c" class="block w-full p-3 border rounded-lg cursor-pointer">She thinks it will probably be supported by future studies.</label></div>
+                            <div class="question-option"><input type="radio" id="l2-q6-d" name="l2-q6" value="D" class="hidden"><label for="l2-q6-d" class="block w-full p-3 border rounded-lg cursor-pointer">She thinks the conclusion is based on inaccurate data from the study in Brazil.</label></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Lecture 3 Container -->
+            <div id="l3-container" class="hidden">
+                <div id="l3-audio-view" class="mb-8 p-6 bg-gray-50 rounded-lg text-center">
+                    <h3 class="font-bold text-xl mb-4">Lecture 3 (25Z01-L3)</h3>
+                    <p class="text-gray-600 mb-6">Click the button to play the audio. You can only play it once.</p>
+                    <button id="play-l3-btn" class="bg-indigo-600 text-white font-bold py-3 px-6 rounded-lg shadow-md hover:bg-indigo-700 disabled:bg-gray-400 disabled:cursor-not-allowed transition">Play Audio</button>
+                    <audio id="audio-l3" src="
+                    25Z01-L3.mp3" preload="auto"></audio>
+                    <div class="mt-6">
+                        <button id="start-l3-questions-btn" class="bg-green-600 text-white font-bold py-2 px-6 rounded-lg shadow-md hover:bg-green-700 disabled:opacity-50 disabled:cursor-not-allowed transition hidden">Start Questions</button>
+                    </div>
+                </div>
+                <div id="l3-questions-view" class="hidden mb-8 p-6 bg-gray-50 rounded-lg">
+                    <div class="listening-question l3-question">
+                        <p class="mb-2 font-medium">1. Why does the professor discuss Rembrandt?</p>
+                        <div class="space-y-2">
+                            <div class="question-option"><input type="radio" id="l3-q1-a" name="l3-q1" value="A" class="hidden"><label for="l3-q1-a" class="block w-full p-3 border rounded-lg cursor-pointer">To familiarize the class with one of the most prolific artists of the 1600s</label></div>
+                            <div class="question-option"><input type="radio" id="l3-q1-b" name="l3-q1" value="B" class="hidden"><label for="l3-q1-b" class="block w-full p-3 border rounded-lg cursor-pointer">To point out the difficulties of confirming the creator of important artworks</label></div>
+                            <div class="question-option"><input type="radio" id="l3-q1-c" name="l3-q1" value="C" class="hidden"><label for="l3-q1-c" class="block w-full p-3 border rounded-lg cursor-pointer">To introduce the skills and techniques required to replicate famous paintings</label></div>
+                            <div class="question-option"><input type="radio" id="l3-q1-d" name="l3-q1" value="D" class="hidden"><label for="l3-q1-d" class="block w-full p-3 border rounded-lg cursor-pointer">To exemplify the most effective methods used to authenticate old paintings</label></div>
+                        </div>
+                    </div>
+                    <div class="listening-question l3-question hidden">
+                        <p class="mb-2 font-medium">2. What points does the professor make about Rembrandt's approach to teaching? <span class="font-normal text-gray-500">(Click on 2 answers)</span></p>
+                        <div class="space-y-2">
+                            <div class="question-option"><input type="checkbox" id="l3-q2-a" name="l3-q2" value="A" class="hidden"><label for="l3-q2-a" class="block w-full p-3 border rounded-lg cursor-pointer">Rembrandt urged his students to develop their own style.</label></div>
+                            <div class="question-option"><input type="checkbox" id="l3-q2-b" name="l3-q2" value="B" class="hidden"><label for="l3-q2-b" class="block w-full p-3 border rounded-lg cursor-pointer">Rembrandt would not allow his students to sell the artworks that they made in his studio</label></div>
+                            <div class="question-option"><input type="checkbox" id="l3-q2-c" name="l3-q2" value="C" class="hidden"><label for="l3-q2-c" class="block w-full p-3 border rounded-lg cursor-pointer">Rembrandt allowed his students to work with him on some paintings</label></div>
+                            <div class="question-option"><input type="checkbox" id="l3-q2-d" name="l3-q2" value="D" class="hidden"><label for="l3-q2-d" class="block w-full p-3 border rounded-lg cursor-pointer">Rembrandt encouraged his students to copy his paintings.</label></div>
+                        </div>
+                    </div>
+                    <div class="listening-question l3-question hidden">
+                        <p class="mb-2 font-medium">3. What does the professor imply when he mentions highly respected art museums of the 1860s?</p>
+                        <div class="space-y-2">
+                            <div class="question-option"><input type="radio" id="l3-q3-a" name="l3-q3" value="A" class="hidden"><label for="l3-q3-a" class="block w-full p-3 border rounded-lg cursor-pointer">Almost every art museum at the time had at least one Rembrandt in its collection.</label></div>
+                            <div class="question-option"><input type="radio" id="l3-q3-b" name="l3-q3" value="B" class="hidden"><label for="l3-q3-b" class="block w-full p-3 border rounded-lg cursor-pointer">Owning high-quality copies of Rembrandt paintings increased the museums' prestige.</label></div>
+                            <div class="question-option"><input type="radio" id="l3-q3-c" name="l3-q3" value="C" class="hidden"><label for="l3-q3-c" class="block w-full p-3 border rounded-lg cursor-pointer">Even art experts could be fooled by copies of Rembrandt's paintings.</label></div>
+                            <div class="question-option"><input type="radio" id="l3-q3-d" name="l3-q3" value="D" class="hidden"><label for="l3-q3-d" class="block w-full p-3 border rounded-lg cursor-pointer">The abundance of Rembrandt forgeries caused many museums to limit the number of paintings they purchased</label></div>
+                        </div>
+                    </div>
+                    <div class="listening-question l3-question hidden">
+                        <p class="mb-2 font-medium">4. Why did the Rembrandt Research Project initially call The Good Samaritan a forgery?</p>
+                        <div class="space-y-2">
+                            <div class="question-option"><input type="radio" id="l3-q4-a" name="l3-q4" value="A" class="hidden"><label for="l3-q4-a" class="block w-full p-3 border rounded-lg cursor-pointer">It was signed only with initials instead of with Rembrandt's full name.</label></div>
+                            <div class="question-option"><input type="radio" id="l3-q4-b" name="l3-q4" value="B" class="hidden"><label for="l3-q4-b" class="block w-full p-3 border rounded-lg cursor-pointer">It did not appear to be painted by an artist with Rembrandt's technical confidence.</label></div>
+                            <div class="question-option"><input type="radio" id="l3-q4-c" name="l3-q4" value="C" class="hidden"><label for="l3-q4-c" class="block w-full p-3 border rounded-lg cursor-pointer">The colors used in the painting were difficult to obtain during Rembrandt's time.</label></div>
+                            <div class="question-option"><input type="radio" id="l3-q4-d" name="l3-q4" value="D" class="hidden"><label for="l3-q4-d" class="block w-full p-3 border rounded-lg cursor-pointer">An unusually high number of forgeries of The Good Samaritan are known to exist.</label></div>
+                        </div>
+                    </div>
+                    <div class="listening-question l3-question hidden">
+                        <p class="mb-2 font-medium">5. What is the professor's opinion of the people who helped cause the RRP to disband?</p>
+                        <div class="space-y-2">
+                            <div class="question-option"><input type="radio" id="l3-q5-a" name="l3-q5" value="A" class="hidden"><label for="l3-q5-a" class="block w-full p-3 border rounded-lg cursor-pointer">They had selfish reasons for being critical of the RRP.</label></div>
+                            <div class="question-option"><input type="radio" id="l3-q5-b" name="l3-q5" value="B" class="hidden"><label for="l3-q5-b" class="block w-full p-3 border rounded-lg cursor-pointer">They should have formed their own groups to compete with the RRP.</label></div>
+                            <div class="question-option"><input type="radio" id="l3-q5-c" name="l3-q5" value="C" class="hidden"><label for="l3-q5-c" class="block w-full p-3 border rounded-lg cursor-pointer">They probably knew more about Rembrandt than the RRP did</label></div>
+                            <div class="question-option"><input type="radio" id="l3-q5-d" name="l3-q5" value="D" class="hidden"><label for="l3-q5-d" class="block w-full p-3 border rounded-lg cursor-pointer">They envied the public support that the RRP had earned.</label></div>
+                        </div>
+                    </div>
+                    <div class="listening-question l3-question hidden">
+                        <p class="mb-2 font-medium">6. What information about La main chaude was the RRP able to discover? <span class="font-normal text-gray-500">(Click on 2 answers)</span></p>
+                        <div class="space-y-2">
+                            <div class="question-option"><input type="checkbox" id="l3-q6-a" name="l3-q6" value="A" class="hidden"><label for="l3-q6-a" class="block w-full p-3 border rounded-lg cursor-pointer">The age of the wood that it was painted on</label></div>
+                            <div class="question-option"><input type="checkbox" id="l3-q6-b" name="l3-q6" value="B" class="hidden"><label for="l3-q6-b" class="block w-full p-3 border rounded-lg cursor-pointer">The chemical composition of the varnish</label></div>
+                            <div class="question-option"><input type="checkbox" id="l3-q6-c" name="l3-q6" value="C" class="hidden"><label for="l3-q6-c" class="block w-full p-3 border rounded-lg cursor-pointer">The years that the clothing fashions depicted in the painting were popular</label></div>
+                            <div class="question-option"><input type="checkbox" id="l3-q6-d" name="l3-q6" value="D" class="hidden"><label for="l3-q6-d" class="block w-full p-3 border rounded-lg cursor-pointer">The name of the game depicted in the painting</label></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Listening Navigation -->
+            <div id="listening-nav" class="hidden flex justify-end mt-8 pt-6 border-t">
+                 <button id="next-listening-q-btn" class="bg-indigo-600 text-white font-bold py-2 px-6 rounded-lg shadow-md hover:bg-indigo-700">Next &rarr;</button>
+            </div>
+
+        </div>
+
+        <!-- Reading Section -->
+        <div id="reading-section" class="hidden">
+            <h2 class="text-xl font-semibold mb-4 text-indigo-700 border-l-4 border-indigo-500 pl-3">Section 2: Reading</h2>
+
+            <div id="reading-intro-1">
+                <div class="p-6 bg-gray-50 rounded-lg">
+                    <h3 class="font-bold text-lg mb-4">Reading Passage 1: Forests after Rome</h3>
+                    <div class="prose max-w-none text-gray-700 leading-relaxed space-y-4">
+                        <p><b>P1</b> In the Mediterranean, the Roman Empire (27B.C.E-394 C.E) focused agriculture in the lowlands and protected the wooded uplands. But this broke down as the Empire declined, starting around 300 C.E. as large-scale lowland agriculture was abandoned in favor of small upland farms. Some historians have claimed that this caused the subsequent increase in forest clearing (removal of trees), with a need for more small farms, and more grazing animals like sheep and goats (<span class= "highlighted-sentence">which eat young trees and green shoots</span>). However, others consider this conclusion something of an exaggeration, as it overstates the extent to which widespread forest use meant forest clearance. Even in the absence of government control and supervision, many forces limited the exploitation of woodlands. Wooded land is valuable and likely to attract the protection of powerful people whether they are figures of authority or not, so dense forests and sizable woodlands would typical have been off-limits to random exploitation. Jobs like building ships and roofing large structures require big forest trees. Demand was low, since shipbuilding was pointless when commerce was virtually nonexistent, and large structures are more usually built when population is increasing and cities are growing. Even where demand existed, transport remained a problem. The high cost and difficulty of cutting down a great tree was negligible compared with the expense and challenge of moving wood overland from the forest where it was harvested to the shipyard or building site where it was to be used.</p>
+                        <p><b>P2</b> A factor that is harder for us to appreciate in an age when chain saws and wood splitters are widely available is the technological limitation on harvesting forest giants. Big trees contain many times the potential heat energy of small trees, but harvesting them and reducing them to wood that is useful for burning is a formidable task as the small hand tools that most villagers possessed were hardly up to the job. A householder was better off gathering and using small pieces of wood. For fires, fallen or hanging branches that had dried out over the course of a year or so were preferable.</p>
+                        <p><b>P3</b> Two forest management techniques Roman writers or farming experts advocated continued to be widely used after the fall of Rome.They survived not because they were mandated but because they were practical methods of producing renewable supplies of the small-dimension wood that met the needs of farmers. These techniques, known as coppicing and pollarding, are occasionally still practiced today, and many Mediterranean forests still bear the marks of this kind of cultivation. The purpose of coppicing is to transform a single-trunked tree into a producer of multiple fast-growing branches that can be harvested <span class= "highlighted-sentence">periodically</span>. Mature trees are cut to the ground then allowed to sprout multiple trunks. A coppiced woodland is typically divided into sections that are harvested on a rotating basis. The length of the rotation depends on the speed with which the trees grow and the use to which the branches are to be put. Fast-growing trees might be harvested every four years; slower-growing trees, like oak, might require a fifty-year rotation. Instead of big trunks difficult to harvest and slow to regrow, coppiced woods produce multiple small diameter sticks and poles. Pollarding works on the same principle as coppicing, but trees that are pollarded are cut back to a main trunk rather than to the ground. Where wild or domestic animals graze forests, the new branches that grow from coppiced trees at ground level are likely to be eaten. With pollarded trees the production source of new growth is raised above the level where animals browse.</p>
+                        <p><b>P4</b> Neither deforestation nor upland erosion was widespread after the fall of Rome. Upland soils were enriched rather than depleted. Those who continued to live in the area appear to have adapted well to changed conditions. They relied on the time-tested technologies of simple, minimally destructive agriculture, cultivating olives, figs, and grapes and herding sheep. Grain, the largest Roman crop, continued to be raised on small plots or on flat areas cut out of the hillside shaded by olive trees or vines. This type of farming decreases erosion and surface water runoff. The sustainable agriculture that had characterized the region before the great Roman explosion once again served the inhabitants.</p>
+                    </div>
+                </div>
+                <div class="text-center mt-6">
+                    <button id="start-reading-1-btn" class="bg-indigo-600 text-white font-bold py-3 px-8 rounded-lg shadow-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-transform transform hover:scale-105">Start Questions for Passage 1</button>
+                </div>
+            </div>
+
+            <div id="reading-intro-2" class="hidden">
+                 <div class="p-6 bg-gray-50 rounded-lg mt-8">
+                    <h3 class="font-bold text-lg mb-4">Reading Passage 2: Lenape Horticulture</h3>
+                    <div class="prose max-w-none text-gray-700 leading-relaxed space-y-4">
+                        <p>
+                            <b>P1</b>
+                            Older scholarship on Native Americans assumed that, at the time of their first contact with Europeans, Native Americans in the northeastern United States were farmers whose main food source was maize (corn). This view was based on evidence of extensive fields inland. It was also consistent with reports from early European explorers, including Henry Hudson who sailed for the Dutch, about trading with Native Americans for "Turkish wheat," the explorers' term for maize. However, in the 1970s a
+                            <span class="highlighted-sentence">persuasive</span>
+                            archaeologist, Lynn Ceci, challenged this orthodoxy. She argued that for the people living in coastal New York, such as the Lenape occupying Manhattan Island when Dutch explorers arrived in the early seventeenth century, the environment was so abundant with resources that horticulture was an adjunct to the diet, not the primary source of calories.
+                            <span class="insert-square" data-passage="2" data-location="1">▇</span>
+                            She argued along several lines of evidence. First, she noted that "flotation tests"--in which prehistoric fire pits are flooded with water--caused relatively few seeds and corn kernels to float to the surface in coastal sites compared to inland sites.
+                            <span class="insert-square" data-passage="2" data-location="2">▇</span>
+                            Second, she argued that the soils in coastal regions, generally sandy and rocky, are not particularly productive and would require a lot of work to cultivate (an observation also noted by the Dutch).
+                            <span class="insert-square" data-passage="2" data-location="3">▇</span>
+                            Third, she argued from ecological evidence that it really was not necessary for coastal people to adopt an agricultural way of life, given the year-round abundance of shellfish, fish, mammals, nuts, and berries.
+                            <span class="insert-square" data-passage="2" data-location="4">▇</span>
+                            Other archaeologists corroborated these views by testing Lenape bones from local archaeological sites and showing that the Lenape primarily ate local plants, not maize, and a lot of seafood, and were generally healthy. (Adopting agriculture often leads to a reduction in the health of a population.)
+                        </p>
+                        
+                        <p><b>P2</b> Research has added a couple of twists to Ceci's hypothesis. A Columbia University student used a modern crop model to simulate maize horticulture on Manhattan, using representative soil types, climate, and maize varieties. He found that when maize was grown by itself, productivity was uneven, and there was a modest but significant probability of total crop failure each year. Soil nitrogen levels appeared to be the limiting factor. But the Lenape did not plant maize in monoculture (as a single crop), rather they practiced team planting (also known as multicropping); that is, they grew maize in combination with beans and squash--the traditional "three sisters"garden.</p>
+                        <p><b>P3</b> Beginning in late April, Lenape men cleared a plot of land by cutting down the large trees and burning the vegetation. Burning fertilized the soil with ash, which promoted plant growth by changing the soil chemistry from acidic to alkaline, releasing more nutrients. In early May the women created mounds and planted maize kernels saved from the year before. A few weeks later, they planted beans along the sides of the mounds and squash between them. Over the course of the summer, the beans climbed up the maize stalks, using the six-foot stems as a ladder to reach the sun; in the meantime, the beans, which have nitrogen-fixing nodules on their roots, transformed nitrogen from the atmosphere into a natural fertilizer, which fed the maize and the beans. The squash, growing its large green leaves between the mounds, kept the weeds down and held in soil moisture between rain showers (the Lenape did not practice irrigation). Crops were harvested from late summer until first frost, usually in October.</p>
+                        <p><b>P4</b> Modern crop models are generally not written to include team planting, because they assume monocultures--but they will accept inputs of fertilizer. Researchers simulated nitrogen inputs from bean plants at three different levels and showed that even modest nitrogen support increased maize productivity, and, more importantly, enhanced the consistency of the crop. In model simulations by researchers, maize rarely failed when grown with beans. Productivity, though, was still generally low, at about 700- 2,300 kilograms per hectare.</p>
+                        <p><b>P5</b> How many people that level of productivity would feed depends, of course, on how large the fields were. As mentioned, gardening was a woman's responsibility, but women had many other tasks that would limit their time in the garden. The Lenape were not immune to the human-wildlife conflicts that bedevil suburban gardeners today--deer, squirrels, raccoons, and assorted other wildlife were pests in the fields. Keeping the animals out required diligence throughout the growing season.</p>
+                    </div>
+                </div>
+                <div class="text-center mt-6">
+                    <button id="start-reading-2-btn" class="bg-indigo-600 text-white font-bold py-3 px-8 rounded-lg shadow-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-transform transform hover:scale-105">Start Questions for Passage 2</button>
+                </div>
+            </div>
+            
+            <div id="reading-passage-1-view" class="hidden">
+                 <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div id="passage-container-1" class="bg-gray-50 p-4 rounded-lg overflow-y-auto max-h-[85vh]">
+                         <div id="passage-content-1" class="prose max-w-none text-gray-700 leading-relaxed space-y-4">
+                            <p id="p1"><b>P1</b> In the Mediterranean, the Roman Empire (27B.C.E-394 C.E) <span class= "highlighted-sentence">focused</span> agriculture in the lowlands and protected the wooded uplands. But this broke down as the Empire declined, starting around 300 C.E. as large-scale lowland agriculture was abandoned in favor of small upland farms. Some historians have claimed that this caused the subsequent increase in forest clearing (removal of trees), with a need for more small farms, and more grazing animals like sheep and goats (<span class="highlighted-sentence">which eat young trees and green shoots</span>). However, others consider this conclusion something of an exaggeration, as it overstates the extent to which widespread forest use meant forest clearance. Even in the absence of government control and supervision, many forces limited the exploitation of woodlands. <span class="highlighted-sentence">Wooded land is valuable and likely to attract the protection of powerful people whether they are figures of authority or not, so dense forests and sizable woodlands would typical have been off-limits to random exploitation </span>. Jobs like building ships and roofing large structures require big forest trees. Demand was low, since shipbuilding was pointless when commerce was virtually nonexistent, and large structures are more usually built when population is increasing and cities are growing. Even where demand existed, transport remained a problem. The high cost and difficulty of cutting down a great tree was negligible compared with the expense and challenge of moving wood overland from the forest where it was harvested to the shipyard or building site where it was to be used.
+                            <p id="p2">
+                                <b>P2</b>
+                                <span class="insert-square" data-passage="1" data-location="1">▇</span>
+                                A factor that is harder for us to appreciate in an age when chain saws and wood splitters are widely available is the technological limitation on harvesting forest giants.
+                                <span class="insert-square" data-passage="1" data-location="2">▇</span>
+                                Big trees contain many times the potential heat energy of small trees, but harvesting them and reducing them to wood that is useful for burning is a formidable task as the small hand tools that most villagers possessed were hardly up to the job.
+                                <span class="insert-square" data-passage="1" data-location="3">▇</span>
+                                A householder was better off gathering and using small pieces of wood.
+                                <span class="insert-square" data-passage="1" data-location="4">▇</span>
+                                For fires, fallen or hanging branches that had dried out over the course of a year or so were preferable.
+                            </p>                            
+                            <p id="p3"><b>P3</b> Two forest management techniques Roman writers or farming experts advocated continued to be widely used after the fall of Rome.They survived not because they were mandated but because they were practical methods of producing renewable supplies of the small-dimension wood that met the needs of farmers. These techniques, known as coppicing and pollarding, are occasionally still practiced today, and many Mediterranean forests still bear the marks of this kind of cultivation. The purpose of coppicing is to transform a single-trunked tree into a producer of multiple fast-growing branches that can be harvested <span class="highlighted-sentence">periodically</span>. Mature trees are cut to the ground then allowed to sprout multiple trunks. A coppiced woodland is typically divided into sections that are harvested on a rotating basis. The length of the rotation depends on the speed with which the trees grow and the use to which the branches are to be put. Fast-growing trees might be harvested every four years; slower-growing trees, like oak, might require a fifty-year rotation. Instead of big trunks difficult to harvest and slow to regrow, coppiced woods produce multiple small diameter sticks and poles. Pollarding works on the same principle as coppicing, but trees that are pollarded are cut back to a main trunk rather than to the ground. Where wild or domestic animals graze forests, the new branches that grow from coppiced trees at ground level are likely to be eaten. With pollarded trees the production source of new growth is raised above the level where animals browse.</p>
+                            <p id="p4"><b>P4</b> Neither deforestation nor upland erosion was widespread after the fall of Rome. Upland soils were enriched rather than depleted. Those who continued to live in the area appear to have adapted well to changed conditions. They relied on the time-tested technologies of simple, minimally destructive agriculture, cultivating olives, figs, and grapes and herding sheep. Grain, the largest Roman crop, continued to be raised on small plots or on flat areas cut out of the hillside shaded by olive trees or vines. This type of farming decreases erosion and surface water runoff. The sustainable agriculture that had characterized the region before the great Roman explosion once again served the inhabitants.</p>
+                        </div>
+                    </div>
+                    <div id="questions-container-1">
+                        <div class="reading-q reading-q-rp1" data-paragraph-id="p1">
+                            <p class="mb-2 font-medium">1. The word "focused" in the passage is closest in meaning to</p>
+                            <div class="space-y-2">
+                                <div class="question-option"><input type="radio" id="r-q1-a" name="r-q1" value="A" class="hidden"><label for="r-q1-a" class="block w-full p-3 border rounded-lg cursor-pointer">depended on</label></div>
+                                <div class="question-option"><input type="radio" id="r-q1-b" name="r-q1" value="B" class="hidden"><label for="r-q1-b" class="block w-full p-3 border rounded-lg cursor-pointer">concentrated</label></div>
+                                <div class="question-option"><input type="radio" id="r-q1-c" name="r-q1" value="C" class="hidden"><label for="r-q1-c" class="block w-full p-3 border rounded-lg cursor-pointer">expanded</label></div>
+                                <div class="question-option"><input type="radio" id="r-q1-d" name="r-q1" value="D" class="hidden"><label for="r-q1-d" class="block w-full p-3 border rounded-lg cursor-pointer">authorized</label></div>
+                            </div>
+                        </div>
+                        <div class="reading-q reading-q-rp1" data-paragraph-id="p1">
+                            <p class="mb-2 font-medium">2. In paragraph 1, why does the author provide the information that sheep and goats "eat young trees and green shoots"?</p>
+                            <div class="space-y-2">
+                                <div class="question-option"><input type="radio" id="r-q2-a" name="r-q2" value="A" class="hidden"><label for="r-q2-a" class="block w-full p-3 border rounded-lg cursor-pointer">To suggest that grazing animals like sheep and goats were better adapted to small upland farms than they were to large-scale lowland agriculture</label></div>
+                                <div class="question-option"><input type="radio" id="r-q2-b" name="r-q2" value="B" class="hidden"><label for="r-q2-b" class="block w-full p-3 border rounded-lg cursor-pointer">To argue that grazing animals increased in number on small upland farms because there was an unlimited supply of food for them there</label></div>
+                                <div class="question-option"><input type="radio" id="r-q2-c" name="r-q2" value="C" class="hidden"><label for="r-q2-c" class="block w-full p-3 border rounded-lg cursor-pointer">To indicate why some historians believe that the increase in small upland farms led to more forest clearing</label></div>
+                                <div class="question-option"><input type="radio" id="r-q2-d" name="r-q2" value="D" class="hidden"><label for="r-q2-d" class="block w-full p-3 border rounded-lg cursor-pointer">To explain why large-scale Roman agriculture was more productive than small upland farming</label></div>
+                            </div>
+                        </div>
+                        <div class="reading-q reading-q-rp1" data-paragraph-id="p1">
+                            <p class="mb-2 font-medium">3. Which of the sentences below best expresses the essential information in the highlighted sentence in the passage? Incorrect choices change the meaning in important ways or leave out essential information</p>
+                            <div class="space-y-2">
+                                <div class="question-option"><input type="radio" id="r-q3-a" name="r-q3" value="A" class="hidden"><label for="r-q3-a" class="block w-full p-3 border rounded-lg cursor-pointer">Powerful people helped the authorities protect valuable trees in dense forests sizable woodlands from random exploitation.</label></div>
+                                <div class="question-option"><input type="radio" id="r-q3-b" name="r-q3" value="B" class="hidden"><label for="r-q3-b" class="block w-full p-3 border rounded-lg cursor-pointer">Powerful people probably protected dense forests and sizable woodlands from random exploitation because of their value.</label></div>
+                                <div class="question-option"><input type="radio" id="r-q3-c" name="r-q3" value="C" class="hidden"><label for="r-q3-c" class="block w-full p-3 border rounded-lg cursor-pointer">The random exploitation of wooded land caused powerful people to authorize the protection of dense forests and sizable woodlands.</label></div>
+                                <div class="question-option"><input type="radio" id="r-q3-d" name="r-q3" value="D" class="hidden"><label for="r-q3-d" class="block w-full p-3 border rounded-lg cursor-pointer">Powerful people found dense forests and sizable woodlands attractive and interesting, so they tried to protect them.</label></div>
+                            </div>
+                        </div>
+                        <div class="reading-q reading-q-rp1" data-paragraph-id="p1">
+                            <p class="mb-2 font-medium">4. According to paragraph 1, all of the following factors limited the use of big forest trees in large-structure projects EXCEPT:</p>
+                            <div class="space-y-2">
+                                <div class="question-option"><input type="radio" id="r-q4-a" name="r-q4" value="A" class="hidden"><label for="r-q4-a" class="block w-full p-3 border rounded-lg cursor-pointer">lack of population growth</label></div>
+                                <div class="question-option"><input type="radio" id="r-q4-b" name="r-q4" value="B" class="hidden"><label for="r-q4-b" class="block w-full p-3 border rounded-lg cursor-pointer">lack of commerce</label></div>
+                                <div class="question-option"><input type="radio" id="r-q4-c" name="r-q4" value="C" class="hidden"><label for="r-q4-c" class="block w-full p-3 border rounded-lg cursor-pointer">difficulty of finding forests from which big trees could be cut</label></div>
+                                <div class="question-option"><input type="radio" id="r-q4-d" name="r-q4" value="D" class="hidden"><label for="r-q4-d" class="block w-full p-3 border rounded-lg cursor-pointer">cost of transporting wood from the forest to the building site</label></div>
+                            </div>
+                        </div>
+                        <div class="reading-q reading-q-rp1" data-paragraph-id="p1">
+                            <p class="mb-2 font-medium">5. Which of the following can be inferred from paragraph 1 about the probable effect that the decline of the Roman Empire had on forests?</p>
+                            <div class="space-y-2">
+                                <div class="question-option"><input type="radio" id="r-q5-a" name="r-q5" value="A" class="hidden"><label for="r-q5-a" class="block w-full p-3 border rounded-lg cursor-pointer">It made forests more valuable to the landowners.</label></div>
+                                <div class="question-option"><input type="radio" id="r-q5-b" name="r-q5" value="B" class="hidden"><label for="r-q5-b" class="block w-full p-3 border rounded-lg cursor-pointer">It had little impact on the extent of tree removal</label></div>
+                                <div class="question-option"><input type="radio" id="r-q5-c" name="r-q5" value="C" class="hidden"><label for="r-q5-c" class="block w-full p-3 border rounded-lg cursor-pointer">It resulted in closer government supervision of forest clearance.</label></div>
+                                <div class="question-option"><input type="radio" id="r-q5-d" name="r-q5" value="D" class="hidden"><label for="r-q5-d" class="block w-full p-3 border rounded-lg cursor-pointer">It increased the demand for trees as building materials.</label></div>
+                            </div>
+                        </div>
+                        <div class="reading-q reading-q-rp1" data-paragraph-id="p3">
+                            <p class="mb-2 font-medium">6. The word "periodically" in the passage is closest in meaning to</p>
+                            <div class="space-y-2">
+                                <div class="question-option"><input type="radio" id="r-q6-a" name="r-q6" value="A" class="hidden"><label for="r-q6-a" class="block w-full p-3 border rounded-lg cursor-pointer">at regular intervals</label></div>
+                                <div class="question-option"><input type="radio" id="r-q6-b" name="r-q6" value="B" class="hidden"><label for="r-q6-b" class="block w-full p-3 border rounded-lg cursor-pointer">many times</label></div>
+                                <div class="question-option"><input type="radio" id="r-q6-c" name="r-q6" value="C" class="hidden"><label for="r-q6-c" class="block w-full p-3 border rounded-lg cursor-pointer">profitably</label></div>
+                                <div class="question-option"><input type="radio" id="r-q6-d" name="r-q6" value="D" class="hidden"><label for="r-q6-d" class="block w-full p-3 border rounded-lg cursor-pointer">without much effort</label></div>
+                            </div>
+                        </div>
+                        <div class="reading-q reading-q-rp1" data-paragraph-id="p3">
+                            <p class="mb-2 font-medium">7. According to paragraph 3, what do the coppicing and pollarding methods have in common?</p>
+                            <div class="space-y-2">
+                                <div class="question-option"><input type="radio" id="r-q7-a" name="r-q7" value="A" class="hidden"><label for="r-q7-a" class="block w-full p-3 border rounded-lg cursor-pointer">They both rely on cutting back trees to produce multiple small-diameter branches.</label></div>
+                                <div class="question-option"><input type="radio" id="r-q7-b" name="r-q7" value="B" class="hidden"><label for="r-q7-b" class="block w-full p-3 border rounded-lg cursor-pointer">They both cut back mature trees to the ground</label></div>
+                                <div class="question-option"><input type="radio" id="r-q7-c" name="r-q7" value="C" class="hidden"><label for="r-q7-c" class="block w-full p-3 border rounded-lg cursor-pointer">They both raise the productive growth above the ground to prevent its being eaten by grazing animals.</label></div>
+                                <div class="question-option"><input type="radio" id="r-q7-d" name="r-q7" value="D" class="hidden"><label for="r-q7-d" class="block w-full p-3 border rounded-lg cursor-pointer">They were both required by law after the fall of Rome.</label></div>
+                            </div>
+                        </div>
+                        <div class="reading-q reading-q-rp1" data-paragraph-id="p3">
+                            <p class="mb-2 font-medium">8. According to paragraph 3, which of the following is an advantage that pollarded trees have over coppiced trees?</p>
+                            <div class="space-y-2">
+                                <div class="question-option"><input type="radio" id="r-q8-a" name="r-q8" value="A" class="hidden"><label for="r-q8-a" class="block w-full p-3 border rounded-lg cursor-pointer">They produce more branches.</label></div>
+                                <div class="question-option"><input type="radio" id="r-q8-b" name="r-q8" value="B" class="hidden"><label for="r-q8-b" class="block w-full p-3 border rounded-lg cursor-pointer">They have bigger trunks.</label></div>
+                                <div class="question-option"><input type="radio" id="r-q8-c" name="r-q8" value="C" class="hidden"><label for="r-q8-c" class="block w-full p-3 border rounded-lg cursor-pointer">They regrow more quickly.</label></div>
+                                <div class="question-option"><input type="radio" id="r-q8-d" name="r-q8" value="D" class="hidden"><label for="r-q8-d" class="block w-full p-3 border rounded-lg cursor-pointer">They are not damaged by grazing animals.</label></div>
+                            </div>
+                        </div>
+                        <div class="reading-q reading-q-rp1" data-paragraph-id="p1,p2">
+                            <p class="mb-2 font-medium">9. Look at the squares 【▇】 that indicate where the following sentence can be added to the passage. Where would the sentence best fit?</p>
+                            <p class="mb-2 p-3 bg-blue-100 border-l-4 border-blue-400 rounded-md">"Even if those problems could be overcome, there was a more practical obstacle to overexploitation."</p>
+                            <p class="text-gray-600">Click a square in the passage on the left. Your selected position will be highlighted.</p>
+                        </div>
+                        <div class="reading-q reading-q-rp1" data-paragraph-id="all-rp1">
+                            <p class="mb-2 font-medium">10. Directions: An introductory sentence for a brief summary of the passage is provided below.Complete the summary by selecting the THREE answer choices that express the most important ideas in the passage.Some answer choices do not belong in the summary because they express ideas that are not presented in the passage or are minor ideas in the passage. This questions is worth 2 points</p>
+                            <p class="mb-2 p-3 bg-gray-200 rounded-md">"The extent to which the fall of Roman Empire affacted forests is debated among researchers."</p>
+                            <div class="space-y-2">
+                                <div class="question-option"><input type="checkbox" id="r-q10-a" name="r-q10" value="A" class="hidden"><label for="r-q10-a" class="block w-full p-3 border rounded-lg cursor-pointer">A. The protection and supervision of upland forests and woodlands that existed under the Romans continued uninterrupted by those who continued to live in the area.</label></div>
+                                <div class="question-option"><input type="checkbox" id="r-q10-b" name="r-q10" value="B" class="hidden"><label for="r-q10-b" class="block w-full p-3 border rounded-lg cursor-pointer">B. Exploitation of lowland fields was taken over by villagers and householders after the fields were abandoned by the Romans.</label></div>
+                                <div class="question-option"><input type="checkbox" id="r-q10-c" name="r-q10" value="C" class="hidden"><label for="r-q10-c" class="block w-full p-3 border rounded-lg cursor-pointer">C. Harvesting large trees and preparing their wood for use was difficult with the limited tools available at the time.</label></div>
+                                <div class="question-option"><input type="checkbox" id="r-q10-d" name="r-q10" value="D" class="hidden"><label for="r-q10-d" class="block w-full p-3 border rounded-lg cursor-pointer">D. Use of large, valuable trees was restricted to large-scale projects, for which there was little demand, and transportation costs were high.</label></div>
+                                <div class="question-option"><input type="checkbox" id="r-q10-e" name="r-q10" value="E" class="hidden"><label for="r-q10-e" class="block w-full p-3 border rounded-lg cursor-pointer">E. Useful Roman techniques for the use and regrowth of small trees continued to be popular after the decline of the Roman Empire.</label></div>
+                                <div class="question-option"><input type="checkbox" id="r-q10-f" name="r-q10" value="F" class="hidden"><label for="r-q10-f" class="block w-full p-3 border rounded-lg cursor-pointer">F. The Romans began growing grain in many small upland plots to supplement inadequate lowland harvest.</label></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="reading-passage-2-view" class="hidden">
+                 <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div id="passage-container-2" class="bg-gray-50 p-4 rounded-lg overflow-y-auto max-h-[85vh]">
+                        <div id="passage-content-2" class="prose max-w-none text-gray-700 leading-relaxed space-y-4">
+                            <p id="rp2-p1"><b>P1</b>
+                                Older scholarship on Native Americans assumed that, at the time of their first contact with Europeans, Native Americans in the northeastern United States were farmers whose main food source was maize (corn). This view was based on evidence of extensive fields inland. It was also consistent with reports from early European explorers, including Henry Hudson who sailed for the Dutch, about trading with Native Americans for "Turkish wheat," the explorers' term for maize. However, in the 1970s a
+                                <span class="highlighted-sentence">persuasive</span>
+                                archaeologist, Lynn Ceci, challenged this orthodoxy. She argued that for the people living in coastal New York, such as the Lenape occupying Manhattan Island when Dutch explorers arrived in the early seventeenth century, the environment was so abundant with resources that horticulture was an adjunct to the diet, not the primary source of calories.
+                                <span class="insert-square" data-passage="2" data-location="1">▇</span>
+                                She argued along several lines of evidence. First, she noted that "flotation tests"--in which prehistoric fire pits are flooded with water--caused relatively few seeds and corn kernels to float to the surface in coastal sites compared to inland sites.
+                                <span class="insert-square" data-passage="2" data-location="2">▇</span>
+                                Second, she argued that the soils in coastal regions, generally sandy and rocky, are not particularly productive and would require a lot of work to cultivate (an observation also noted by the Dutch).
+                                <span class="insert-square" data-passage="2" data-location="3">▇</span>
+                                Third, she argued from ecological evidence that it really was not necessary for coastal people to adopt an agricultural way of life, given the year-round abundance of shellfish, fish, mammals, nuts, and berries.
+                                <span class="insert-square" data-passage="2" data-location="4">▇</span>
+                                Other archaeologists corroborated these views by testing Lenape bones from local archaeological sites and showing that the Lenape primarily ate local plants, not maize, and a lot of seafood, and were generally healthy. (Adopting agriculture often leads to a reduction in the health of a population.)
+</p>
+                            <p id="rp2-p2"><b>P2</b> Research has added a couple of twists to Ceci's hypothesis. A Columbia University student used a modern crop model to simulate maize horticulture on Manhattan, using representative soil types, climate, and maize varieties. He found that when maize was grown by itself, productivity was uneven, and there was a modest but significant probability of total crop failure each year. Soil nitrogen levels appeared to be the limiting factor. But the Lenape did not plant maize in monoculture (as a single crop), rather they practiced team planting (also known as multicropping); that is, they grew maize in combination with beans and squash--the traditional "three sisters"garden.</p>
+                            <p id="rp2-p3"><b>P3</b> Beginning in late April, Lenape men cleared a plot of land by cutting down the large trees and burning the vegetation. Burning fertilized the soil with ash, which promoted plant growth by changing the soil chemistry from acidic to alkaline, releasing more nutrients. In early May the women created mounds and planted maize kernels saved from the year before. A few weeks later, they planted beans along the sides of the mounds and squash between them. <span class="highlighted-sentence">Over the course of the summer, the beans climbed up the maize stalks, using the six-foot stems as a ladder to reach the sun; in the meantime, the beans, which have nitrogen-fixing nodules on their roots, transformed nitrogen from the atmosphere into a natural fertilizer, which fed the maize and the beans.</span> The squash, growing its large green leaves between the mounds, kept the weeds down and held in soil moisture between rain showers (the Lenape did not practice irrigation). Crops were harvested from late summer until first frost, usually in October.</p>
+                            <p id="rp2-p4"><b>P4</b> Modern crop models are generally not written to include team planting, because they assume monocultures--but they will accept inputs of fertilizer. Researchers simulated nitrogen inputs from bean plants at three different levels and showed that even modest nitrogen support increased maize productivity, and, more importantly, enhanced the consistency of the crop. In model simulations by researchers, maize rarely failed when grown with beans. Productivity, though, was still generally low, at about 700- 2,300 kilograms per hectare.</p>
+                            <p id="rp2-p5"><b>P5</b> How many people that level of productivity would feed depends, of course, on how large the fields were. As mentioned, gardening was a woman's responsibility, but women had many other tasks that would limit their time in the garden. The Lenape were not immune to the human-wildlife conflicts that bedevil suburban gardeners today--deer, squirrels, raccoons, and assorted other wildlife were pests in the fields. Keeping the animals out required diligence throughout the growing season.</p>
+                        </div>
+                    </div>
+                    <div id="questions-container-2">
+                        <!-- Reading Passage 2 Questions -->
+                        <div class="reading-q reading-q-rp2" data-paragraph-id="rp2-p1">
+                            <p class="mb-2 font-medium">1. The word "persuasive" in the passage is closest in meaning to</p>
+                            <div class="space-y-2">
+                                <div class="question-option"><input type="radio" id="r2-q1-a" name="r2-q1" value="A" class="hidden"><label for="r2-q1-a" class="block w-full p-3 border rounded-lg cursor-pointer">convincing</label></div>
+                                <div class="question-option"><input type="radio" id="r2-q1-b" name="r2-q1" value="B" class="hidden"><label for="r2-q1-b" class="block w-full p-3 border rounded-lg cursor-pointer">important</label></div>
+                                <div class="question-option"><input type="radio" id="r2-q1-c" name="r2-q1" value="C" class="hidden"><label for="r2-q1-c" class="block w-full p-3 border rounded-lg cursor-pointer">ambitious</label></div>
+                                <div class="question-option"><input type="radio" id="r2-q1-d" name="r2-q1" value="D" class="hidden"><label for="r2-q1-d" class="block w-full p-3 border rounded-lg cursor-pointer">brilliant</label></div>
+                            </div>
+                        </div>
+                        <div class="reading-q reading-q-rp2" data-paragraph-id="rp2-p1">
+                            <p class="mb-2 font-medium">2. The word "corroborated" in the passage is closest in meaning to</p>
+                            <div class="space-y-2">
+                                <div class="question-option"><input type="radio" id="r2-q2-a" name="r2-q2" value="A" class="hidden"><label for="r2-q2-a" class="block w-full p-3 border rounded-lg cursor-pointer">developed</label></div>
+                                <div class="question-option"><input type="radio" id="r2-q2-b" name="r2-q2" value="B" class="hidden"><label for="r2-q2-b" class="block w-full p-3 border rounded-lg cursor-pointer">spread</label></div>
+                                <div class="question-option"><input type="radio" id="r2-q2-c" name="r2-q2" value="C" class="hidden"><label for="r2-q2-c" class="block w-full p-3 border rounded-lg cursor-pointer">examined</label></div>
+                                <div class="question-option"><input type="radio" id="r2-q2-d" name="r2-q2" value="D" class="hidden"><label for="r2-q2-d" class="block w-full p-3 border rounded-lg cursor-pointer">confirmed</label></div>
+                            </div>
+                        </div>
+                        <div class="reading-q reading-q-rp2" data-paragraph-id="rp2-p1">
+                            <p class="mb-2 font-medium">3. According to paragraph 1, Ceci considered all of the following facts to be evidence that maize was less important on the coast EXCEPT</p>
+                            <div class="space-y-2">
+                                <div class="question-option"><input type="radio" id="r2-q3-a" name="r2-q3" value="A" class="hidden"><label for="r2-q3-a" class="block w-full p-3 border rounded-lg cursor-pointer">Old fire pits along the coast reveal few traces of seeds and maize</label></div>
+                                <div class="question-option"><input type="radio" id="r2-q3-b" name="r2-q3" value="B" class="hidden"><label for="r2-q3-b" class="block w-full p-3 border rounded-lg cursor-pointer">The soil along the coast was not well suited for growing maize</label></div>
+                                <div class="question-option"><input type="radio" id="r2-q3-c" name="r2-q3" value="C" class="hidden"><label for="r2-q3-c" class="block w-full p-3 border rounded-lg cursor-pointer">Many different sources of food were available on the coast</label></div>
+                                <div class="question-option"><input type="radio" id="r2-q3-d" name="r2-q3" value="D" class="hidden"><label for="r2-q3-d" class="block w-full p-3 border rounded-lg cursor-pointer">Maize fields on the coast were frequently flooded with water</label></div>
+                            </div>
+                        </div>
+                        <div class="reading-q reading-q-rp2" data-paragraph-id="rp2-p2">
+                            <p class="mb-2 font-medium">4. According to paragraph 2, the modern crop model was not an accurate simulation of Lenape agriculture because</p>
+                            <div class="space-y-2">
+                                <div class="question-option"><input type="radio" id="r2-q4-a" name="r2-q4" value="A" class="hidden"><label for="r2-q4-a" class="block w-full p-3 border rounded-lg cursor-pointer">the type of maize used in the model was not the same as Lenape maize</label></div>
+                                <div class="question-option"><input type="radio" id="r2-q4-b" name="r2-q4" value="B" class="hidden"><label for="r2-q4-b" class="block w-full p-3 border rounded-lg cursor-pointer">the soil on Manhattan was different from the soil types used by the Lenape</label></div>
+                                <div class="question-option"><input type="radio" id="r2-q4-c" name="r2-q4" value="C" class="hidden"><label for="r2-q4-c" class="block w-full p-3 border rounded-lg cursor-pointer">the model used only one type of plant but the Lenape used several types of plants</label></div>
+                                <div class="question-option"><input type="radio" id="r2-q4-d" name="r2-q4" value="D" class="hidden"><label for="r2-q4-d" class="block w-full p-3 border rounded-lg cursor-pointer">the climate of Manhattan is no longer appropriate for growing Lenape maize</label></div>
+                            </div>
+                        </div>
+                        <div class="reading-q reading-q-rp2" data-paragraph-id="rp2-p3">
+                            <p class="mb-2 font-medium">5. Which of the sentences below best expresses the essential information in the highlighted sentence in the passage? Incorrect choices change the meaning in important ways or leave out essential information</p>
+                            <div class="space-y-2">
+                                <div class="question-option"><input type="radio" id="r2-q5-a" name="r2-q5" value="A" class="hidden"><label for="r2-q5-a" class="block w-full p-3 border rounded-lg cursor-pointer">The maize relied on the stems to reach the sun and on the beans for fertilizer</label></div>
+                                <div class="question-option"><input type="radio" id="r2-q5-b" name="r2-q5" value="B" class="hidden"><label for="r2-q5-b" class="block w-full p-3 border rounded-lg cursor-pointer">The beans turned atmospheric nitrogen into a natural fertilizer for the maize</label></div>
+                                <div class="question-option"><input type="radio" id="r2-q5-c" name="r2-q5" value="C" class="hidden"><label for="r2-q5-c" class="block w-full p-3 border rounded-lg cursor-pointer">The beans and maize were able to grow in areas with sun and natural fertilizer</label></div>
+                                <div class="question-option"><input type="radio" id="r2-q5-d" name="r2-q5" value="D" class="hidden"><label for="r2-q5-d" class="block w-full p-3 border rounded-lg cursor-pointer">The maize helped the beans reach the sun while the beans fertilized the maize</label></div>
+                            </div>
+                        </div>
+                        <div class="reading-q reading-q-rp2" data-paragraph-id="rp2-p3">
+                            <p class="mb-2 font-medium">6. According to paragraph 3, men made which of the following contributions to Lenape plant cultivation?</p>
+                            <div class="space-y-2">
+                                <div class="question-option"><input type="radio" id="r2-q6-a" name="r2-q6" value="A" class="hidden"><label for="r2-q6-a" class="block w-full p-3 border rounded-lg cursor-pointer">They planted maize seeds</label></div>
+                                <div class="question-option"><input type="radio" id="r2-q6-b" name="r2-q6" value="B" class="hidden"><label for="r2-q6-b" class="block w-full p-3 border rounded-lg cursor-pointer">They created ash that fertilized the soil</label></div>
+                                <div class="question-option"><input type="radio" id="r2-q6-c" name="r2-q6" value="C" class="hidden"><label for="r2-q6-c" class="block w-full p-3 border rounded-lg cursor-pointer">They removed weeds from around the crops</label></div>
+                                <div class="question-option"><input type="radio" id="r2-q6-d" name="r2-q6" value="D" class="hidden"><label for="r2-q6-d" class="block w-full p-3 border rounded-lg cursor-pointer">They improved soil moisture with irrigation</label></div>
+                            </div>
+                        </div>
+                        <div class="reading-q reading-q-rp2" data-paragraph-id="rp2-p3">
+                            <p class="mb-2 font-medium">7. Paragraph 3 suggests which of the following about squash grown on Lenape fields?</p>
+                            <div class="space-y-2">
+                                <div class="question-option"><input type="radio" id="r2-q7-a" name="r2-q7" value="A" class="hidden"><label for="r2-q7-a" class="block w-full p-3 border rounded-lg cursor-pointer">It increased the availability of water for the maize and beans</label></div>
+                                <div class="question-option"><input type="radio" id="r2-q7-b" name="r2-q7" value="B" class="hidden"><label for="r2-q7-b" class="block w-full p-3 border rounded-lg cursor-pointer">It was usually planted in late April</label></div>
+                                <div class="question-option"><input type="radio" id="r2-q7-c" name="r2-q7" value="C" class="hidden"><label for="r2-q7-c" class="block w-full p-3 border rounded-lg cursor-pointer">It led to increasing weeds</label></div>
+                                <div class="question-option"><input type="radio" id="r2-q7-d" name="r2-q7" value="D" class="hidden"><label for="r2-q7-d" class="block w-full p-3 border rounded-lg cursor-pointer">It needed irrigation in order to grow successfully</label></div>
+                            </div>
+                        </div>
+                        <div class="reading-q reading-q-rp2" data-paragraph-id="rp2-p5">
+                            <p class="mb-2 font-medium">8. In paragraph 5, why does the author mention that Lenape women had to perform tasks other than gardening?</p>
+                            <div class="space-y-2">
+                                <div class="question-option"><input type="radio" id="r2-q8-a" name="r2-q8" value="A" class="hidden"><label for="r2-q8-a" class="block w-full p-3 border rounded-lg cursor-pointer">To suggest that Lenape women were treated unfairly</label></div>
+                                <div class="question-option"><input type="radio" id="r2-q8-b" name="r2-q8" value="B" class="hidden"><label for="r2-q8-b" class="block w-full p-3 border rounded-lg cursor-pointer">To challenge the belief that gardening was a woman's responsibility</label></div>
+                                <div class="question-option"><input type="radio" id="r2-q8-c" name="r2-q8" value="C" class="hidden"><label for="r2-q8-c" class="block w-full p-3 border rounded-lg cursor-pointer">To provide a factor that limited the total amount of food grown on Lenape fields</label></div>
+                                <div class="question-option"><input type="radio" id="r2-q8-d" name="r2-q8" value="D" class="hidden"><label for="r2-q8-d" class="block w-full p-3 border rounded-lg cursor-pointer">To demonstrate that Lenape gardening was similar to modern gardening</label></div>
+                            </div>
+                        </div>
+                         <div class="reading-q reading-q-rp2" data-paragraph-id="rp2-p1">
+                            <p class="mb-2 font-medium">9. Look at the squares 【▇】 that indicate where the following sentence can be added to the passage. Where would the sentence best fit?</p>
+                            <p class="mb-2 p-3 bg-blue-100 border-l-4 border-blue-400 rounded-md">"If maize had been the main food source for the Lenape, Ceci reasoned, more remains of corn should have risen to the top."</p>
+                            <p class="text-gray-600">Click a square in the passage on the left. Your selected position will be highlighted.</p>
+                        </div>
+                        <div class="reading-q reading-q-rp2" data-paragraph-id="all-rp2">
+                            <p class="mb-2 font-medium">10. Directions: An introductory sentence for a brief summary of the passage is provided below. Complete the summary by selecting the THREE answer choices that express the most important ideas in the passage. Some answer choices do not belong in the summary because they express ideas that are not presented in the passage or are minor ideas in the passage. This questions is worth 2 points</p>
+                            <p class="mb-2 p-3 bg-gray-200 rounded-md">"The Lenape of Manhattan changed their environment through horticulture and fire."</p>
+                            <div class="space-y-2">
+                                <div class="question-option"><input type="checkbox" id="r2-q10-a" name="r2-q10" value="A" class="hidden"><label for="r2-q10-a" class="block w-full p-3 border rounded-lg cursor-pointer">A. Historians long believed that groups of Native Americans such as the Lenape ate primarily maize, but recent research has shown that the Lenape actually ate relatively little maize</label></div>
+                                <div class="question-option"><input type="checkbox" id="r2-q10-b" name="r2-q10" value="B" class="hidden"><label for="r2-q10-b" class="block w-full p-3 border rounded-lg cursor-pointer">B. The Lenape did not rely primarily on horticulture for food, but they did grow beans, squash, and maize on Manhattan</label></div>
+                                <div class="question-option"><input type="checkbox" id="r2-q10-c" name="r2-q10" value="C" class="hidden"><label for="r2-q10-c" class="block w-full p-3 border rounded-lg cursor-pointer">C. The mixture of crops grown by the Lenape helped sustain over a agricultural production, although keeping wildlife out of the fields was a problem</label></div>
+                                <div class="question-option"><input type="checkbox" id="r2-q10-d" name="r2-q10" value="D" class="hidden"><label for="r2-q10-d" class="block w-full p-3 border rounded-lg cursor-pointer">D. Early Dutch and English explorers adapted Lenape methods of growing maize in order to provide a food source for settlers in inland areas</label></div>
+                                <div class="question-option"><input type="checkbox" id="r2-q10-e" name="r2-q10" value="E" class="hidden"><label for="r2-q10-e" class="block w-full p-3 border rounded-lg cursor-pointer">E. Crop models have shown that the Lenape "three sisters" horticulture on Manhattan produced a significant probability of crop failure because of low nitrogen levels in the soil</label></div>
+                                <div class="question-option"><input type="checkbox" id="r2-q10-f" name="r2-q10" value="F" class="hidden"><label for="r2-q10-f" class="block w-full p-3 border rounded-lg cursor-pointer">F. The methods that the Lenape used to practice horticulture, such as burning vegetation and planting different crops at different times, reduced nutrients in the soil and kept productivity low</label></div>
+                            </div>
+                        </div>
+                    </div>
+                 </div>
+            </div>
+
+            <div id="reading-nav" class="hidden flex justify-between mt-6 pt-6 border-t">
+                <button id="prev-q-btn" class="bg-gray-500 text-white font-bold py-2 px-6 rounded-lg shadow-md hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-400 transition-transform transform hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed"> &larr; Previous </button>
+                <span id="question-counter" class="text-lg font-semibold text-gray-700 self-center"></span>
+                <button id="next-q-btn" class="bg-indigo-600 text-white font-bold py-2 px-6 rounded-lg shadow-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-transform transform hover:scale-105"> Next &rarr; </button>
+            </div>
+        </div>
+
+        <!-- Results Section -->
+        <div id="results-section" class="hidden text-center">
+            <h2 class="text-2xl font-semibold mb-4 text-green-700">Test Complete!</h2>
+            <p class="text-lg mb-8 text-gray-600">You have finished the practice test. Click the button below to download a file containing all of your answers.</p>
+            <button id="download-btn" class="bg-green-600 text-white font-bold py-3 px-8 rounded-lg shadow-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 transition-transform transform hover:scale-105">
+                Download My Answers
+            </button>
+        </div>
+
+        <!-- Main Navigation -->
+        <div id="main-navigation" class="hidden flex justify-end mt-8 pt-6 border-t">
+            <button id="main-next-btn" class="bg-indigo-600 text-white font-bold py-2 px-6 rounded-lg shadow-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-transform transform hover:scale-105">
+                Next Section &rarr;
+            </button>
+        </div>
+
+    </div>
+
+    <script src="timer.js"></script>
+    <script>
+        // 保持原有的JavaScript代码不变
+        document.addEventListener('DOMContentLoaded', () => {
+            const LISTENING_DURATION = 18 * 60;
+            const READING_DURATION = 36 * 60;
+
+            // --- State Management ---
+            const userAnswers = {};
+            let currentSection = 'listening';
+            let currentListeningPassageId = 'c1';
+            let currentListeningQIndex = 0;
+            
+            let currentReadingPassageId = 'rp1';
+            let currentReadingQIndex = 0;
+
+            // --- Element Selectors ---
+            // Sections
+            const listeningSection = document.getElementById('listening-section');
+            const readingSection = document.getElementById('reading-section');
+            const resultsSection = document.getElementById('results-section');
+            const listeningNav = document.getElementById('listening-nav');
+            const nextListeningQBtn = document.getElementById('next-listening-q-btn');
+            
+            const timerDisplay = document.getElementById('timer');
+            let listeningTimerRunning = false;
+            let readingTimerStarted = false;
+            let listeningLocked = false;
+            let readingLocked = false;
+
+            // Passage Data
+            const passageOrder = ['c1', 'l1', 'c2', 'l2', 'l3'];
+            const passageContainers = {};
+            const audioViews = {};
+            const questionViews = {};
+            const questionSets = {};
+            const startQuestionButtons = {};
+
+            passageOrder.forEach(id => {
+                passageContainers[id] = document.getElementById(`${id}-container`);
+                audioViews[id] = document.getElementById(`${id}-audio-view`);
+                questionViews[id] = document.getElementById(`${id}-questions-view`);
+                questionSets[id] = document.querySelectorAll(`.${id}-question`);
+                startQuestionButtons[id] = document.getElementById(`start-${id}-questions-btn`);
+            });
+
+            // Reading Elements
+            const readingIntro1 = document.getElementById('reading-intro-1');
+            const readingIntro2 = document.getElementById('reading-intro-2');
+            const readingPassage1View = document.getElementById('reading-passage-1-view');
+            const readingPassage2View = document.getElementById('reading-passage-2-view');
+
+            const startReading1Btn = document.getElementById('start-reading-1-btn');
+            const startReading2Btn = document.getElementById('start-reading-2-btn');
+            
+            const readingQuestionsRP1 = document.querySelectorAll('.reading-q-rp1');
+            const readingQuestionsRP2 = document.querySelectorAll('.reading-q-rp2');
+            
+            const questionCounter = document.getElementById('question-counter');
+            const readingNav = document.getElementById('reading-nav');
+            const prevQBtn = document.getElementById('prev-q-btn');
+            const nextQBtn = document.getElementById('next-q-btn');
+            
+            // General Elements
+            const mainNavigation = document.getElementById('main-navigation');
+            const mainNextBtn = document.getElementById('main-next-btn');
+            const downloadBtn = document.getElementById('download-btn');
+            setTimerVisibility(false);
+
+            let listeningTimer = null;
+            const readingTimer = new CountdownTimer(READING_DURATION, {
+                onTick: (seconds) => {
+                    updateTimerDisplay('Reading', seconds);
+                },
+                onExpire: () => {
+                    lockReadingSection();
+                    showResultsSection();
+                }
+            });
+            
+            // --- Audio Setup ---
+            function setupAudioPlayer(buttonId, audioId, onPlayCallback) {
+                const button = document.getElementById(buttonId);
+                const audio = document.getElementById(audioId);
+                if (button && audio) {
+                    button.addEventListener('click', () => {
+                        audio.play();
+                        button.disabled = true;
+                        if(onPlayCallback) {
+                            onPlayCallback();
+                        }
+                    });
+                }
+            }
+
+            passageOrder.forEach(id => {
+                setupAudioPlayer(`play-${id}-btn`, `audio-${id}`, () => {
+                    startQuestionButtons[id].classList.remove('hidden');
+                    startQuestionButtons[id].disabled = false;
+                });
+            });
+
+            setupAudioPlayer('play-c2-q5-replay-btn', 'audio-c2-q5-replay', null);
+
+            // --- Listening Section Logic ---
+            passageOrder.forEach(id => {
+                startQuestionButtons[id].addEventListener('click', () => {
+                    audioViews[id].classList.add('hidden');
+                    questionViews[id].classList.remove('hidden');
+                    listeningNav.classList.remove('hidden');
+                    displayListeningQuestion();
+                    startListeningTimerIfNeeded();
+                });
+            });
+
+            nextListeningQBtn.addEventListener('click', () => {
+                const currentPassageQuestions = questionSets[currentListeningPassageId];
+                
+                if (currentListeningQIndex < currentPassageQuestions.length - 1) {
+                    currentListeningQIndex++;
+                    displayListeningQuestion();
+                } else {
+                    listeningNav.classList.add('hidden');
+                    passageContainers[currentListeningPassageId].classList.add('hidden');
+                    pauseListeningTimerForAudio();
+
+                    const currentPassageIndex = passageOrder.indexOf(currentListeningPassageId);
+                    if (currentPassageIndex < passageOrder.length - 1) {
+                        const nextPassageId = passageOrder[currentPassageIndex + 1];
+                        currentListeningPassageId = nextPassageId;
+                        currentListeningQIndex = 0;
+                        if (audioViews[nextPassageId]) {
+                            audioViews[nextPassageId].classList.remove('hidden');
+                        }
+                        if (questionViews[nextPassageId]) {
+                            questionViews[nextPassageId].classList.add('hidden');
+                        }
+                        passageContainers[nextPassageId].classList.remove('hidden');
+                    } else {
+                        pauseListeningTimerForAudio();
+                        listeningSection.classList.add('hidden');
+                        mainNavigation.classList.remove('hidden');
+                        mainNextBtn.disabled = false;
+                    }
+                }
+            });
+
+            function displayListeningQuestion() {
+                const questionsToShow = questionSets[currentListeningPassageId];
+                questionsToShow.forEach((q, index) => {
+                    q.classList.toggle('hidden', index !== currentListeningQIndex);
+                });
+            }
+
+            // --- Reading Section Logic ---
+            mainNextBtn.addEventListener('click', () => {
+                if (currentSection === 'listening') {
+                    goToReadingIntro();
+                }
+            });
+
+            startReading1Btn.addEventListener('click', () => {
+                readingIntro1.classList.add('hidden');
+                readingPassage1View.classList.remove('hidden');
+                readingNav.classList.remove('hidden');
+                displayReadingQuestion();
+            });
+
+            startReading2Btn.addEventListener('click', () => {
+                readingIntro2.classList.add('hidden');
+                readingPassage2View.classList.remove('hidden');
+                readingNav.classList.remove('hidden');
+                displayReadingQuestion();
+            });
+            
+            nextQBtn.addEventListener('click', () => {
+                const totalQuestionsInPassage = (currentReadingPassageId === 'rp1') ? readingQuestionsRP1.length : readingQuestionsRP2.length;
+
+                if (currentReadingQIndex < totalQuestionsInPassage - 1) {
+                    currentReadingQIndex++;
+                    displayReadingQuestion();
+                } else {
+                    if (currentReadingPassageId === 'rp1') {
+                        readingPassage1View.classList.add('hidden');
+                        readingNav.classList.add('hidden');
+                        readingIntro2.classList.remove('hidden');
+                        currentReadingPassageId = 'rp2';
+                        currentReadingQIndex = 0;
+                    } else {
+                        finishReadingSection();
+                    }
+                }
+            });
+
+            prevQBtn.addEventListener('click', () => {
+                if (currentReadingQIndex > 0) {
+                    currentReadingQIndex--;
+                    displayReadingQuestion();
+                }
+            });
+            
+            function displayReadingQuestion() {
+                const questionsToShow = (currentReadingPassageId === 'rp1') ? readingQuestionsRP1 : readingQuestionsRP2;
+                const totalQuestions = questionsToShow.length;
+
+                questionsToShow.forEach((q, index) => {
+                    q.style.display = (index === currentReadingQIndex) ? 'block' : 'none';
+                });
+                
+                const currentQ = questionsToShow[currentReadingQIndex];
+                questionCounter.textContent = `Question ${currentReadingQIndex + 1} of ${totalQuestions}`;
+
+                const passageContent = (currentReadingPassageId === 'rp1') ? 
+                    document.getElementById('passage-content-1') : 
+                    document.getElementById('passage-content-2');
+                
+                passageContent.querySelectorAll('p').forEach(p => p.style.display = 'none');
+
+                const paraId = currentQ.dataset.paragraphId;
+                if (paraId) {
+                    if (paraId.startsWith('all-')) {
+                         passageContent.querySelectorAll('p').forEach(p => p.style.display = 'block');
+                    }
+                    else {
+                        const paraIds = paraId.split(',');
+                        paraIds.forEach(id => {
+                            const paraToShow = document.getElementById(id);
+                            if (paraToShow) paraToShow.style.display = 'block';
+                        });
+                    }
+                }
+                
+                prevQBtn.disabled = currentReadingQIndex === 0;
+
+                if (currentReadingQIndex === totalQuestions - 1) {
+                    if(currentReadingPassageId === 'rp1') {
+                        nextQBtn.textContent = 'Finish Passage 1';
+                    } else {
+                        nextQBtn.textContent = 'Finish Test';
+                    }
+                } else {
+                    nextQBtn.textContent = 'Next →';
+                }
+            }
+
+            function startListeningTimerIfNeeded() {
+                if (!hasVisibleListeningQuestions()) {
+                    pauseListeningTimerForAudio();
+                    return;
+                }
+                if (!listeningTimer) {
+                    listeningTimer = createListeningTimer();
+                }
+                if (listeningTimerRunning) return;
+                setTimerVisibility(true);
+                listeningTimer.start();
+                listeningTimerRunning = true;
+            }
+
+            function pauseListeningTimerForAudio() {
+                if (listeningTimer && listeningTimerRunning) {
+                    listeningTimer.stop();
+                }
+                listeningTimerRunning = false;
+                clearTimerDisplay();
+            }
+
+            function startReadingTimerIfNeeded() {
+                if (readingTimerStarted) return;
+                readingTimerStarted = true;
+                if (listeningTimer) {
+                    listeningTimer.stop();
+                }
+                listeningTimerRunning = false;
+                setTimerVisibility(true);
+                readingTimer.start();
+            }
+
+            function createListeningTimer() {
+                return new CountdownTimer(LISTENING_DURATION, {
+                    onTick: (seconds) => {
+                        updateTimerDisplay('Listening', seconds);
+                    },
+                    onExpire: () => {
+                        listeningTimerRunning = false;
+                        lockListeningSection();
+                        goToReadingIntro();
+                    }
+                });
+            }
+
+            function hasVisibleListeningQuestions() {
+                const questionView = questionViews[currentListeningPassageId];
+                if (!questionView || questionView.classList.contains('hidden')) {
+                    return false;
+                }
+                const visibleQuestionBlocks = questionView.querySelectorAll('.listening-question:not(.hidden)');
+                if (visibleQuestionBlocks.length > 0) {
+                    return true;
+                }
+                const answerInputs = questionView.querySelectorAll('input[type=\"radio\"], input[type=\"checkbox\"], textarea');
+                return answerInputs.length > 0;
+            }
+
+            function lockListeningSection() {
+                if (listeningLocked) return;
+                listeningLocked = true;
+                disableInputs(listeningSection);
+            }
+
+            function lockReadingSection() {
+                if (readingLocked) return;
+                readingLocked = true;
+                disableInputs(readingSection);
+                readingSection.querySelectorAll('.insert-square').forEach(square => {
+                    square.style.pointerEvents = 'none';
+                    square.style.opacity = '0.5';
+                });
+                nextQBtn.disabled = true;
+                prevQBtn.disabled = true;
+                startReading1Btn.disabled = true;
+                startReading2Btn.disabled = true;
+            }
+
+            function disableInputs(container) {
+                container.querySelectorAll('input, textarea, select').forEach(el => {
+                    el.disabled = true;
+                });
+            }
+
+            function updateTimerDisplay(label, seconds) {
+                if (!timerDisplay) return;
+                if (typeof seconds !== 'number' || seconds < 0) {
+                    timerDisplay.textContent = '';
+                    return;
+                }
+                timerDisplay.textContent = `${label} Time: ${formatTime(seconds)}`;
+            }
+
+            function setTimerVisibility(isVisible) {
+                if (!timerDisplay) return;
+                timerDisplay.style.visibility = isVisible ? 'visible' : 'hidden';
+            }
+
+            function formatTime(totalSeconds) {
+                const minutes = Math.floor(totalSeconds / 60);
+                const seconds = totalSeconds % 60;
+                const paddedMinutes = minutes.toString().padStart(2, '0');
+                const paddedSeconds = seconds.toString().padStart(2, '0');
+                return `${paddedMinutes}:${paddedSeconds}`;
+            }
+
+            function clearTimerDisplay() {
+                if (timerDisplay) {
+                    timerDisplay.textContent = '';
+                }
+                setTimerVisibility(false);
+            }
+
+            function goToReadingIntro() {
+                if (currentSection === 'reading') return;
+                listeningSection.classList.add('hidden');
+                mainNavigation.classList.add('hidden');
+                readingSection.classList.remove('hidden');
+                readingIntro1.classList.remove('hidden');
+                readingIntro2.classList.add('hidden');
+                readingPassage1View.classList.add('hidden');
+                readingPassage2View.classList.add('hidden');
+                readingNav.classList.add('hidden');
+                currentSection = 'reading';
+                startReadingTimerIfNeeded();
+            }
+
+            function showResultsSection() {
+                readingTimer.stop();
+                readingSection.classList.add('hidden');
+                readingIntro1.classList.add('hidden');
+                readingIntro2.classList.add('hidden');
+                readingPassage1View.classList.add('hidden');
+                readingPassage2View.classList.add('hidden');
+                readingNav.classList.add('hidden');
+                resultsSection.classList.remove('hidden');
+                mainNavigation.classList.add('hidden');
+                clearTimerDisplay();
+            }
+
+            function finishReadingSection() {
+                showResultsSection();
+            }
+            
+            // --- General Logic (Answer Storage & Download) ---
+             document.querySelectorAll('input[type="radio"], input[type="checkbox"]').forEach(input => {
+                input.addEventListener('change', (e) => {
+                    const name = e.target.name;
+                    if (e.target.type === 'radio') {
+                        userAnswers[name] = e.target.value;
+                    } else {
+                        if (!userAnswers[name]) userAnswers[name] = [];
+                        if (e.target.checked) {
+                            if (!userAnswers[name].includes(e.target.value)) userAnswers[name].push(e.target.value);
+                        } else {
+                            userAnswers[name] = userAnswers[name].filter(val => val !== e.target.value);
+                        }
+                        userAnswers[name].sort();
+                    }
+                });
+            });
+            
+            document.querySelectorAll('.insert-square').forEach(square => {
+                square.addEventListener('click', (e) => {
+                    if (readingLocked) return;
+                    const passageNum = e.target.dataset.passage;
+                    document.querySelectorAll(`.insert-square[data-passage="${passageNum}"]`).forEach(s => s.classList.remove('selected'));
+                    
+                    square.classList.add('selected');
+                    const questionName = (passageNum === '1') ? 'r-q9-insert' : 'r2-q9-insert';
+                    userAnswers[questionName] = `Position ${square.dataset.location}`;
+                });
+            });
+
+            downloadBtn.addEventListener('click', () => {
+                let report = 'TOEFL Practice Test Answers\n============================\n\n';
+                const questionOrder = [ 
+                    'c1-q1', 'c1-q2', 'c1-q3', 'c1-q4', 'c1-q5', 
+                    'l1-q1', 'l1-q2', 'l1-q3', 'l1-q4', 'l1-q5', 'l1-q6',
+                    'c2-q1', 'c2-q2', 'c2-q3', 'c2-q4', 'c2-q5',
+                    'l2-q1', 'l2-q2', 'l2-q3', 'l2-q4', 'l2-q5', 'l2-q6',
+                    'l3-q1', 'l3-q2', 'l3-q3', 'l3-q4', 'l3-q5', 'l3-q6',
+                    'r-q1', 'r-q2', 'r-q3', 'r-q4', 'r-q5', 'r-q6', 'r-q7', 'r-q8', 'r-q9-insert', 'r-q10',
+                    'r2-q1', 'r2-q2', 'r2-q3', 'r2-q4', 'r2-q5', 'r2-q6', 'r2-q7', 'r2-q8', 'r2-q9-insert', 'r2-q10'
+                ];
+                questionOrder.forEach(key => {
+                    const answer = userAnswers[key];
+                    if (answer && answer.length > 0) {
+                        let formattedAnswer = Array.isArray(answer) ? answer.join(', ') : answer;
+                        report += `${key.toUpperCase()}: ${formattedAnswer}\n`;
+                    } else {
+                        report += `${key.toUpperCase()}: (No Answer)\n`;
+                    }
+                });
+                const blob = new Blob([report], { type: 'text/plain' });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = 'toefl_answers.txt';
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                URL.revokeObjectURL(url);
+            });
+            
+            // Initial setup on load
+            mainNextBtn.disabled = true;
+
+        });
+    </script>
+</body>
+</html>
